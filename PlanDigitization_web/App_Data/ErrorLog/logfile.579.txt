@@ -1,0 +1,7 @@
+------Warn(2023-06-08 12:19:36.6450)INPAS1VMS013------
+                       Exception Type:System.Threading.Tasks.TaskCanceledException |                       Exception Message:A task was canceled. |                       Stack Trace: |                       Additional Info:System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at PlanDigitization_web.Controllers.UserSettingsController.<Set_CompanyCode>d__44.MoveNext() in D:\TestPortal-07-06-2023\i4metricstest_frontend-master\PlanDigitization_web\Controllers\UserSettingsController.cs:line 2511
+

@@ -1,0 +1,10 @@
+------Warn(2023-06-07 14:09:18.2428)INPAS1VMS013------
+                       Exception Type:System.Threading.Tasks.TaskCanceledException |                       Exception Message:A task was canceled. |                       Stack Trace: |                       Additional Info:System.AggregateException: One or more errors occurred. ---> System.Threading.Tasks.TaskCanceledException: A task was canceled.
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at System.Threading.Tasks.Task`1.get_Result()
+   at PlanDigitization_web.Controllers.MainController.<Checklogin>d__19.MoveNext() in D:\TestPortal-07-06-2023\i4metricstest_frontend-master\PlanDigitization_web\Controllers\MainController.cs:line 409
+---> (Inner Exception #0) System.Threading.Tasks.TaskCanceledException: A task was canceled.<---
+
+

@@ -1,0 +1,34 @@
+<<<<<<< HEAD
+------Warn(2020-11-04 16:02:05.2003)TCLHSRPEDLT0478------
+                       Exception Type:System.Threading.Tasks.TaskCanceledException |                       Exception Message:A task was canceled. |                       Stack Trace: |                       Additional Info:System.AggregateException: One or more errors occurred. ---> System.Threading.Tasks.TaskCanceledException: A task was canceled.
+=======
+------Warn(2020-11-05 11:36:58.1513)TCLHSRPEDLT0476------
+                       Exception Type:System.Net.Http.HttpRequestException |                       Exception Message:An error occurred while sending the request. |                       Stack Trace: |                       Additional Info:System.AggregateException: One or more errors occurred. ---> System.Net.Http.HttpRequestException: An error occurred while sending the request. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:63267
+   at System.Net.Sockets.Socket.InternalEndConnect(IAsyncResult asyncResult)
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.Net.Http.HttpClientHandler.GetRequestStreamCallback(IAsyncResult ar)
+   --- End of inner exception stack trace ---
+>>>>>>> securitymodification
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at System.Threading.Tasks.Task`1.get_Result()
+<<<<<<< HEAD
+   at PlanDigitization_web.Controllers.UserSettingsController.<Insert_users>d__34.MoveNext() in D:\githubPlantDigitization\PlanDigitization_web-latest\PlanDigitization_web\Controllers\UserSettingsController.cs:line 1624
+---> (Inner Exception #0) System.Threading.Tasks.TaskCanceledException: A task was canceled.<---
+=======
+   at PlanDigitization_web.Controllers.MainController.<Checklogin>d__9.MoveNext() in G:\e drive\PlanDigitization(20-10-2020)\PlanDigitizationweb\PlanDigitization_web-latest\PlanDigitization_web\Controllers\MainController.cs:line 107
+---> (Inner Exception #0) System.Net.Http.HttpRequestException: An error occurred while sending the request. ---> System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.SocketException: No connection could be made because the target machine actively refused it 127.0.0.1:63267
+   at System.Net.Sockets.Socket.InternalEndConnect(IAsyncResult asyncResult)
+   at System.Net.Sockets.Socket.EndConnect(IAsyncResult asyncResult)
+   at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- End of inner exception stack trace ---
+   at System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   at System.Net.Http.HttpClientHandler.GetRequestStreamCallback(IAsyncResult ar)
+   --- End of inner exception stack trace ---<---
+>>>>>>> securitymodification
+
+

@@ -1,0 +1,573 @@
+﻿body {
+    background-color: white;
+    height: 100%;
+}
+
+.dark-mode {
+    background-color: #1b1c1c;
+}
+
+.legend {
+    float: right;
+    margin-top: -200px;
+    font-size: 12px;
+    color: black;
+    /*font-weight: bold;*/
+    margin-right: -30px;
+}
+
+.legend1 {
+    float: right;
+    margin-top: -200px;
+    font-size: 10px;
+    color: black;
+    /*font-weight: bold;*/
+    margin-right: -30px;
+}
+
+.pie text {
+    font-family: "Verdana";
+    fill: #000;
+}
+
+.pie .name-text {
+    font-size: .8em;
+}
+
+.top_10_duration_table td {
+    font-size: 10px;
+}
+
+.toolTip {
+    position: absolute;
+    display: none;
+    min-width: 80px;
+    height: auto;
+    background: none repeat scroll 0 0 #ffffff;
+    ;
+    border: 1px solid #6F257F;
+    padding: 14px;
+    text-align: center;
+}
+
+.modal {
+    padding: 0 !important;
+    /*override inline padding-right added from js*/
+}
+
+    .modal .modal-dialog {
+        width: 94%;
+        height: 95%;
+        margin-left: 3%;
+        padding: 0;
+    }
+
+/*Carousel Alarm Icon*/
+.alm i.fa {
+    display: inline-block;
+    border-radius: 60px;
+    padding: 0.5em 0.6em;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+
+.alm a {
+    color: grey;
+}
+/*Carousel inner cards styles*/
+.kpiCard, .productionCard {
+    height: 245px;
+}
+
+.prodCardMargin {
+    padding: 0 0 0 0;
+}
+/*Popup Live Symbol*/
+.dot_live {
+    height: 8px;
+    width: 8px;
+    background-color: #E74C3C;
+    border-radius: 50%;
+    display: inline-block;
+}
+/*Carousel Title*/
+.fontSanserif {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*Carousel Title Breadcrumbs*/
+section .panel-heading .row .right-wrapper .breadcrumb {
+    margin: 0 0 0 0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+/*Carousel Machine Batchcode*/
+section .panel-heading .row div .machineBatchcode {
+    margin: 0 0 0 0;
+}
+
+/*Centre Text*/
+.centreText {
+    text-align: center;
+}
+/*nopadding*/
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.noRpadding {
+    padding: 0 0 0 10px !important;
+    margin: 0 !important;
+}
+/*Title attribute tooltip*/
+.titleTooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.titleTooltip_status {
+    position: relative;
+    display: inline-block;
+}
+
+.titleTooltip_status {
+    position: relative;
+    display: inline-block;
+}
+
+.titleTooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: Grey;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    top: 20px;
+    right: 105%;
+    font-weight: normal;
+    z-index: 100000;
+}
+
+.titleTooltip:hover .tooltiptext, .titleTooltip:hover .tooltiptext1, .titleTooltip_status:hover .tooltiptext_status {
+    visibility: visible;
+    display: block;
+}
+
+.titleTooltip .tooltiptext1 {
+    visibility: hidden;
+    width: 200px;
+    background-color: Grey;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    top: 20px;
+    left: 105%;
+    font-weight: normal;
+    z-index: 1;
+}
+
+.titleTooltip_status .tooltiptext_status {
+    visibility: hidden;
+    background-color: grey;
+    color: white;
+    /* text-align: center;*/
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    top: 20px;
+    left: 105%;
+    font-weight: normal;
+    height: 79px;
+    width: 224px;
+    z-index: 9999;
+}
+
+/* cicular progress bar chart*/
+#darkg center .widget_1, #darkg center .widget_2, #darkg center .widget_3 {
+    width: auto;
+    height: auto;
+}
+
+    #darkg center .widget_1 svg, #darkg center .widget_2 svg, #darkg center .widget_3 svg {
+        width: 119px !important;
+        height: 127px !important;
+        display: block;
+    }
+
+.popupWidget {
+    height: 100%;
+    width: 175px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carouselWidget {
+    height: 30px;
+    width: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.progress-bar {
+    fill: #2BAAB1;
+    stroke-width: 1;
+    stroke: #2BAAB1;
+}
+
+.oee svg .progress-bar {
+    fill: #0088CC;
+    stroke-width: 1;
+    stroke: #0088CC;
+}
+
+.progress-bar1 {
+    fill: #2BAAB1;
+    stroke-width: 1;
+    stroke: #2BAAB1;
+}
+
+
+/*#2BAAB1*/
+.progress-bar-bg {
+    fill: #ddd;
+    stroke-width: 1;
+    stroke: #ddd;
+}
+
+.progress-label {
+    fill: #aaa;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    text-anchor: middle;
+    font-weight: bolder;
+    dominant-baseline: central;
+}
+
+.progress-label1 {
+    fill: #aaa;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+.avail, .perf, .qual, .oee {
+    padding: 0;
+    margin: auto;
+    height: 100%;
+}
+
+#darkg .panel-body .col-md-4 .col-md-12 {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.statusbar_flex div {
+    width: 50px;
+    height: 50px;
+}
+
+.modal .modal-content {
+}
+
+.pie .value-text {
+    font-size: 3em;
+}
+
+svg rect.bar, .custome_report rect, .Range_chart_daywise rect, #err_Range_chart_daywise rect {
+    opacity: 0.5;
+    stroke-width: 1;
+    stroke: #0069bf;
+}
+
+.rej_custom rect, #top_10_pareto_chart rect {
+    opacity: 0.5;
+    stroke-width: 1;
+    stroke: #0069bf;
+}
+
+line {
+    shape-rendering: crispEdges;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.line {
+    fill: none;
+    stroke: #5F6A6A;
+    stroke-width: 2px;
+}
+
+.grid .tick {
+    stroke: lightgrey;
+    opacity: 0.7;
+}
+
+.grid path {
+    stroke-width: 0;
+}
+
+.x_label {
+    border: solid;
+    background-color: cornflowerblue;
+}
+
+.main_div {
+    display: flex;
+}
+
+#myCarousel {
+    /*padding-top: 20px;*/
+    width: 1220px;
+    height: 350px;
+}
+
+.statusbar_flex {
+    display: flex;
+    padding-left: 12px;
+    padding-top: 12px;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+
+.Flex-item-status {
+    /*border: 1px solid #c3c3c3;*/
+    margin: 5px;
+    height: 50px;
+    max-width: 62px;
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #f02416;
+    color: black;
+}
+
+.flex-item-status_bar_box {
+    /*border: 1px solid #c3c3c3;*/
+    margin: 5px;
+    height: 50px;
+    width: 88px;
+    text-align: center;
+    border-radius: 5px;
+    color: black;
+}
+
+.carousel-indicators {
+    /*z-index: 15;*/
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.Hourly_Production_Alignment .line {
+    fill: none;
+    stroke-width: 2px;
+}
+
+.Hourly_Production_Alignment .circle {
+    fill: steelblue;
+    stroke: #fff;
+}
+
+.Hourly_Production_Alignment .circle1 {
+    fill: steelblue;
+    stroke: #fff;
+}
+
+.Hourly_Production_Alignment .tooltipHourly {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgb(88, 88, 88);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: -310px;
+    margin-left: -30px;
+    font-size: 12px;
+    z-index: 100000; /*Increase the z-index value */
+}
+
+.Hourly_OEE .tooltipHourlyOEE {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgb(88, 88, 88);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 100000; /*Increase the z-index value */
+}
+
+.Hourly_Production .bar {
+    fill: steelblue;
+    stroke: none !important;
+}
+
+.Hourly_Production .bar-group {
+    fill: lightblue;
+}
+.Hourly_Production .line {
+    fill: none;
+    stroke-width: 1.5px;
+}
+
+.Hourly_Production .circle {
+    fill: steelblue;
+    stroke: #fff;
+}
+
+.Hourly_Production .x-axis .tick {
+    font-size: 12px;
+}
+
+.Hourly_Production .y-axis .tick {
+    font-size: 12px;
+}
+
+.Hourly_Production .tooltipHourlyProd {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgb(88, 88, 88);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 100000; /*Increase the z-index value */
+}
+
+
+
+.Hourly_Utilisation .tooltipHourlyUtil {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgb(88, 88, 88);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 100000; /*Increase the z-index value */
+}
+
+.Hourly_Utilisation .bar-group-0 { /*uptime*/
+    fill: #87c300 !important;
+}
+
+.Hourly_Utilisation .bar-group-1 { /*losstime*/
+    fill: #fac316 !important;
+}
+
+.Hourly_Utilisation .bar-group-2 { /*downtime*/
+    fill: #F39C12 !important;
+}
+
+.Hourly_Utilisation .bar-group-3 { /*breaktime*/
+    fill: #3d85c6 !important;
+}
+
+#Hourly_Downtime_container .circle {
+    fill: steelblue;
+    stroke: #fff;
+}
+
+#Hourly_Downtime_container .line {
+    fill: none;
+    stroke-width: 2px;
+}
+
+#Hourly_Downtime_container .bar {
+    fill: steelblue;
+}
+
+
+#Hourly_Downtime_container .axis path,
+#Hourly_Downtime_container .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+#Hourly_Downtime_container .tooltip {
+    position: absolute;
+    padding: 8px;
+    background-color: rgb(88, 88, 88);
+    color: #fff;
+    border-radius: 4px;
+    pointer-events: none;
+    font-size: 12px;
+}
+
+.Hourly_OEE .bar1 {
+    fill: #2C74B3;
+    stroke: none !important;
+    opacity: 0.5;
+}
+
+.Hourly_OEE .bar2 {
+    fill: #205295;
+    stroke: none !important;
+    opacity: 0.6;
+}
+
+.Hourly_OEE .bar3 {
+    fill: #144272;
+    stroke: none !important;
+    opacity: 0.7;
+}
+
+.Hourly_OEE .bar4 {
+    fill: #0A2647;
+    stroke: none !important;
+    opacity: 0.8;
+}
+
+.item_div_nodata {
+    color: grey;
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+}
+
+.Hourly_Downtime .bar {
+    fill: steelblue;
+    stroke: none !important;
+    opacity: 0.5;
+}
+
+.Hourly_OEE .bar {
+    fill: steelblue;
+    stroke: none !important;
+    opacity: 0.5;
+}
+
+.Hourly_Downtime .tooltipDown {
+    position: absolute;
+    pointer-events: none;
+    background-color: rgb(88, 88, 88);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 100000; /*Increase the z-index value */
+}
+
+.tooltip-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px;
+    border-color: transparent transparent rgb(88, 88, 88) transparent;
+}
+
+.tooltip-rotate {
+    transform: translate(-150%, -250%) rotate(270deg);
+}
