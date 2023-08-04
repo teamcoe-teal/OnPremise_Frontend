@@ -31,6 +31,10 @@
         display: none;
     }
 
+    #yearly_report1.active + .btn-group.select-btn {
+        display: none;
+    }
+
     .form-group {
         margin-bottom: 15px;
         display: flex;
@@ -78,11 +82,7 @@
 @if (ViewContext.Controller.HasPermission("Shiftwise_Production_Summary-View"))
 {
     <div class="row">
-
-
-
-
-        <div class="btn-group">
+        <div class="btn-group" style="padding-right: 15px;">
             <label class="control-label" style="float:right; font-weight:bold;">Select Machine<span class="required">*</span></label>
         </div>
         <div class="btn-group">
@@ -92,13 +92,6 @@
         </div>
 
 
-        @*<div class="btn-group">
-                <label class="control-label" style="float:right; font-weight:bold;"> No of Records <span class="required">*</span></label>
-            </div>
-            <div class="btn-group">
-                <input type="text" class="form-control record" name="records" title="Enter no of records" required />
-            </div>
-            <span style="color:red;">*Type all or number (eg: all or 10 or 20)</span>*@
     </div>
 
 
@@ -117,12 +110,11 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-
                     <div id="custom" class="tab-pane active">
                         <section class="panel">
                             <div class="form-group">
-                                <label class=" control-label">Date range</label>
-                                <div class="col-md-6">
+                                <label class=" control-label" style="margin-right: 100px;">Date range</label>
+                                <div class="col-md-6" style="right: 80px;">
                                     <div class="input-daterange input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -132,7 +124,7 @@
                                         <input type="text" class="form-control datepic" style="text-align:left;z-index:0;" id="end" name="end" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="right: 80px;">
                                     <div class="btn-group">
                                         <button type="button" id="searchcustomwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -161,33 +153,14 @@
                                 <div class="tab-content">
                                     <div id="custome_report1" class="tab-pane active">
                                         <section class="panel-body">
-                                            @*<div class="chart chart-md" id="custom1"></div>*@
-                                            <div class='custome_report' style="height: 450px; width:1102px ; background-color: rgb(91 165 241 / 10%); ">
-
-                                                @*<h3 style="font-family: verdana; color: #47640a; text-align: center ">Shiftwise Aggregate Production VariantWise</h3>*@
-
-                                            </div>
+                                            <div class='custome_report' style="height: 450px; width:1102px ; background-color: rgb(91 165 241 / 10%); "></div>
                                         </section>
-
                                     </div>
 
                                     <div id="custome_Duration1" class="tab-pane">
                                         <section class="panel-body">
-                                            <div class='custome_Duration' style="height: 450px; width:1102px ;background-color: #e0e0e0; ">
-                                                @*<h3 style="font-family: verdana; color: #47640a; text-align: center ">
-                                                        Shiftwise Production
-
-                                                    </h3>*@
-                                                @*<div class="btn-group select-btn">
-                                                        <label class="control-label">Select Variant  </label>
-                                                        <select class="form-control" id="Variant">
-                                                            <option value="All">All</option>
-                                                        </select>
-                                                    </div>*@
-
-                                            </div>
+                                            <div class='custome_Duration' style="height: 450px; width:1102px ;background-color: #e0e0e0; "></div>
                                         </section>
-
                                     </div>
                                 </div>
                             </div>
@@ -199,8 +172,8 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-labe">Select Year</label>
-                                <div class="col-md-4">
+                                <label class="col-md-2 control-labe" style="right: 190px;">Select Year</label>
+                                <div class="col-md-4" style="right: 290px;">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -208,7 +181,7 @@
                                         <input class="date-own form-control" style="width: 150px;z-index:0;" type="text" id="year" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="right: 95px;">
                                     <div class="btn-group">
                                         <button type="button" id="searchyearwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -217,54 +190,44 @@
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
                             <div class="tabs tabs-danger">
                                 <ul class="nav nav-tabs">
-                                    <li class="active" id="custom_report_tab">
-                                        <a href="#yearly_report1" data-toggle="tab">Variantwise Production</a>
+                                    <li class="active" id="yearly_report_tab">
+                                        <a href="#yearly_report1" data-toggle="tab">Variantwise Production </a>
                                     </li>
-                                    <li id="custom_report_tab_day">
+                                    <li id="yearly_report_tab_day">
                                         <a href="#yearly_Duration1" data-toggle="tab">Daywise Production</a>
                                     </li>
                                 </ul>
-
-                                <div class="btn-group select-btn">
-                                    <label class="control-label" style="float:right; font-weight:bold;"> SelectVariant </label>
-                                    <select class="form-control" id="Yearly_Variant">
+                                <div class="select-btn">
+                                    <label class="control-label variant-label" style="margin-right: 16px;font-weight: bold;padding: 0;font-weight: bold;"> Select Variant </label>
+                                    <select class="form-control" id="Yearly_Variant" style="width: fit-content;display: inline-block;">
                                         <option value="All">All</option>
                                     </select>
                                 </div>
-
                                 <div class="tab-content">
                                     <div id="yearly_report1" class="tab-pane active">
                                         <section class="panel-body">
-                                            <div class='year_report' style="height: 450px; width: 1102px; background-color: rgb(91 165 241 / 10%); ">
-
-                                                @*<h3 style="font-family: verdana; color: #47640a; text-align: center ">Shiwise Aggreagte Production Variant Wise</h3>*@
-
-                                            </div>
+                                            <div class='year_report' style="height: 450px; width:1102px ; background-color: rgb(91 165 241 / 10%); "></div>
                                         </section>
                                     </div>
 
-                                    <div id="yearly_Duration1" class="tab-pane active">
+                                    <div id="yearly_Duration1" class="tab-pane">
                                         <section class="panel-body">
-                                            <div class='year_Duration' style="height: 450px; width: 1102px; background-color: #e0e0e0; ">
-                                                @*<h3 style="font-family: verdana; color: #47640a; text-align: center ">
-                                                        Shiftwise Production
-
-                                                    </h3>*@
-                                                @*<div class="btn-group select-btn">
-                                                        <label class="control-label">Select Variant  </label>
-                                                        <select class="form-control" id="Variant">
-                                                            <option value="All">All</option>
-                                                        </select>
-                                                    </div>*@
-
-                                            </div>
-
-                                        </section>>
+                                            <div class='year_Duration' style="height: 450px; width:1102px ;background-color: #e0e0e0; "></div>
+                                        </section>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
 
                         </section>
                     </div>
@@ -273,8 +236,8 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-label">Select Month</label>
-                                <div class="col-md-4">
+                                <label class="col-md-2 control-label" style="right: 190px;">Select Month</label>
+                                <div class="col-md-4" style="right: 285px;">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -282,7 +245,7 @@
                                         <input class="month-own form-control" style="width: 150px;z-index:0;" type="text" id="month" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="right: 95px;">
                                     <div class="btn-group">
                                         <button type="button" id="searchmonthwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -291,54 +254,43 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="tabs tabs-danger">
                                 <ul class="nav nav-tabs">
-                                    <li class="active" id="custom_report_tab">
-                                        <a href="#monthly_report1" data-toggle="tab">Variantwise Production</a>
+                                    <li class="active" id="monthly_report_tab">
+                                        <a href="#monthly_report1" data-toggle="tab">Variantwise Production </a>
                                     </li>
-                                    <li id="custom_report_tab_day">
+                                    <li id="monthly_report_tab_day">
                                         <a href="#monthly_Duration1" data-toggle="tab">Daywise Production</a>
                                     </li>
                                 </ul>
-
+                                <div class="select-btn">
+                                    <label class="control-label variant-label" style="margin-right: 16px;font-weight: bold;padding: 0;font-weight: bold;"> Select Variant </label>
+                                    <select class="form-control" id="Monthly_Variant" style="width: fit-content;display: inline-block;">
+                                        <option value="All">All</option>
+                                    </select>
+                                </div>
                                 <div class="tab-content">
                                     <div id="monthly_report1" class="tab-pane active">
                                         <section class="panel-body">
-                                            <div class='monthly_report' style="height: 450px; width: 1102px; background-color: rgb(91 165 241 / 10%); ">
-
-                                                @*<h3 style="font-family: verdana; color: #47640a; text-align: center ">Shiwise Aggreagte Production Variant Wise</h3>*@
-
-                                            </div>
+                                            <div class='monthly_report' style="height: 450px; width:1102px ; background-color: rgb(91 165 241 / 10%); "></div>
                                         </section>
-
                                     </div>
 
-                                    <div class="btn-group select-btn">
-                                        <label class="control-label" style="float:right; font-weight:bold;"> SelectVariant </label>
-                                        <select class="form-control" id="Monthly_Variant">
-                                            <option value="All">All</option>
-                                        </select>
-                                    </div>
-                                    <div id="monthly_Duration1" class="tab-pane active">
+                                    <div id="monthly_Duration1" class="tab-pane">
                                         <section class="panel-body">
-                                            <div class='monthly_Duration' style="height: 450px; width: 1102px; background-color: #e0e0e0; ">
-                                                @*<h3 style="font-family: verdana; color: #47640a; text-align: center ">
-                                                        Shiftwise Production
-
-                                                    </h3>*@
-                                                @*<div class="btn-group select-btn">
-                                                        <label class="control-label">Select Variant  </label>
-                                                        <select class="form-control" id="Variant">
-                                                            <option value="All">All</option>
-                                                        </select>
-                                                    </div>*@
-
-                                            </div>
-
+                                            <div class='monthly_Duration' style="height: 450px; width:1102px ;background-color: #e0e0e0; "></div>
                                         </section>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
+
+
                         </section>
                     </div>
                 </div>
@@ -350,6 +302,7 @@ else
     <div class="row">
         <h2 class="panel-title">View Permission is denied</h2>
     </div>}
+
 <!-- end: page -->
 <script src="~/assets1/javascripts/swal.js"></script>
 <script src="~/assets1/javascripts/swal_alert.js"></script>
@@ -357,206 +310,15 @@ else
 <script src="~/assets1/datepicker_normal/jquery-ui-1.8.19.custom.min.js"></script>
 <script src="~/Scripts/bootstrap-datepicker.js"></script>
 <script src="~/Scripts/d3_v3.min.js"></script>
-<script type="text/javascript">
-    document.querySelectorAll('#custom_report_tab_day')[0].addEventListener('click', (element) => {
-        document.querySelector('.select-btn').style.display = 'inline-flex';
-    });
-    document.querySelectorAll('#custom_report_tab')[0].addEventListener('click', (element) => {
-        document.querySelector('.select-btn').style.display = 'none';
-    });
-    //$(".datepic").datepicker({
-    //    format: "yyyy-mm-dd",
-    //    orientation: "bottom",
-    //    endDate: '+0d'
-    //});
-
-    $('.month-own').datepicker({
-        format: "yyyy-mm",
-        viewMode: "months",
-        endDate: '+0m',
-        minViewMode: "months",
-        orientation: "bottom"
-    });
-    $('.date-own').datepicker({
-        minViewMode: 2,
-        format: 'yyyy',
-        endDate: '+0y',
-        startView: 2,
-        orientation: "bottom"
-    });
-</script>
-<script>
-    $(function () {
-        var todaydt = new Date();
-        todaydt.setDate(todaydt.getDate() - 1);
-        $("#start").datepicker({
-            autoclose: true,
-            endDate: todaydt,
-            format: 'yyyy-mm-dd'
-        }).on('changeDate', function (selected) {
-            var minDate = new Date(selected.date);
-            minDate.setDate(minDate.getDate());
-            $('#end').datepicker('setStartDate', minDate);
-        });
-
-        $("#end").datepicker({
-            autoclose: true,
-            endDate: todaydt,
-            format: 'yyyy-mm-dd'
-        }).on('changeDate', function (selected) {
-            var minDate = new Date(selected.date);
-            minDate.setDate(minDate.getDate() - 1);
-            $('#start').datepicker('setEndDate', minDate);
-        });
-    });
-
-    $(function () {
-        $('#start').keypress(function (event) {
-            event.preventDefault();
-            return false;
-        });
-    });
-
-    $(function () {
-        $('#end').keypress(function (event) {
-            event.preventDefault();
-            return false;
-        });
-    });
-
-</script>
-
-<script type="text/javascript">
-    $(function ()
-    {
-        var CompanyCode = '@Session["CompanyCode"]';
-        var PlantCode = '@Session["PlantCode"]';
-        var LineCode = '@Session["LineCode"]';
-        if (CompanyCode == "" && PlantCode == "" && LineCode == "") {
-            swal({
-                icon: "error",
-                title: "Please Select Customer, Plant and Line...!",
-                button: true,
-                timer: 4500
-            })
-            return;
-        }
-        else
-            if (CompanyCode == "") {
-                swal({
-                    icon: "error",
-                    title: "Please Select Customer...!",
-                    button: true,
-                    timer: 4500
-                })
-                return;
-            }
-            else
-                if (PlantCode == "") {
-                    swal({
-                        icon: "error",
-                        title: "Please Select Plant...!",
-                        button: true,
-                        timer: 4500
-                    })
-                    return;
-                }
-                if (LineCode == "") {
-                    swal({
-                        icon: "error",
-                        title: "Please Select Line...!",
-                        button: true,
-                        timer: 4500
-                    })
-                    return;
-                }
-                else
-                {
-                    var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
-
-
-                      var myData1 = {
-                        "Flag": "Subsystem",
-                        "CompanyCode": '@Session["CompanyCode"]',
-                        "PlantCode": '@Session["PlantCode"]',
-                        "LineCode":'@Session["LineCode"]'
-                    };
-                     var R_url = '@Url.Action("Login", "Main")';
-                   var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-
-                     var R_url = '@Url.Action("GetSettingdatas1", "Main")';
-
-                       var URL2 = '@Url.Action("GetSettingdatas1", "Main")';
-                    $.ajax({
-                        type: "POST",
-                        url: URL2,
-                       data: myData1,
-                        dataType: "json",
-                        success: function (response) {
-                            var s = '<option value="">Select Machine</option>';
-
-
-                            for (var i = 0; i < response.data.length; i++) {
-                                //console.log(response.data.length);
-                                if (response.data.length == 1) {
-                                    s += '<option value="' + response.data[i].Code + '" selected=selected>' + response.data[i].Name + '</option>';
-                                }
-                                else {
-                                    s += '<option value="' + response.data[i].Code + '">' + response.data[i].Code + "-" + response.data[i].Name + '</option>';
-                                }
-                            }
-                            $("#machinecode").html(s);
-                            //$(".record").text("10");
-                            $(".record").val(10);
-                        },
-                        error: function (response) {
-                            if (response.status == "401") {
-                                swal({
-                                    icon: "warning",
-                                    title: "Session Timeout",
-                                    button: true,
-                                    closeModal: false
-                                })
-                                window.location = R_url;
-                            }
-                            else {
-                                swal({
-                                    icon: "warning",
-                                    title: response.responseText,
-                                    button: true,
-                                    closeModal: false
-                                })
-
-                            }
-                        }
-                    });
-
-
-        }
+<script type="text/javascript" src="~/Scripts/Shiftwise_production/monthly.js"></script>
+<script type="text/javascript" src="~/Scripts/Shiftwise_production/graph.js"></script>
+<script type="text/javascript" src="~/Scripts/Shiftwise_production/yearly.js"></script>
+<script type="text/javascript" src="~/Scripts/Shiftwise_production/custom.js"></script>
+<script type="text/javascript" src="~/Scripts/Shiftwise_production/common.js"></script>
 
 
 
-    });
 
-    document.getElementById("resetcustom").addEventListener("click", function () {
-        $('#start').val('');
-        $('#end').val('');
-        d3.select(".custome_report svg").remove();
-        d3.select(".custome_Duration svg").remove();
-    })
-    document.getElementById("resetyear").addEventListener("click", function () {
-        $('#year').val('');
-        d3.select(".year_report svg").remove();
-        d3.select(".year_Duration svg").remove();
-    })
-    document.getElementById("resetmonth").addEventListener("click", function () {
-        $('#month').val('');
-        d3.select(".monthly_report svg").remove();
-        d3.select(".monthly_Duration svg").remove();
-    })
-
-
-</script>
 
 
 
@@ -564,1691 +326,115 @@ else
 <script type="text/javascript">
 
     var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
+    var CompanyCode = '@Session["CompanyCode"]';
+    var PlantCode = '@Session["PlantCode"]';
+    var LineCode = '@Session["LineCode"]';
+    var R_url = '@Url.Action("Login", "Main")';
+    var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
 
-    function graph(id, response) {
-        //console.log(response);
-        const a = $(id).height();
-        const b = $(id).width();
+     $(function ()
+    {
+        var URL2 = '@Url.Action("GetSettingdatas1", "Main")';
+        SelectMachine(URL2, URL, CompanyCode, PlantCode, LineCode, R_url, user1);
 
-        //console.log(a + "1st" + b);
-        var m = { top: 100, right: 50, bottom: 100, left: 70 }
-            , h = a - m.top - m.bottom
-            , w = b - m.left - m.right
-            , barWidth = 5;
-        //console.log(response);
-        //console.log("response.data.Table[0]",response.data.Table[0].S2_OKParts)
-        var dataset = null;
-        //typecast Amount to #, calculate total, and cumulative amounts
-        dataset = response.data.Table;
+    });
 
-        //Axes and scales
-        var xScale = d3.scale.ordinal().rangeRoundBands([0, w], 0.1);
-        var x1Scale = d3.scale.ordinal();
-        var x2Scale = d3.scale.ordinal();
 
 
-        xScale.domain(response.data.Table.map(function (d) { return d.Variant_code; }));
-        x1Scale.domain(['S1_OKParts', 'S2_OKParts', 'S3_OKParts']).rangeRoundBands([0, xScale.rangeBand() /2], 0.1);
-        x2Scale.domain(['S1_OKParts', 'S2_OKParts', 'S3_OKParts']).rangeRoundBands([0, x1Scale.rangeBand() / 2], 0.1);
-        x1Scale.domain(['S1_NOKParts', 'S2_NOKParts', 'S3_NOKParts']).rangeRoundBands([0, xScale.rangeBand() / 2], 0.1);
-        x2Scale.domain(['S1_NOKParts', 'S2_NOKParts', 'S3_NOKParts']).rangeRoundBands([0, x1Scale.rangeBand()/2], 0.1);
+     function assignValue()
+    {
 
 
+         var value = {
+             'URL': URL,
+            'machinecode': $('#machinecode').val(),
+            'machinecode1': $('#machinecode option:selected').text(),
+            'records': $('.record').val(),
+            'year': $('#year').val(),
+            'month': $('#month').val(),
+            'start' : $('#start').val(),
+            'end' : $('#end').val(),
+            'MonthlyVariant': $('#Monthly_Variant').val(),
+            'Yearly_Variant': $('#Yearly_Variant').val(),
+            'Custom_Variant': $('#Variant').val()
 
 
-        var yhist = d3.scale.linear()
-            .domain([0, d3.max(response.data.Table, function (d) {
-                return (d.S1_OKParts > d.S2_OKParts ? d.S1_OKParts : d.S2_OKParts) > d.S3_OKParts ? (d.S1_OKParts > d.S2_OKParts ? d.S1_OKParts : d.S2_OKParts) : d.S3_NOKParts
-                return (d.S1_NOKParts > d.S2_NOKParts ? d.S1_NOKParts : d.S2_NOKParts) > d.S3_NOKParts ? (d.S1_NOKParts > d.S2_NOKParts ? d.S1_NOKParts : d.S2_NOKParts) : d.S3_OKParts
+        };
 
-            })])
-            .range([h, 0]);
 
-
-        var ycum = d3.scale.linear().domain([0, 100]).range([h, 0]);
-
-
-
-        var xAxis = d3.svg.axis()
-            .scale(xScale)
-            .orient('bottom');
-
-        var yAxis = d3.svg.axis()
-            .scale(yhist)
-            .orient('left');
-
-        var yAxis2 = d3.svg.axis()
-            .scale(ycum)
-            .orient('right');
-
-        var tooltip = d3.select(id)
-            .append("div")
-            .style("opacity", 0)
-            .attr("class", "tooltip")
-            .style("background-color", "tranparent")
-            .style("border", "solid")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px")
-
-        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("background-color", "#898584").style("color", "white")
-            .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
-        toolval = tooltip.append("div");
-
-
-
-
-        //Draw svg
-        var svg = d3.select(id).append("svg")
-            .attr("width", w + m.left + m.right)
-            .attr("height", h + m.top + m.bottom)
-            .append("g")
-            .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
-        //Draw histogram
-        var bar = svg.selectAll(".bar")
-            .data(response.data.Table)
-            .enter().append("g")
-            .attr("class", "bar");
-
-
-
-        bar.append("rect")
-            .attr("x", function (d) { return xScale(d.Variant_code); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S1_OKParts); })
-            .attr("height", function (d) { return h - yhist(d.S1_OKParts); })
-            .style("fill", "rgb(135, 195, 0)")
-
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-                                         }
-               )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S1' + '<br> OK Parts :' + d.S1_OKParts + '<br> NOK Parts :' + d.S1_NOKParts +'<br>';
-
-                tooltip.select("div").html(text)
-
-                                             }
-        )
-
-        bar.append("rect")
-            .attr("x", function (d) { return xScale(d.Variant_code); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S1_NOKParts); })
-            .attr("height", function (d) { return h - yhist(d.S1_NOKParts); })
-            .style("fill", "rgb(243, 156, 18)")
-
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S1' + '<br> OK Parts :' + d.S1_OKParts + '<br> NOK Parts :' + d.S1_NOKParts + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-            )
-
-
-        bar.append("rect")
-            .attr("x", function (d) { return (xScale(d.Variant_code) + x1Scale.rangeBand()); })
-
-
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S2_OKParts); })
-            .attr("height", function (d) { return h - yhist(d.S2_OKParts); })
-            .style("fill", "rgb(135, 195, 0)")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S2' + '<br> OK Parts :' + d.S2_OKParts + '<br> NOK Parts :' + d.S2_NOKParts+'<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-        )
-
-
-
-        bar.append("rect")
-            .attr("x", function (d) { return (xScale(d.Variant_code) + x1Scale.rangeBand()); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S2_NOKParts); })
-            .attr("height", function (d) { return h - yhist(d.S2_NOKParts); })
-            .style("fill", "rgb(243, 156, 18)")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S2' + '<br> OK Parts :' + d.S2_OKParts + '<br> NOK Parts :' + d.S2_NOKParts + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-            )
-
-        bar.append("rect")
-            .attr("x", function (d) { return (xScale(d.Variant_code) + (2 * x1Scale.rangeBand())); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S3_OKParts); })
-            .attr("height", function (d) { return h - yhist(d.S3_OKParts); })
-            .style("fill", "rgb(135, 195, 0)")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S3' + '<br> OK Parts :' + d.S3_OKParts + '<br> NOK Parts :' + d.S3_NOKParts  + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-        )
-
-
-        bar.append("rect")
-            .attr("x", function (d) { return (xScale(d.Variant_code) + (2 * x1Scale.rangeBand())); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S3_NOKParts); })
-            .attr("height", function (d) { return h - yhist(d.S3_NOKParts); })
-            .style("fill", "rgb(243, 156, 18)")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S3' + '<br> OK Parts :' + d.S3_OKParts + '<br> NOK Parts :' + d.S3_NOKParts + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-            )
-
-
-        bar.append('text')
-            .attr('class', 'value')
-            .attr("transform", "rotate(-90)")
-            .attr('x', function (d) { return -yhist(d.S1_OKParts + d.S1_NOKParts) + 20; })
-            .attr('y', function (d) {
-                return (xScale(d.Variant_code) + (x1Scale.rangeBand() / 2));
-            })
-
-            .attr('text-anchor', 'middle')
-            .style('fill', '#FD625E')
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "10px")
-
-
-            .text(function (d) { return d.S1_OKParts + d.S1_NOKParts;})
-
-        bar.append('text')
-            .attr('class', 'value')
-            .attr("transform", "rotate(-90)")
-            .attr('x', function (d) { return -yhist(d.S2_OKParts + d.S2_NOKParts) + 20; })
-            .attr('y', function (d) {
-                return (xScale(d.Variant_code) + ((3 * x1Scale.rangeBand()) / 2));
-            })
-            .attr('text-anchor', 'middle')
-            .style('fill', 'rgb(92, 89, 80)')
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "10px")
-            .text(function (d) { return d.S2_OKParts + d.S2_NOKParts})
-        bar.append('text')
-            .attr('class', 'value')
-            .attr("transform", "rotate(-90)")
-            .attr('x', function (d) { return -yhist(d.S3_OKParts + d.S3_NOKParts) + 20; })
-            .attr('y', function (d) {
-                return (xScale(d.Variant_code) + ((5.5 * x1Scale.rangeBand()) / 2));
-            })
-            .attr('text-anchor', 'middle')
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "10px")
-            .style('fill', '#00b6a7)')
-            .text(function (d) { return d.S3_OKParts + d.S3_NOKParts })
-
-
-
-
-
-
-
-         //Draw axes
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("rect")
-            .attr("y", -340)
-            .attr("x", 900)
-            .attr("width", 20)
-            .attr("height", 20)
-            .style("fill", "#FD625E")
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", -300)
-            .attr("x", 920)
-            .style("text-anchor", "end")
-        /* .text("Shift1");*/
-            .text("OK");
-
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("rect")
-            .attr("y", -340)
-            .attr("x", 950)
-            .attr("width", 20)
-            .attr("height", 20)
-           /* .style("fill", "rgb(92, 89, 80)")*/
-            .style("fill", "#A6C54B")
-
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", -300)
-            .attr("x", 975)
-            .style("text-anchor", "end")
-           /* .text("Shift2");*/
-            .text("NOK");
-
-        //svg.append("g")
-        //    .attr("class", "x axis")
-        //    .attr("transform", "translate(0," + h + ")")
-        //    .call(xAxis)
-        //    .append("rect")
-        //    .attr("y", -340)
-        //    .attr("x", 1000)
-        //    .attr("width", 20)
-        //    .attr("height", 20)
-        //    .style("fill", "#00b6a7")
-
-        //svg.append("g")
-        //    .attr("class", "x axis")
-        //    .attr("transform", "translate(0," + h + ")")
-        //    .call(xAxis)
-        //    .append("text")
-        //    .attr("y", -300)
-        //    .attr("x", 1030)
-        //    .style("text-anchor", "end")
-        //    .text("Shift3");
-
-
-
-
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", -60)
-            .attr("x", -90)
-            .attr("dy", ".70em")
-            .style("text-anchor", "end")
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "12px")
-            .text("Production Count");
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", 60)
-            .attr("x", 450)
-            .style("text-anchor", "end")
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "12px")
-            .text("Variant");
-
-
+        return value;
 
 
     }
 
-    function Daywisegraph(id, response) {
-        //console.log(response);
 
-        const a = $(id).height();
-        const b = $(id).width();
-        var m = { top: 100, right: 50, bottom: 100, left: 70 }
-            , h = a - m.top - m.bottom
-            , w = b - m.left - m.right
-            , barWidth = 5;
-       /* console.log(a + "2nd" + b);*/
-        //console.log("response.data.Table[0]", response.data.Table[0].S2_OKParts)
-        var dataset = null;
-        //typecast Amount to #, calculate total, and cumulative amounts
-        dataset = response.data.Table;
 
-        //Axes and scales
-        var xScale = d3.scale.ordinal().rangeRoundBands([0, w], 0.1);
-        var x1Scale = d3.scale.ordinal();
-        var x2Scale = d3.scale.ordinal();
+   /* MonthlyCode*/
 
+    $('#Monthly_Variant').on('change', () => {
 
-        xScale.domain(response.data.Table.map(function (d) {
+         var value = assignValue();
+        MonthlyVariantChange(value['URL'],CompanyCode, PlantCode, LineCode, R_url, user1, value['machinecode'], value['month'], value['MonthlyVariant']);
 
-            return d.date;
-        }));
-
-
-        xScale.domain(response.data.Table.map(function (d) { return d.date; }));
-        x1Scale.domain(['S1_OKParts', 'S2_OKParts', 'S3_OKParts']).rangeRoundBands([0, xScale.rangeBand()], 0.1);
-        x2Scale.domain(['S1_OKParts', 'S2_OKParts', 'S3_OKParts']).rangeRoundBands([0, x1Scale.rangeBand()], 0.1);
-        x1Scale.domain(['S1_NOKParts', 'S2_NOKParts', 'S3_NOKParts']).rangeRoundBands([0, xScale.rangeBand()], 0.1);
-        x2Scale.domain(['S1_NOKParts', 'S2_NOKParts', 'S3_NOKParts']).rangeRoundBands([0, x1Scale.rangeBand()], 0.1);
-
-
-        var yhist = d3.scale.linear()
-            .domain([0, d3.max(response.data.Table, function (d) {
-
-                //console.log(d.date);
-                //console.log(d.S1_OKParts + " " + d.S2_OKParts + " " + d.S3_OKParts);
-                //console.log(
-                //    (d.S1_OKParts > d.S2_OKParts ? d.S1_OKParts : d.S2_OKParts) > d.S3_OKParts ? (d.S1_OKParts > d.S2_OKParts ? d.S1_OKParts : d.S2_OKParts) : d.S3_OKParts
-
-                //)
-                return (d.S1_OKParts > d.S2_OKParts ? d.S1_OKParts : d.S2_OKParts) > d.S3_OKParts ? (d.S1_OKParts > d.S2_OKParts ? d.S1_OKParts : d.S2_OKParts) : d.S3_OKParts
-                return (d.S1_NOKParts > d.S2_NOKParts ? d.S1_NOKParts : d.S2_NOKParts) > d.S3_NOKParts ? (d.S1_NOKParts > d.S2_NOKParts ? d.S1_NOKParts : d.S2_NOKParts) : d.S3_NOKParts
-
-
-            })])
-            .range([h, 0]);
-
-        var ycum = d3.scale.linear().domain([0, 100]).range([h, 0]);
-
-
-
-        var xAxis = d3.svg.axis()
-            .scale(xScale)
-            .orient('bottom');
-
-        var yAxis = d3.svg.axis()
-            .scale(yhist)
-            .orient('left');
-
-        var yAxis2 = d3.svg.axis()
-            .scale(ycum)
-            .orient('right');
-
-        var tooltip = d3.select(id)
-            .append("div")
-            .style("opacity", 0)
-            .attr("class", "tooltip")
-            .style("background-color", "tranparent")
-            .style("border", "solid")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px")
-
-        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("background-color", "#898584").style("color", "white")
-            .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
-        toolval = tooltip.append("div");
-
-
-
-
-        //Draw svg
-        var svg = d3.select(id).append("svg")
-            .attr("width", w + m.left + m.right)
-            .attr("height", h + m.top + m.bottom)
-            .append("g")
-            .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
-        //Draw histogram
-        var bar = svg.selectAll(".bar")
-            .data(response.data.Table)
-            .enter().append("g")
-            .attr("class", "bar");
-
-
-
-        bar.append("rect")
-            .attr("x", function (d) { return xScale(d.date); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S1_OKParts); })
-            .attr("height", function (d) { return h - yhist(d.S1_OKParts); })
-            .style("fill", "rgb(135, 195, 0)")
-            .style("padding","12px")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S1' + '<br> OK Parts :' + d.S1_OKParts + '<br> NOK Parts :' + d.S1_NOKParts + '<br> Date :' + d.date + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-        )
-
-        bar.append("rect")
-            .attr("x", function (d) { return xScale(d.date); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S1_NOKParts); })
-            .attr("height", function (d) { return h - yhist(d.S1_NOKParts); })
-            .style("fill", "rgb(243, 156, 18)")
-
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S1' + '<br> OK Parts :' + d.S1_OKParts + '<br> NOK Parts :' + d.S1_NOKParts + '<br> Date :' + d.date + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-            )
-
-        bar.append("rect")
-            .attr("x", function (d) { return (xScale(d.date) + x1Scale.rangeBand()); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S2_OKParts); })
-            .attr("height", function (d) { return h - yhist(d.S2_OKParts); })
-            .style("fill", "rgb(135, 195, 0)")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S2' + '<br> OK Parts :' + d.S2_OKParts + '<br> NOK Parts :' + d.S2_NOKParts + '<br> Date :' + d.date + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-            )
-
-
-        bar.append("rect")
-            .attr("x", function (d) { return (xScale(d.date) + x1Scale.rangeBand()); })
-            .attr("width", x1Scale.rangeBand())
-             .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S2_NOKParts); })
-            .attr("height", function (d) { return h - yhist(d.S2_NOKParts); })
-
-            .style("fill", "rgb(243, 156, 18)")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S2' + '<br> OK Parts :' + d.S2_OKParts + '<br> NOK Parts :' + d.S2_NOKParts + '<br> Date :' + d.date + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-            )
-
-
-        bar.append("rect")
-            .attr("x", function (d) { return (xScale(d.date) + (2 * x1Scale.rangeBand())); })
-            .attr("width", x1Scale.rangeBand())
-            .attr("y", function (d) { return yhist(d.S3_OKParts); })
-            .attr("height", function (d) { return h - yhist(d.S3_OKParts); })
-            .style("fill", "rgb(135, 195, 0)")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S3' + '<br> OK Parts :' + d.S3_OKParts + '<br> NOK Parts :' + d.S3_NOKParts + '<br> Date :' + d.date + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-        )
-
-
-
-        bar.append("rect")
-            .attr("x", function (d) { return (xScale(d.date) + (2 * x1Scale.rangeBand())); })
-            .attr("width", x1Scale.rangeBand())
-
-            .attr("y", function (d) { return yhist(d.S3_NOKParts); })
-            .attr("height", function (d) { return h - yhist(d.S3_NOKParts); })
-            .style("fill", "rgb(243, 156, 18)")
-            .on("mouseout", function () {
-                d3.select(this).style("stroke", "none");
-                tooltip.style("visibility", "hidden");
-            }
-            )
-
-            .on("mousemove", function (d) {
-
-
-                tooltip.style("visibility", "visible")
-                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
-
-                var text = 'Shift :' + 'S3' + '<br> OK Parts :' + d.S3_OKParts + '<br> NOK Parts :' + d.S3_NOKParts + '<br> Date :' + d.date + '<br>';
-
-                tooltip.select("div").html(text)
-
-            }
-            )
-
-        bar.append('text')
-            .attr('class', 'value')
-            .attr("transform", "(0," + h + ")")
-            .attr('x', function (d) { return -yhist(d.S1_OKParts + d.S1_NOKParts) + 20; })
-
-            .attr('y', function (d) {
-                return (xScale(d.date) + (x1Scale.rangeBand() / 2)+3);
-            })
-            .attr('text-anchor', 'middle')
-            .style('fill', '#FD625E')
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "10px")
-            .text(function (d) { return d.S1_OKParts + d.S1_NOKParts; })
-
-        bar.append('text')
-            .attr('class', 'value')
-            .attr("transform", "rotate(-90)")
-            .attr('x', function (d) { return -yhist(d.S2_OKParts + d.S2_NOKParts) + 20; })
-            .attr('y', function (d) {
-                return (xScale(d.date) + ((3 * x1Scale.rangeBand()) / 2)+3);
-            })
-            .attr('text-anchor', 'middle')
-            .style('fill', 'rgb(92, 89, 80)')
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "10px")
-            .text(function (d) { return d.S2_OKParts + d.S2_NOKParts})
-        bar.append('text')
-            .attr('class', 'value')
-            .attr("transform", "rotate(-90)")
-            .attr('x', function (d) { return -yhist(d.S3_OKParts + d.S3_NOKParts) + 20; })
-            .attr('y', function (d) {
-                return (xScale(d.date) + ((5.5 * x1Scale.rangeBand()) / 2)+3);
-            })
-            .attr('text-anchor', 'middle')
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "10px")
-            .style('fill', '#00b6a7)')
-            .text(function (d) { return d.S3_OKParts + d.S3_NOKParts })
-
-
-
-
-        //Draw axes
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("rect")
-            .attr("y", -340)
-            .attr("x", 900)
-            .attr("width", 20)
-            .attr("height", 20)
-            .style("fill", "#FD625E")
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", -300)
-            .attr("x", 920)
-            .style("text-anchor", "end")
-            /* .text("Shift1");*/
-            .text("OK");
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("rect")
-            .attr("y", -340)
-            .attr("x", 950)
-            .attr("width", 20)
-            .attr("height", 20)
-        /* .style("fill", "rgb(92, 89, 80)")*/
-            .style("fill", "#A6C54B")
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", -300)
-            .attr("x", 975)
-            .style("text-anchor", "end")
-        /*.text("Shift2");*/
-            .text("NOK");
-
-        //svg.append("g")
-        //    .attr("class", "x axis")
-        //    .attr("transform", "translate(0," + h + ")")
-        //    .call(xAxis)
-        //    .append("rect")
-        //    .attr("y", -340)
-        //    .attr("x", 1000)
-        //    .attr("width", 20)
-        //    .attr("height", 20)
-        //    .style("fill", "#00b6a7")
-
-
-        //svg.append("g")
-        //    .attr("class", "x axis")
-        //    .attr("transform", "translate(0," + h + ")")
-        //    .call(xAxis)
-        //    .append("text")
-        //    .attr("y", -300)
-        //    .attr("x", 1030)
-        //    .style("text-anchor", "end")
-            /*.text("Shift3");*/
-
-
-
-
-        svg.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", -60)
-            .attr("dy", ".70em")
-            .style("text-anchor", "end")
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "12px")
-            .text("Production Count");
-
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + h + ")")
-            .call(xAxis)
-            .append("text")
-            .attr("y", 90)
-            .attr("x", 450)
-            .style("text-anchor", "end")
-            .style("font-family", "Arial, Helvetica, sans-serif")
-            .style("font-size", "12px")
-            .text("Date");
-
-
-    }
-    document.getElementById("searchcustomwise").addEventListener("click", function () {
-
-        var linecode = '@Session["LineCode"]';
-        var machinecode = $('#machinecode').val();
-        var machinecode1 = $('#machinecode option:selected').text();
-        var records = $('.record').val();
-        var start = $('#start').val();
-        var end = $('#end').val();
-        var year = $('#year').val();
-        var month = $('#month').val();
-        $('.updated_time').text(new Date().toLocaleString());
-        $('.shift').text("N/A");
-
-        var syear = start.substr(0, 4);
-        var eyear = end.substr(0, 4);
-        if (syear != eyear && end!='') {
-            swal({
-                icon: "error",
-                title: "Please Select Same Year for Fromdate and Todate...!",
-                button: false,
-                timer: 4500
-            })
-            d3.select("svg").remove();
-            return;
-        }
-
-
-        if (linecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Line details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (machinecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Machine details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (records == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide No. of records",
-                button: false,
-                timer: 4500
-            })
-        }
-
-        else if (start == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide start date",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (end == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide End date",
-                button: false,
-                timer: 4500
-            })
-        }
-        else {
-            if (start > end) {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Dates correctly...",
-                    button: false,
-                    timer: 4500
-                })
-            }
-
-            var myData = {
-                "variant": 'All',
-                "line": linecode,
-                "Machine": machinecode,
-                "FromDate": start,
-                "ToDate": end,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
-            var sample;
-            var R_url = '@Url.Action("Login", "Main")';
-            var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-
-
-             $.ajax({
-                type: "POST",
-                 url: URL + 'api/Paretoanalysis/ShiwiseAggreagte',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                dataType: "json",
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                    d3.select(".custome_report svg").remove();
-                    if (response.status != "Error") {
-                        /* $('#custom_line').text(linecode);*/
-
-
-
-                        graph(".custome_report", response);
-                        $.ajax({
-                            type: "POST",
-                            url: URL + 'api/Paretoanalysis/DaywiseShiftProduction',
-                            headers: {
-                                Authorization: 'Bearer ' + user1
-                            },
-                            data: myData,
-                            dataType: "json",
-                            beforeSend: function () {
-                                $('.loading').show();
-                            },
-                            complete: function () {
-                                $('.loading').hide();
-                            },
-                            success: function (response) {
-                                d3.select(".custome_Duration svg").remove();
-                                if (response.status != "Error") {
-                                    /* $('#custom_line').text(linecode);*/
-                                    var s = '<option value="All">All</option>';
-                                   // console.log(response.data.Table1[0].variant_code);
-                                    for (var i = 0; i < response.data.Table1.length; i++) {
-                                       // console.log("dj:" + response.data.Table1[i].variant_code);
-                                        s += '<option value="' + response.data.Table1[i].variant_code + '">' + response.data.Table1[i].variant_code + "-" + response.data.Table1[i].VariantName + '</option>';
-                                        //console.log(s);
-                                    }
-                                    $("#Variant").html(s);
-
-                                    Daywisegraph(".custome_Duration", response);
-                                }
-                                else {
-                                    sample = "";
-                                    $(".custome_Duration").empty();
-
-                                    var div_width = 400;
-                                    var div_height = 400;
-                                    var svg = d3.select(".custome_Duration").append("svg")
-                                        .attr("width", div_width)
-                                        .attr("height", div_height)
-                                        .attr("preserveAspectRatio", "xMidYMid")
-                                        .append("g")
-                                        .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                                    svg.append("text")
-                                        .text("No Data Available")
-                                        .style("font-size", "40px");
-                                }
-
-                            },
-                            error: function (response) {
-                                if (response.status == "401") {
-                                    swal({
-                                        icon: "warning",
-                                        title: "Session Timeout",
-                                        button: true,
-                                        closeModal: false
-                                    })
-                                    window.location = R_url;
-                                }
-                                else {
-                                    swal({
-                                        icon: "warning",
-                                        title: response.responseText,
-                                        button: true,
-                                        closeModal: false
-                                    })
-
-                                }
-                            }
-                        });
-                    }
-                    else {
-                        sample = "";
-                        $(".custome_report").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".custome_report").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-             });
-
-
-
-        }
+    });
+    $("#searchmonthwise").on("click", function () {
+        var value = assignValue();
+        MonthlyGraphCheck(value['URL'], CompanyCode, PlantCode, LineCode, R_url, user1, value['machinecode'], value['month']);
 
     })
 
+
+    ///* YearlyCode*/
+
+    $('#Yearly_Variant').on('change', () => {
+
+        var value = assignValue();
+        YearlyVariantChange(value['URL'], CompanyCode, PlantCode, LineCode, R_url, user1, value['machinecode'], value['year'], value['Yearly_Variant']);
+
+    });
+
+    $("#searchyearwise").on("click", function () {
+        var value = assignValue();
+        YearlyGraphCheck(value['URL'], CompanyCode, PlantCode, LineCode, R_url, user1, value['machinecode'], value['year']);
+
+
+    });
+
+
+    ///*CustomCode*/
 
 
     $('#Variant').on('change', () => {
 
+        var value = assignValue();
+        CustomVariantChange(value['URL'], CompanyCode, PlantCode, LineCode, R_url, user1, value['machinecode'], value['start'], value['end'], value['Custom_Variant']);
 
-        var linecode = '@Session["LineCode"]';
-        var machinecode = $('#machinecode').val();
-        var machinecode1 = $('#machinecode option:selected').text();
-        var records = $('.record').val();
-        var start = $('#start').val();
-        var end = $('#end').val();
-        var year = $('#year').val();
-        var month = $('#month').val();
-        $('.updated_time').text(new Date().toLocaleString());
-        $('.shift').text("N/A");
+    });
 
-        var syear = start.substr(0, 4);
-        var eyear = end.substr(0, 4);
-        if (syear != eyear && end!='') {
-            swal({
-                icon: "error",
-                title: "Please Select Same Year for Fromdate and Todate...!",
-                button: false,
-                timer: 4500
-            })
-            d3.select("svg").remove();
-            return;
-        }
 
 
-        if (linecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Line details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (machinecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Machine details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (records == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide No. of records",
-                button: false,
-                timer: 4500
-            })
-        }
 
-        else if (start == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide start date",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (end == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide End date",
-                button: false,
-                timer: 4500
-            })
-        }
-        else {
-            if (start > end) {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Dates correctly...",
-                    button: false,
-                    timer: 4500
-                })
-            }
+    $("#searchcustomwise").on("click", function () {
+        debugger;
 
-            var myData = {
-                "line": linecode,
-                "Machine": machinecode,
-                "FromDate": start,
-                "ToDate": end,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
-            var sample;
-            var R_url = '@Url.Action("Login", "Main")';
-            var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
+        var value = assignValue();
 
 
-             $.ajax({
-                type: "POST",
-                 url: URL + 'api/Paretoanalysis/ShiwiseAggreagte',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                dataType: "json",
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                    d3.select(".custome_report svg").remove();
-                    if (response.status != "Error") {
-                        /* $('#custom_line').text(linecode);*/
+        CustomGraphCheck(value['URL'], CompanyCode, PlantCode, LineCode, R_url, user1, value['machinecode'], value['start'], value['end']);
 
 
 
-                        graph(".custome_report", response);
-                    }
-                    else {
-                        sample = "";
-                        $(".custome_report").empty();
+    });
 
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".custome_report").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
 
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
 
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
 
-                    }
-                }
-             });
-            var variant = $('#Variant').val();
-            var myData3 = {
-                "variant":variant,
-                "line": linecode,
-                "Machine": machinecode,
-                "FromDate": start,
-                "ToDate": end,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
 
-
-
-
-
-            $.ajax({
-                type: "POST",
-                url: URL + 'api/Paretoanalysis/DaywiseShiftProduction',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData3,
-                dataType: "json",
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                    d3.select(".custome_Duration svg").remove();
-                    if (response.status != "Error") {
-
-                        Daywisegraph( ".custome_Duration", response);
-                    }
-                    else {
-                        sample = "";
-                        $(".custome_Duration").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".custome_Duration").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-            });
-
-        }
-
-
-
-    })
-
-
-
-    document.getElementById("searchyearwise").addEventListener("click", function () {
-
-        var linecode = '@Session["LineCode"]';
-        var machinecode = $('#machinecode').val();
-        var machinecode1 = $('#machinecode option:selected').text();
-        var records = $('.record').val();
-        var year = $('#year').val();
-        $('.updated_time').text(new Date().toLocaleString());
-        $('.shift').text("N/A");
-
-
-        if (linecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Line details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (machinecode == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Machine details",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else if (records == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide No. of records",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (year == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Year",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else
-        {
-            var myData = {
-                "variant": "All",
-                "line": linecode,
-                "Machine": machinecode,
-                "records": records,
-                "Year": year,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
-             @*var R_url = '@Url.Action("Login", "Main")';
-                   var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-                    $.ajax({
-                        type: 'Get',
-                        url: URL + 'api/UserSettings/GetEmployee',
-                        headers: {
-                            Authorization: 'Bearer ' + user1
-                        },
-                        dataType: 'json'
-                    }).success(function (response) {*@
-             var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: URL + 'api/Paretoanalysis/yearlyShiwiseAggreagte',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                   /* $('#yearly_line').text(linecode);*/
-
-
-                    d3.select("svg").remove();
-                    if (response.status != "Error") {
-
-
-                        graph(".year_report", response);
-                        $.ajax({
-                            type: "POST",
-                            url: URL + 'api/Paretoanalysis/yearlyDaywiseShiftProduction',
-                            headers: {
-                                Authorization: 'Bearer ' + user1
-                            },
-                            data: myData,
-                            dataType: "json",
-                            beforeSend: function () {
-                                $('.loading').show();
-                            },
-                            complete: function () {
-                                $('.loading').hide();
-                            },
-                            success: function (response) {
-                                d3.select(".year_Duration svg").remove();
-                                if (response.status != "Error") {
-                                    /* $('#custom_line').text(linecode);*/
-
-                                    //console.log(response);
-                                    //var s = '<option value="All">All</option>';
-                                    //console.log(response.data.Table1[0].variant_code);
-                                    //for (var i = 0; i < response.data.Table1.length; i++) {
-                                    //    console.log("dj:" + response.data.Table1[i].variant_code);
-                                    //    s += '<option value="' + response.data.Table1[i].variant_code + '">' + response.data.Table1[i].variant_code + '</option>';
-                                    //    console.log(s);
-                                    //}
-                                    //$("#Yearly_Variant").html(s);
-
-
-                                    Daywisegraph(".year_Duration", response);
-
-
-                                }
-                                else {
-                                    sample = "";
-                                    $(".year_Duration").empty();
-
-                                    var div_width = 400;
-                                    var div_height = 400;
-                                    var svg = d3.select(".year_Duration").append("svg")
-                                        .attr("width", div_width)
-                                        .attr("height", div_height)
-                                        .attr("preserveAspectRatio", "xMidYMid")
-                                        .append("g")
-                                        .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                                    svg.append("text")
-                                        .text("No Data Available")
-                                        .style("font-size", "40px");
-                                }
-
-                            },
-                            error: function (response) {
-                                if (response.status == "401") {
-                                    swal({
-                                        icon: "warning",
-                                        title: "Session Timeout",
-                                        button: true,
-                                        closeModal: false
-                                    })
-                                    window.location = R_url;
-                                }
-                                else {
-                                    swal({
-                                        icon: "warning",
-                                        title: response.responseText,
-                                        button: true,
-                                        closeModal: false
-                                    })
-
-                                }
-                            }
-                        });
-
-
-                    }
-                    else
-                    {
-                        $(".year_report").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".year_report").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-                },
-                error: function (result) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-            });
-
-
-
-
-
-
-        }
-
-    })
-
-    document.getElementById("searchmonthwise").addEventListener("click", function () {
-
-        var linecode = '@Session["LineCode"]';
-        var machinecode = $('#machinecode').val();
-        var machinecode1 = $('#machinecode option:selected').text();
-        var records = $('.record').val();
-        var month = $('#month').val();
-        $('.updated_time').text(new Date().toLocaleString());
-        $('.shift').text("N/A");
-
-
-        if (linecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Line details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (machinecode == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Machine details",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else if (records == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide No. of records",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (month == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Month",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else
-        {
-            var chartData = [];
-            var myData = {
-                "variant": 'All',
-                "line": linecode,
-                "Machine": machinecode,
-                "records": records,
-                "Year": month,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
-             var R_url = '@Url.Action("Login", "Main")';
-                   var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: URL + 'api/Paretoanalysis/monthlyShiwiseAggreagte',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                    d3.select(".monthly_report svg").remove();
-                    /*  $('#monthly_line').text(linecode);*/
-
-                    if (response.status != "Error")
-                    {
-
-                        const a = $('.monthly_report').height();
-                        const b = $('.monthly_report').width();
-                        graph(".monthly_report", response);
-
-                        $.ajax({
-                            type: "POST",
-                            url: URL + 'api/Paretoanalysis/monthlyDaywiseShiftProduction',
-                            headers: {
-                                Authorization: 'Bearer ' + user1
-                            },
-                            data: myData,
-                            dataType: "json",
-                            beforeSend: function () {
-                                $('.loading').show();
-                            },
-                            complete: function () {
-                                $('.loading').hide();
-                            },
-                            success: function (response) {
-                                d3.select(".monthly_Duration svg").remove();
-                                if (response.status != "Error") {
-                                    /* $('#custom_line').text(linecode);*/
-
-
-                                    Daywisegraph(".monthly_Duration", response);
-
-
-                                }
-                                else {
-                                    sample = "";
-                                    $(".monthly_Duration").empty();
-
-                                    var div_width = 400;
-                                    var div_height = 400;
-                                    var svg = d3.select(".monthly_Duration").append("svg")
-                                        .attr("width", div_width)
-                                        .attr("height", div_height)
-                                        .attr("preserveAspectRatio", "xMidYMid")
-                                        .append("g")
-                                        .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                                    svg.append("text")
-                                        .text("No Data Available")
-                                        .style("font-size", "40px");
-                                }
-
-                            },
-                            error: function (response) {
-                                if (response.status == "401") {
-                                    swal({
-                                        icon: "warning",
-                                        title: "Session Timeout",
-                                        button: true,
-                                        closeModal: false
-                                    })
-                                    window.location = R_url;
-                                }
-                                else {
-                                    swal({
-                                        icon: "warning",
-                                        title: response.responseText,
-                                        button: true,
-                                        closeModal: false
-                                    })
-
-                                }
-                            }
-                        });
-
-                    }
-                    else
-                    {
-                        $(".monthly_report").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".monthly_report").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-              });
-
-             var myData5 = {
-                "variant":variant,
-                "line": linecode,
-                "Machine": machinecode,
-                  "Year": month,
-                "ToDate": end,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
-
-
-
-        }
-
-    })
 
 </script>
+
+
+
 
 
 

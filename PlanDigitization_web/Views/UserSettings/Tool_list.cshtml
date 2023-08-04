@@ -814,7 +814,7 @@
 
                    $.ajax({
                         type: "POST",
-                       url: '/Main/GetSettingdatas1',
+                       url: '@Url.Action("GetSettingdatas1", "Main")',
                         data: myData,
                         dataType: "json",
                         success: function (response) {
@@ -865,7 +865,7 @@
 
                    $.ajax({
                         type: "POST",
-                       url: '/Main/GetSettingdatas1',
+                       url: '@Url.Action("GetSettingdatas1", "Main")',
                         data: myData,
                         dataType: "json",
                         success: function (response) {

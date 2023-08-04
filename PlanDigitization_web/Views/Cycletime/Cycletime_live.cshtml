@@ -1,6 +1,6 @@
 ﻿
 @{ ViewBag.Title = "Cycletime_live";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 <header class="page-header">
     <h2> Cycle Time - Live </h2>
@@ -28,19 +28,19 @@
             </header>
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label"> Select Machine  <span class="required">*</span></label>
-                    <div class="col-sm-2">
+                    <label class="col-sm-2 control-label" style="right: 10px;top: 5px;"> Select Machine  <span class="required">*</span></label>
+                    <div class="col-sm-2" style="right: 87px;">
                         <select class="form-control" id="Machine" onchange="select_machine()">
                             <option value="">Select</option>
                         </select>
                     </div>
 
-                    <label class="col-sm-2 control-label"> No of Records  <span class="required">*</span></label>
-                    <div class="col-sm-2">
+                    <label class="col-sm-2 control-label" style="right: 80px;top: 5px;"> No of Records  <span class="required">*</span></label>
+                    <div class="col-sm-2" style="right: 160px;">
                         <input type="text" value="100" id="records" class="form-control" />
                     </div>
 
-                    <div class="col-sm-4" style="text-align:right;">
+                    <div class="col-sm-4" style="text-align: right; width: 170px;right: 100px;">
                         <button type="button" id="Search_live" class="btn btn-primary">Search</button>
                         <button type="reset" id="btn_cancel" class="btn btn-danger cancel">Reset</button>
                     </div>

@@ -86,6 +86,7 @@
                     <div class="col-sm-2">
                         <select class="form-control" id="Variant"></select>
                     </div>
+                    <label style="display:none" id="Actual_cycle"></label>
 
                     <label class="col-sm-2 control-label"> Select Report  <span class="required">*</span></label>
                     <div class="col-sm-2">
@@ -639,7 +640,7 @@
                 success: function (response) {
                     var s = '<option value="">Select Variant</option>';
                     for (var i = 0; i < response.data.Table.length; i++) {
-                        s += '<option value="' + response.data.Table[i].Variant_Code + '">' + response.data.Table[i].VariantName + '</option>';
+                        s += '<option value="' + response.data.Table[i].Variant_Code + "-" + response.data.Table[i].VariantName+ '">' + response.data.Table[i].VariantName + '</option>';
                     }
                     $("#Variant").html(s);
                 }
@@ -650,7 +651,7 @@
 
 
         $("#Variant").change(function () {
-            var Variant = $('#Variant').val();
+            var Variant = $('#Variant').val().split("-").shift();
             var Machine = $('#Machine').val();
 
 
@@ -666,6 +667,20 @@
                 "LineCode": '@Session["LineCode"]'
             };
 
+            var data3 = {
+                        "QueryType": "Actual_cycle_time",
+                        "Parameter": '@Session["PlantCode"]',
+                        "Parameter1": '@Session["CompanyCode"]',
+                        "Parameter2": Machine,
+                        "Parameter3": Variant,
+                        "Parameter6": '@Session["LineCode"]',
+                        "CompanyCode": '@Session["CompanyCode"]',
+                        "PlantCode": '@Session["PlantCode"]',
+                        "LineCode": '@Session["LineCode"]'
+                };
+
+
+
             $.ajax({
                 type: "POST",
                 data: data2,
@@ -677,6 +692,26 @@
                 dataType: "json",
 
                 success: function (response) {
+
+                    $.ajax({
+                        type: "POST",
+                        data: data3,
+                        headers:
+                        {
+                            Authorization: 'Bearer ' + user1
+                        },
+                        url: URL + "api/Values/User_settings_details",
+                        dataType: "json",
+
+                        success: function (response1) {
+
+                            var ac = response1.data.Table[0].Autocycletime;
+                            $("#Actual_cycle").html(ac);
+
+                        }
+                    })
+
+
                     var s = '<option value="">Select Movement</option>';
                     for (var i = 0; i < response.data.Table.length; i++) {
                         s += '<option value="' + response.data.Table[i].Movement + '">' + response.data.Table[i].Movement + '</option>';
@@ -685,6 +720,7 @@
                     // s += '<option value="Others-manual">Others-manual</option>';
 
                     $("#Move").html(s);
+
                 }
             })
 
@@ -740,7 +776,7 @@
         $("#Year").val('');
         $("#FromDate").val('');
         $("#ToDate").val('');
-        $("#Variant").val('');
+        $("#Variant").val('').split("-").shift();
         $("#Move").val('');
         $("#s_cycletime").val('');
         $("#d_cycletime").val('');
@@ -783,7 +819,7 @@
         var Year = $("#Year").val();
         var FDate = $("#FromDate").val();
         var TDate = $("#ToDate").val();
-        var Variant = $("#Variant").val();
+        var Variant = $("#Variant").val().split("-").shift();
         var Movement = $("#Move").val();
 
         var P_Date = $("#P_Date").val();
@@ -2016,7 +2052,10 @@
                         "Date": Date,
                         "Machine": Machine,
                         "Variant": Variant
-                    };
+                };
+
+
+
 
                 $.ajax({
                     type: "POST",
@@ -2034,9 +2073,14 @@
                     },
                     success: function (response) {
 
-                        $("#average_table").show();
 
-                        $("#lbl_title").html("Daywise Average - Table");
+
+                        $("#average_table").show();
+                        //var VariantCode = $('#end').val();
+                        var VariantCode = $('#Variant').val();
+                        var Actual_cycle = $("#Actual_cycle").html();
+
+                        $("#lbl_title").html("Daywise Average - Table [ " + VariantCode + "(" + Actual_cycle+' sec) ]');
 
                         if (response.status != "Error") {
                             var Cycle_Data = {
