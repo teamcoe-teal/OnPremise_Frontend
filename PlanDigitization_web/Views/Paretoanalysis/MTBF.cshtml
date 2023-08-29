@@ -11,7 +11,7 @@
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("Dashboard","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -42,13 +42,13 @@
                 </select>
             </div>
             <div class="btn-group">
-                <label class="control-label" style="float: right; font-weight: bold; margin-left: 35px;"> No of Records <span class="required">*</span></label>
+                <label class="control-label" style="float: right; font-weight: bold;"> No of Records <span class="required">*</span></label>
             </div>
             <div class="btn-group">
-                <input type="text" class="form-control record" name="records" title="Enter no. of records" required style="margin-left: 10px;" />
+                <input type="text" class="form-control record" name="records" title="Enter no. of records" required />
             </div>
             <div class="btn-group">
-                <span style="color: red; margin-left: 20px;">Note : Type 'All' or number (eg: all or 10 or 20)</span>
+                <span style="color:red;">Note : Type 'All' or number (eg: all or 10 or 20)</span>
             </div>
         </div>
     </div>
@@ -70,8 +70,8 @@
                     <div id="custom" class="tab-pane active">
                         <section class="panel">
                             <div class="form-group">
-                                <label class="col-md-1 control-label">Date range</label>
-                                <div class="col-md-5">
+                                <label class="col-md-2 control-label">Date range</label>
+                                <div class="col-md-6">
                                     <div class="input-daterange input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -81,7 +81,7 @@
                                         <input type="text" class="form-control datepic" style="text-align:left;z-index:0;" id="end" name="end" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="left: 105px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchcustomwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -94,7 +94,7 @@
                                 <div class="btn-group" style="width:100%;padding:10px;padding-right:50px;">
                                     <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="custom_line"></span></button>
                                     <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default" style="float:right;">Machine : <span id="custom_subsystem"></span></button>
-                                    <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Mean time between failure for machine : <span id="custom_msg"></span>mins</button>
+                                    <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Mean time between failure for subsystem : <span id="custom_msg"></span>mins</button>
                                     <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">No Of Stoppages : <span id="custom_stoppage"></span> </button>
                                     <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Downtime : <span id="custom_downtime"></span> </button>
 
@@ -113,8 +113,8 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-labe" style="right: 189px;">Select Year</label>
-                              <div class="col-md-4" style="right: 288px;">
+                                <label class="col-md-2 control-labe">Select Year</label>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -122,7 +122,7 @@
                                         <input class="date-own form-control" style="width: 150px;z-index:0;" type="text" id="year" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="right: 89px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchyearwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -152,8 +152,8 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-label"style="right: 189px;">Select Month</label>
-                                <div class="col-md-4" style="right: 287px;">
+                                <label class="col-md-2 control-label">Select Month</label>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -161,7 +161,7 @@
                                         <input class="month-own form-control" style="width: 150px;z-index:0;" type="text" id="month" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="right: 89px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchmonthwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -374,13 +374,7 @@ else
                         success: function (response) {
                             var s = '<option value="">Select Machine</option>';
                             for (var i = 0; i < response.data.length; i++) {
-                                console.log(response.data.length);
-                                if (response.data.length == 1) {
-                                    s += '<option value="' + response.data[i].Code + '" selected=selected>' + response.data[i].Name + '</option>';
-                                }
-                                else {
-                                    s += '<option value="' + response.data[i].Code + '">' + response.data[i].Code + "-" + response.data[i].Name + '</option>';
-                                }
+                                s += '<option value="' + response.data[i].Code + '">' + response.data[i].Name + '</option>';
                             }
                             $("#machinecode").html(s);
                         },
@@ -584,7 +578,7 @@ else
                             .style("border-width", "2px")
                             .style("border-radius", "5px")
                             .style("padding", "5px")
-                        tooltip = d3.select("body").append("div").style("width", "120px").style("height", "50px").style("background-color", "#898584").style("color","white")
+                        tooltip = d3.select("body").append("div").style("width", "120px").style("height", "50px").style("background", "white")
                             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
                         chart.append('g')
@@ -632,7 +626,7 @@ else
                                 tooltip.style("visibility", "visible")
                                     .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                var text = 'Freq: ' + d.Frequency + 'Count<br/>MTBF: ' + d.MTBF + ' Min <br>';
+                                var text = 'Freq: ' + d.Frequency + '<br/>MTBF: ' + d.MTBF + '';
 
                                 tooltip.select("div").html(text)
 
@@ -839,7 +833,7 @@ else
                              .style("border-radius", "5px")
                              .style("padding", "5px")
 
-                        tooltip = d3.select("body").append("div").style("width", "120px").style("height", "50px").style("background-color", "#898584").style("color", "white")
+                             tooltip = d3.select("body").append("div").style("width", "120px").style("height", "50px").style("background", "white")
                                  .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
 
@@ -890,7 +884,7 @@ else
                                  tooltip.style("visibility", "visible")
                                      .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                 var text = 'Freq: ' + d.Frequency + '<br/>MTBF: ' + d.MTBF +' Min <br>';
+                                 var text = 'Freq: ' + d.Frequency + '<br/>MTBF: ' + d.MTBF +'';
 
                                  //console.log(d3.mouse(this)[0])
                                  tooltip.select("div").html(text)
@@ -1108,7 +1102,7 @@ else
 
 
 
-                        tooltip = d3.select("body").append("div").style("width", "120px").style("height", "50px").style("background-color", "#898584").style("color", "white")
+                             tooltip = d3.select("body").append("div").style("width", "120px").style("height", "50px").style("background", "white")
                                  .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
 
@@ -1153,7 +1147,7 @@ else
                                  tooltip.style("visibility", "visible")
                                      .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                 var text = 'Freq: ' + d.Frequency + '<br/> MTBF: ' + d.MTBF +' Min <br>';
+                                 var text = 'Freq: ' + d.Frequency + '<br/> MTBF: ' + d.MTBF +'';
 
                                  //console.log(d3.mouse(this)[0])
                                  tooltip.select("div").html(text)

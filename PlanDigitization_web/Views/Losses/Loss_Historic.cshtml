@@ -47,7 +47,7 @@
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("NewDash","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -56,7 +56,7 @@
     </div>
 </header>
 
-@if (ViewContext.Controller.HasPermission("LossesHistoric-View"))
+@if (ViewContext.Controller.HasPermission("Losshistoric-View"))
 {
 
     <div class="row" id="Historic" style="display:block;">
@@ -135,8 +135,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="form-group" style="display:none;" id="divmonth">
                         <label class="col-sm-2 control-label"> Month  <span class="required">*</span></label>
                         <div class="col-sm-2">
@@ -178,11 +176,7 @@
     </div>
 
 
-    <!--
-
-
-
-        Tables & Charts -->
+    <!-- Specific Reason Tables & Charts -->
 
     <div class="row" id="Horly_Specific_trend" style="display:none;">
         <div class="col-md-2"></div>
@@ -691,8 +685,8 @@
                         @*<div id='top_10_pareto_chart' style="height:600px;width:100%">
 
                             </div>*@
-                        <div id='top_10_pareto_chart' class="custom" style="height:600px;">
-
+                        <div id='top_10_pareto_chart' style="height:600px;width:100%">
+                            <svg id="custom1" style="height:100%;width:100%"></svg>
                         </div>
                     </div>
                 </div>
@@ -871,8 +865,7 @@ else
 </script>
 
 <script>
-
-    $("#TimeSlot").change(function () {
+      $("#TimeSlot").change(function () {
         var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
         var TimeSlot = $('#TimeSlot').val();
         if (TimeSlot == "1") {
@@ -1107,7 +1100,7 @@ else
              var Report_name = $('#Report_name').val();
 
              if (Report_name == "2") {
-                // var s = '<option value="0">Select Report</option>';
+                 var s = '<option value="0">Select Report</option>';
                  s += '<option value="2">Day</option>';
                  $("#TimeSlot").html(s);
              }
@@ -1387,9 +1380,9 @@ else
 
                 };
 
-                    //console.log('testDate' + localStorage.getItem('sdate'))
-                    //console.log('testMachine' + localStorage.getItem('machine'))
-                    //console.log('testLoss_Name' + localStorage.getItem('lossname'))
+                    console.log('testDate' + localStorage.getItem('sdate'))
+                    console.log('testMachine' + localStorage.getItem('machine'))
+                    console.log('testLoss_Name' + localStorage.getItem('lossname'))
 
                 $.ajax({
                     type: "POST",
@@ -1692,7 +1685,6 @@ else
         var FDate = $("#FromDate").val();
         var TDate = $("#ToDate").val();
         var Loss_Name = $("#Loss_Name option:selected").text();
-        var Loss_id = $("#Loss_Name").val();
         var cat_test = $("#Loss_Category").val();
         if (Machine == "") {
             swal({
@@ -1805,8 +1797,7 @@ else
                     "shift": ShiftID,
                     "Date": ShiftDate,
                     "Machine": Machine,
-                    "Loss": Loss_id,
-
+                    "Loss": Loss_Name,
                 };
                 $.ajax({
                     type: "POST",
@@ -2276,21 +2267,8 @@ else
                 else {
                     losscat = $("#Loss_Category").val()
                 }
-
                 var myData = {
                     "QueryType": 'Shift',
-                    "CompanyCode": '@Session["CompanyCode"]',
-                    "PlantCode": '@Session["PlantCode"]',
-                    "Line_Code": '@Session["LineCode"]',
-                    "shiftid": ShiftID,
-                    "date": ShiftDate,
-                    "Machine_Code": Machine,
-                    "report_type": '1',
-                    "loss_category":losscat
-                };
-
-                var myData_new = {
-                    "QueryType": 'Shift_duration',
                     "CompanyCode": '@Session["CompanyCode"]',
                     "PlantCode": '@Session["PlantCode"]',
                     "Line_Code": '@Session["LineCode"]',
@@ -2304,7 +2282,7 @@ else
                 $.ajax({
                     type: "POST",
                     url: URL + 'api/Losses/Get_Loss_Occurence_chart',
-                    data: myData_new,
+                    data: myData,
                     headers: {
                         Authorization: 'Bearer ' + user1
                     },
@@ -2550,7 +2528,6 @@ else
                         }
                     });
                 }
-
                 if (Report_name == "5") {
                     var losscat = ''
                     if ($("#Loss_Category").val() == "null") {
@@ -2560,7 +2537,7 @@ else
                         losscat = $("#Loss_Category").val()
                     }
                     var myData = {
-                        "QueryType": 'Shift_duration',
+                        "QueryType": 'Shift',
                         "CompanyCode": '@Session["CompanyCode"]',
                         "PlantCode": '@Session["PlantCode"]',
                         "Line_Code": '@Session["LineCode"]',
@@ -2586,7 +2563,6 @@ else
                             $('.loading').hide();
                         },
                         success: function (response) {
-
                             $("#top_10_duration_pareto").show();
 
                             d3.select("#top_10_pareto_chart svg").remove();
@@ -2594,11 +2570,10 @@ else
                             $("#top_10_pareto_div").html("Hourly Top 10 Losses based on duration : Pareto");
 
                             if (response.status != "Error") {
-
                                 sample_pareto = response.data.Table;
-
                                 if (sample_pareto.length < 2) {
                                     $('#top_10_pareto_chart').css("width", "30%");
+
                                 }
 
                                 else if (sample_pareto.length < 5) {
@@ -2611,7 +2586,6 @@ else
                                 else {
                                     $('#top_10_pareto_chart').css("width", "100%");
                                 }
-
                                 const a = $('#top_10_pareto_chart').height();
                                 const b = $('#top_10_pareto_chart').width();
 
@@ -2629,8 +2603,6 @@ else
                                 //Axes and scales
                                 var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                                 xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                                xScale.paddingInner(0.2)
-                                xScale.paddingOuter(0.2);
 
                                 var yhist = d3.scaleLinear()
                                     .domain([0, d3.max(sample_pareto, function (d) { return d.duration; })])
@@ -2648,8 +2620,14 @@ else
 
                                 var yAxis2 = d3.axisRight()
                                     .scale(ycum);
+                                d3.selectAll("#top_10_pareto_chart > *").remove();
 
-                                d3.selectAll(".custom > *").remove();
+                                ////Draw svg
+                                var svg_pareto = d3.select("#top_10_pareto_chart").append("svg")
+                                    .attr("width", w + m.left + m.right)
+                                    .attr("height", h + m.top + m.bottom)
+                                    .append("g")
+                                    .attr("transform", "translate(" + m.left + "," + m.top + ")");
 
                                 var tooltip = d3.select("#top_10_pareto_chart")
                                     .append("div")
@@ -2663,19 +2641,9 @@ else
 
 
 
-                                tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
+                                tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
                                     .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                                 toolval = tooltip.append("div");
-
-                                ////Draw svg
-                                var svg_pareto = d3.select("#top_10_pareto_chart").append("svg")
-                                    .attr("width", w + m.left + m.right)
-                                    .attr("height", h + m.top + m.bottom)
-                                    .append("g")
-                                    .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
-
-
 
                                 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -2686,74 +2654,48 @@ else
                                     .attr("class", "bar")
 
 
+                                var duration_tot = 0;
 
+                                for (var i = 0; i < response.data.Table.length; i++) {
+                                    duration_tot += response.data.Table[i].duration;
+
+                                }
+                                var Cum_percentage = 0;
 
                                 bar_pareto.append("rect")
-                                    .attr("x", function (d) { return xScale(d.loss_description); })
-                                    .attr("width", xScale.bandwidth() - 2)
+                                    .attr("x", function (d) { return xScale(d.loss_description) + 80; })
+                                    .attr("width", "50")
                                     .attr("y", function (d) { return yhist(d.duration); })
                                     .attr("height", function (d) { return h - yhist(d.duration); })
                                     .style("fill", function (d) {
-                                        if (d.Percentage < 80)
-                                        {
-                                            return color(d.d)
-                                        }
-                                        else
-                                        {
-                                            return "#B8B0AF"
-                                        }
+                                        console.log(color(d.duration))
+                                        return color(d.duration)
                                     })
                                     .attr("fill", color)
                                     .attr("text", function (d) { return `${d.duration}` })
 
                                     .on("mouseout", function () {
-                                        d3.select(this).style('Stroke', 'none');
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 1);
+                                        d3.select(this).style("stroke", "none");
                                         tooltip.style("visibility", "hidden");
                                     })
 
                                     .on("mousemove", function (d) {
-                                        var bar = d3.select(this);
-                                        var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 4);
-                                        d3.select(this).style('Stroke', 'black');
-                                        d3.select(this).style('stroke-width', '2');
-                                        d3.select(this).transition()
-                                            .style("opacity", 2);
                                         tooltip.style("visibility", "visible")
                                             .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                        var text = 'Duration: ' + d.duration + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
-
+                                        var text = 'Duration: ' + d.duration ;
 
                                         tooltip.select("div").html(text)
 
-
                                     })
-                                    //.on("click", function (d) {
-                                    //    get_Rejection_data(d.RejectionDescription);
-
-                                    //})
-
-
-                                bar_pareto.selectAll(".bar-title")
-                                    .data(sample_pareto)
-                                    .enter()
-                                    .append("text")
-                                    .classed('bar-title', true)
-                                    .attr('text-anchor', 'middle')
-                                    .style("color", "black")
-                                    .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                    .attr("y", function (d) { return yhist(d.duration); })
-                                    .text((a) => `${a.duration}`)
-
 
                                 ////Draw CDF line
                                 var guide = d3.line()
                                     .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .y(function (d) { return ycum(d.Percentage) });
+                                    .y(function (d) {
+                                        Cum_percentage += (d.duration * 100) / duration_tot;
+                                        return ycum(Cum_percentage)
+                                    });
 
 
                                 var line = svg_pareto.append('path')
@@ -2762,19 +2704,19 @@ else
                                     .attr('class', 'line');
                                 svg_pareto.selectAll(".line")
                                     .data(sample_pareto)
-                                    .enter().append("circle")
+                                  //  .enter().append("circle")
                                     .attr("r", 3.5)
                                     .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .attr("cy", function (d) { return ycum(d.Percentage) });
+                                    .attr("cy", function (d) {
+                                        Cum_percentage += (d.duration * 100) / duration_tot;
+                                        return ycum(Cum_percentage)
+                                    });
 
                                 //Draw axes
                                 svg_pareto.append("g")
                                     .attr("class", "x axis")
                                     .attr("transform", "translate(0," + h + ")")
-                                    .call(xAxis)
-                                    .selectAll("text")
-                                    .style("text-anchor", "end")
-                                    .attr("transform", "rotate(-65)");
+                                    .call(xAxis);
 
                                 svg_pareto.append("g")
                                     .attr("class", "y axis")
@@ -2796,34 +2738,10 @@ else
                                     .attr("y", 50)
                                     .attr("dy", "-.71em")
                                     .style("text-anchor", "end")
-                                    .text("Pareto Percentage");
-
-
-                                svg_pareto.append("text")
-                                    .attr("class", "y label")
-                                    //.attr("text-anchor", "end")
-                                    .attr("y", -50)
-                                    .attr("dy", ".75em")
-                                    .attr('text-anchor', 'end')
-
-                                    .attr("transform", "rotate(-90)")
-                                    .text("Duration");
-
-                                svg_pareto.append("text")
-                                    .attr("class", "y label2")
-                                    //.attr("text-anchor", "end")
-                                    //.attr("y", -50)
-                                    .attr("dy", ".75em")
-                                    .attr('text-anchor', 'end')
-
-                                    .attr("transform", "translate(" + [w, 0] + ")")
-                                    .attr("transform", "rotate(-90)")
-                                    .attr("y", w + 40)
-                                    .text("Pareto Percentage %");
+                                    .text("Cumulative %");
 
                             }
                             else {
-
                                 $("#top_10_pareto_chart").empty();
                                 var div_width = 400;
                                 var div_height = 400;
@@ -2837,8 +2755,6 @@ else
                                 svg.append("text")
                                     .text("No Data Available")
                                     .style("font-size", "40px");
-
-
                             }
                         },
                         error: function (response) {
@@ -2847,6 +2763,8 @@ else
                     });
                 }
             }
+
+
 
             else if (Report_name == "6")
             {
@@ -3118,7 +3036,7 @@ else
                     losscat = $("#Loss_Category").val()
                 }
                 var myData = {
-                    "QueryType": 'Shift_occurence',
+                    "QueryType": 'Shift',
                     "CompanyCode": '@Session["CompanyCode"]',
                     "PlantCode": '@Session["PlantCode"]',
                     "Line_Code": '@Session["LineCode"]',
@@ -3213,9 +3131,9 @@ else
 
                         if (response.status != "Error") {
                             sample_pareto = response.data.Table;
-
                             if (sample_pareto.length < 2) {
                                 $('#top_10_Occurence_pareto_chart').css("width", "30%");
+
                             }
 
                             else if (sample_pareto.length < 5) {
@@ -3228,7 +3146,6 @@ else
                             else {
                                 $('#top_10_Occurence_pareto_chart').css("width", "100%");
                             }
-
                             const a = $('#top_10_Occurence_pareto_chart').height();
                             const b = $('#top_10_Occurence_pareto_chart').width();
 
@@ -3246,8 +3163,6 @@ else
                             //Axes and scales
                             var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                             xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                            xScale.paddingInner(0.2)
-                            xScale.paddingOuter(0.2);
 
                             var yhist = d3.scaleLinear()
                                 .domain([0, d3.max(sample_pareto, function (d) { return d.Occurence; })])
@@ -3265,9 +3180,18 @@ else
 
                             var yAxis2 = d3.axisRight()
                                 .scale(ycum);
+                            d3.selectAll("#top_10_Occurence_pareto_chart > *").remove();
 
-                            d3.selectAll(".custom > *").remove();
+                            ////Draw svg
+                            var svg_pareto = d3.select("#top_10_Occurence_pareto_chart").append("svg")
+                                .attr("width", w + m.left + m.right)
+                                .attr("height", h + m.top + m.bottom)
+                                .append("g")
+                                .attr("transform", "translate(" + m.left + "," + m.top + ")");
 
+
+
+                            var color = d3.scaleOrdinal(d3.schemeCategory10);
                             var tooltip = d3.select("#top_10_Occurence_pareto_chart")
                                 .append("div")
                                 .style("opacity", 0)
@@ -3280,22 +3204,9 @@ else
 
 
 
-                            tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
+                            tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
                                 .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                             toolval = tooltip.append("div");
-
-                            ////Draw svg
-                            var svg_pareto = d3.select("#top_10_Occurence_pareto_chart").append("svg")
-                                .attr("width", w + m.left + m.right)
-                                .attr("height", h + m.top + m.bottom)
-                                .append("g")
-                                .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
-
-
-
-                            var color = d3.scaleOrdinal(d3.schemeCategory10);
-
                             //Draw histogram
                             var bar_pareto = svg_pareto.selectAll(".bar")
                                 .data(sample_pareto)
@@ -3303,93 +3214,68 @@ else
                                 .attr("class", "bar")
 
 
+                            var duration_tot = 0;
 
+                            for (var i = 0; i < response.data.Table.length; i++) {
+                                duration_tot += response.data.Table[i].Occurence;
+                            }
+                            var Cum_percentage = 0;
 
                             bar_pareto.append("rect")
-                                .attr("x", function (d) { return xScale(d.loss_description); })
-                                .attr("width", xScale.bandwidth() - 2)
+                                .attr("x", function (d) { return xScale(d.loss_description) + 80; })
+                                .attr("width", "50")
                                 .attr("y", function (d) { return yhist(d.Occurence); })
                                 .attr("height", function (d) { return h - yhist(d.Occurence); })
                                 .style("fill", function (d) {
-                                    if (d.Percentage < 80) {
-                                        return color(d.d)
-                                    }
-                                    else {
-                                        return "#B8B0AF"
-                                    }
+                                    console.log(color(d.Occurence))
+                                    return color(d.duration)
                                 })
                                 .attr("fill", color)
                                 .attr("text", function (d) { return `${d.Occurence}` })
 
                                 .on("mouseout", function () {
-                                    d3.select(this).style('Stroke', 'none');
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 1);
+                                    d3.select(this).style("stroke", "none");
                                     tooltip.style("visibility", "hidden");
                                 })
 
                                 .on("mousemove", function (d) {
-                                    var bar = d3.select(this);
-                                    var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 4);
-                                    d3.select(this).style('Stroke', 'black');
-                                    d3.select(this).style('stroke-width', '2');
-                                    d3.select(this).transition()
-                                        .style("opacity", 2);
                                     tooltip.style("visibility", "visible")
                                         .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                    var text = 'Occurence: ' + d.Occurence + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
-
+                                    var text = 'Occurence: ' + d.Occurence;
 
                                     tooltip.select("div").html(text)
 
-
                                 })
-                            //.on("click", function (d) {
-                            //    get_Rejection_data(d.RejectionDescription);
-
-                            //})
-
-
-                            bar_pareto.selectAll(".bar-title")
-                                .data(sample_pareto)
-                                .enter()
-                                .append("text")
-                                .classed('bar-title', true)
-                                .attr('text-anchor', 'middle')
-                                .style("color", "black")
-                                .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                .attr("y", function (d) { return yhist(d.Occurence); })
-                                .text((a) => `${a.Occurence}`)
-
 
                             ////Draw CDF line
-                            var guide = d3.line()
-                                .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .y(function (d) { return ycum(d.Percentage) });
+                            //var guide = d3.line()
+                            //    .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
+                            //    .y(function (d) {
+                            //        Cum_percentage += (d.duration * 100) / duration_tot;
+                            //        return ycum(Cum_percentage)
+                            //    });
 
 
-                            var line = svg_pareto.append('path')
-                                .datum(sample_pareto)
-                                .attr('d', guide)
-                                .attr('class', 'line');
-                            svg_pareto.selectAll(".line")
-                                .data(sample_pareto)
-                                .enter().append("circle")
-                                .attr("r", 3.5)
-                                .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .attr("cy", function (d) { return ycum(d.Percentage) });
+                            //var line = svg_pareto.append('path')
+                            //    .datum(sample_pareto)
+                            //    .attr('d', guide)
+                            //    .attr('class', 'line');
+                            //svg_pareto.selectAll(".line")
+                            //    .data(sample_pareto)
+                            //    //  .enter().append("circle")
+                            //    .attr("r", 3.5)
+                            //    .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
+                            //    .attr("cy", function (d) {
+                            //        Cum_percentage += (d.duration * 100) / duration_tot;
+                            //        return ycum(Cum_percentage)
+                            //    });
 
                             //Draw axes
                             svg_pareto.append("g")
                                 .attr("class", "x axis")
                                 .attr("transform", "translate(0," + h + ")")
-                                .call(xAxis)
-                                .selectAll("text")
-                                .style("text-anchor", "end")
-                                .attr("transform", "rotate(-65)");
+                                .call(xAxis);
 
                             svg_pareto.append("g")
                                 .attr("class", "y axis")
@@ -3402,39 +3288,16 @@ else
 
                                 .text("Occurence");
 
-                            svg_pareto.append("g")
-                                .attr("class", "y axis")
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .call(yAxis2)
-                                .append("text")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", 50)
-                                .attr("dy", "-.71em")
-                                .style("text-anchor", "end")
-                                .text("Pareto Percentage");
-
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label")
-                                //.attr("text-anchor", "end")
-                                .attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "rotate(-90)")
-                                .text("Occurence");
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label2")
-                                //.attr("text-anchor", "end")
-                                //.attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", w + 40)
-                                .text("Pareto Percentage %");
+                            //svg_pareto.append("g")
+                            //    .attr("class", "y axis")
+                            //    .attr("transform", "translate(" + [w, 0] + ")")
+                            //    .call(yAxis2)
+                            //    .append("text")
+                            //    .attr("transform", "rotate(-90)")
+                            //    .attr("y", 50)
+                            //    .attr("dy", "-.71em")
+                            //    .style("text-anchor", "end")
+                            //    .text("Cumulative %");
 
                         }
                         else {
@@ -3487,8 +3350,7 @@ else
                     "line": '@Session["LineCode"]',
                     "Date": Date,
                     "Machine": Machine,
-                    /* "Loss": Loss_Name,*/
-                    "Loss": Loss_id,
+                    "Loss": Loss_Name,
                 };
                 $.ajax({
                     type: "POST",
@@ -3816,8 +3678,6 @@ else
                 else {
                     losscat = $("#Loss_Category").val()
                 }
-
-
                 var myData = {
                     "QueryType": 'Date',
                     "CompanyCode": '@Session["CompanyCode"]',
@@ -3871,9 +3731,7 @@ else
                                     var cols = '';
                                     cols += "<td> " + j + "</td> ";
                                     cols += "<td> " + response.data.Table[i].loss_description + "</td> ";
-                                    cols += "<td> " + response.data.Table[i].duration  + "</td> ";
-
-                                  /*  cols += "<td> " + response.data.Table[i].duration + "</td> ";*/
+                                    cols += "<td> " + response.data.Table[i].duration + "</td> ";
                                     cols += "<td> " + ((response.data.Table[i].duration * 100) / duration_tot).toFixed(2) + "</td> ";
                                     cols += "</tr>";
                                     newRow.append(cols);
@@ -4082,20 +3940,8 @@ else
                 else {
                     losscat = $("#Loss_Category").val()
                 }
-
                 var myData = {
                     "QueryType": 'Date',
-                    "CompanyCode": '@Session["CompanyCode"]',
-                    "PlantCode": '@Session["PlantCode"]',
-                    "Line_Code": '@Session["LineCode"]',
-                    "date": Date,
-                    "Machine_Code": Machine,
-                    "report_type": '1',
-                    "loss_category":losscat
-                };
-
-                var myData_new = {
-                    "QueryType": 'Date_duration',
                     "CompanyCode": '@Session["CompanyCode"]',
                     "PlantCode": '@Session["PlantCode"]',
                     "Line_Code": '@Session["LineCode"]',
@@ -4108,7 +3954,7 @@ else
                 $.ajax({
                     type: "POST",
                     url: URL + 'api/Losses/Get_Loss_Occurence_chart',
-                    data: myData_new,
+                    data: myData,
                     headers: {
                         Authorization: 'Bearer ' + user1
                     },
@@ -4131,8 +3977,10 @@ else
                                 document.getElementById("datatable_top_10_duration_table").deleteRow(1);
                             }
                         }
-                        if (response.status != "Error") {
-                            if (response.data.Table.length != 0) {
+                        if (response.status != "Error")
+                        {
+                            if (response.data.Table.length != 0)
+                            {
                                 var duration_tot = 0;
 
                                 for (var i = 0; i < response.data.Table.length; i++) {
@@ -4142,16 +3990,13 @@ else
 
                                 var j = 1;
                                 var Cum_percentage = 0;
-
                                 for (var i = 0; i < response.data.Table.length; i++) {
                                     Cum_percentage += (response.data.Table[i].duration * 100) / duration_tot;
-
                                     var newRow = $("<tr>");
                                     var cols = '';
-                                  /*  /cols += "<td> " + j + "</td> ";*/
+                                    //cols += "<td> " + j + "</td> ";
                                     cols += "<td> " + response.data.Table[i].loss_description + "</td> ";
                                     cols += "<td> " + response.data.Table[i].duration + "</td> ";
-
                                     cols += "<td> " + ((response.data.Table[i].duration * 100) / duration_tot).toFixed(1) + "</td> ";
                                     cols += "<td> " + Cum_percentage.toFixed(1) + "</td> ";
                                     cols += "</tr>";
@@ -4353,7 +4198,6 @@ else
                         }
                     });
                 }
-
                 if (Report_name == "5") {
                     var losscat = ''
                     if ($("#Loss_Category").val() == "null") {
@@ -4363,7 +4207,7 @@ else
                         losscat = $("#Loss_Category").val()
                     }
                     var myData = {
-                        "QueryType": 'Date_duration',
+                        "QueryType": 'Date',
                         "CompanyCode": '@Session["CompanyCode"]',
                         "PlantCode": '@Session["PlantCode"]',
                         "Line_Code": '@Session["LineCode"]',
@@ -4396,10 +4240,11 @@ else
 
                             if (response.status != "Error") {
 
-                                sample_pareto = response.data.Table;
 
+                                sample_pareto = response.data.Table;
                                 if (sample_pareto.length < 2) {
                                     $('#top_10_pareto_chart').css("width", "30%");
+
                                 }
 
                                 else if (sample_pareto.length < 5) {
@@ -4430,8 +4275,6 @@ else
                                 //Axes and scales
                                 var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                                 xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                                xScale.paddingInner(0.2)
-                                xScale.paddingOuter(0.2);
 
                                 var yhist = d3.scaleLinear()
                                     .domain([0, d3.max(sample_pareto, function (d) { return d.duration; })])
@@ -4449,9 +4292,7 @@ else
 
                                 var yAxis2 = d3.axisRight()
                                     .scale(ycum);
-
-                                d3.selectAll(".custom > *").remove();
-
+                                d3.selectAll("#top_10_pareto_chart > *").remove();
                                 var tooltip = d3.select("#top_10_pareto_chart")
                                     .append("div")
                                     .style("opacity", 0)
@@ -4462,19 +4303,15 @@ else
                                     .style("border-radius", "5px")
                                     .style("padding", "5px")
 
-
-
-                                tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
+                                tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
                                     .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                                 toolval = tooltip.append("div");
-
                                 ////Draw svg
                                 var svg_pareto = d3.select("#top_10_pareto_chart").append("svg")
                                     .attr("width", w + m.left + m.right)
                                     .attr("height", h + m.top + m.bottom)
                                     .append("g")
                                     .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
 
 
 
@@ -4487,72 +4324,47 @@ else
                                     .attr("class", "bar")
 
 
+                                var duration_tot = 0;
 
+                                for (var i = 0; i < response.data.Table.length; i++) {
+                                    duration_tot += response.data.Table[i].duration;
+                                }
+                                var Cum_percentage = 0;
 
                                 bar_pareto.append("rect")
-                                    .attr("x", function (d) { return xScale(d.loss_description); })
-                                    .attr("width", xScale.bandwidth() - 2)
+                                    .attr("x", function (d) { return xScale(d.loss_description) + 80; })
+                                    .attr("width", "50")
                                     .attr("y", function (d) { return yhist(d.duration); })
                                     .attr("height", function (d) { return h - yhist(d.duration); })
                                     .style("fill", function (d) {
-                                        if (d.Percentage < 80) {
-                                            return color(d.d)
-                                        }
-                                        else {
-                                            return "#B8B0AF"
-                                        }
+                                        console.log(color(d.duration))
+                                        return color(d.duration)
                                     })
                                     .attr("fill", color)
                                     .attr("text", function (d) { return `${d.duration}` })
-
                                     .on("mouseout", function () {
-                                        d3.select(this).style('Stroke', 'none');
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 1);
+                                        d3.select(this).style("stroke", "none");
                                         tooltip.style("visibility", "hidden");
                                     })
 
                                     .on("mousemove", function (d) {
-                                        var bar = d3.select(this);
-                                        var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 4);
-                                        d3.select(this).style('Stroke', 'black');
-                                        d3.select(this).style('stroke-width', '2');
-                                        d3.select(this).transition()
-                                            .style("opacity", 2);
                                         tooltip.style("visibility", "visible")
                                             .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                        var text = 'Duration: ' + d.duration + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
-
+                                        var text = 'Duration: ' + d.duration;
 
                                         tooltip.select("div").html(text)
 
-
                                     })
-                                //.on("click", function (d) {
-                                //    get_Rejection_data(d.RejectionDescription);
-
-                                //})
-
-
-                                bar_pareto.selectAll(".bar-title")
-                                    .data(sample_pareto)
-                                    .enter()
-                                    .append("text")
-                                    .classed('bar-title', true)
-                                    .attr('text-anchor', 'middle')
-                                    .style("color", "black")
-                                    .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                    .attr("y", function (d) { return yhist(d.duration); })
-                                    .text((a) => `${a.duration}`)
 
 
                                 ////Draw CDF line
                                 var guide = d3.line()
                                     .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .y(function (d) { return ycum(d.Percentage) });
+                                    .y(function (d) {
+                                        Cum_percentage += (d.duration * 100) / duration_tot;
+                                        return ycum(Cum_percentage)
+                                    });
 
 
                                 var line = svg_pareto.append('path')
@@ -4561,19 +4373,19 @@ else
                                     .attr('class', 'line');
                                 svg_pareto.selectAll(".line")
                                     .data(sample_pareto)
-                                    .enter().append("circle")
+                                  //  .enter().append("circle")
                                     .attr("r", 3.5)
                                     .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .attr("cy", function (d) { return ycum(d.Percentage) });
+                                    .attr("cy", function (d) {
+                                        Cum_percentage += (d.duration * 100) / duration_tot;
+                                        return ycum(Cum_percentage)
+                                    });
 
                                 //Draw axes
                                 svg_pareto.append("g")
                                     .attr("class", "x axis")
                                     .attr("transform", "translate(0," + h + ")")
-                                    .call(xAxis)
-                                    .selectAll("text")
-                                    .style("text-anchor", "end")
-                                    .attr("transform", "rotate(-65)");
+                                    .call(xAxis);
 
                                 svg_pareto.append("g")
                                     .attr("class", "y axis")
@@ -4595,31 +4407,7 @@ else
                                     .attr("y", 50)
                                     .attr("dy", "-.71em")
                                     .style("text-anchor", "end")
-                                    .text("Pareto Percentage");
-
-
-                                svg_pareto.append("text")
-                                    .attr("class", "y label")
-                                    //.attr("text-anchor", "end")
-                                    .attr("y", -50)
-                                    .attr("dy", ".75em")
-                                    .attr('text-anchor', 'end')
-
-                                    .attr("transform", "rotate(-90)")
-                                    .text("Duration");
-
-                                svg_pareto.append("text")
-                                    .attr("class", "y label2")
-                                    //.attr("text-anchor", "end")
-                                    //.attr("y", -50)
-                                    .attr("dy", ".75em")
-                                    .attr('text-anchor', 'end')
-
-                                    .attr("transform", "translate(" + [w, 0] + ")")
-                                    .attr("transform", "rotate(-90)")
-                                    .attr("y", w + 40)
-                                    .text("Pareto Percentage %");
-
+                                    .text("Cumulative %");
 
                             }
                             else {
@@ -4910,7 +4698,7 @@ else
                     losscat = $("#Loss_Category").val()
                 }
                 var myData = {
-                    "QueryType": 'Date_occurence',
+                    "QueryType": 'Date',
                     "CompanyCode": '@Session["CompanyCode"]',
                     "PlantCode": '@Session["PlantCode"]',
                     "Line_Code": '@Session["LineCode"]',
@@ -5008,8 +4796,11 @@ else
 
                             sample_pareto = response.data.Table;
 
+
+
                             if (sample_pareto.length < 2) {
                                 $('#top_10_Occurence_pareto_chart').css("width", "30%");
+
                             }
 
                             else if (sample_pareto.length < 5) {
@@ -5022,12 +4813,8 @@ else
                             else {
                                 $('#top_10_Occurence_pareto_chart').css("width", "100%");
                             }
-
                             const a = $('#top_10_Occurence_pareto_chart').height();
                             const b = $('#top_10_Occurence_pareto_chart').width();
-
-
-
                             var m = { top: 25, right: 50, bottom: 150, left: 50 }
                                 , h = a - m.top - m.bottom - 25
                                 , w = b - m.left - m.right
@@ -5035,13 +4822,22 @@ else
 
                             var dataset = null;
                             //typecast Amount to #, calculate total, and cumulative amounts
-
+                            var tooltip = d3.select("#top_10_Occurence_pareto_chart")
+                                .append("div")
+                                .style("opacity", 0)
+                                .attr("class", "tooltip")
+                                .style("background-color", "tranparent")
+                                .style("border", "solid")
+                                .style("border-width", "2px")
+                                .style("border-radius", "5px")
+                                .style("padding", "5px")
+                            tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
+                                .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
+                            toolval = tooltip.append("div");
 
                             //Axes and scales
                             var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                             xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                            xScale.paddingInner(0.2)
-                            xScale.paddingOuter(0.2);
 
                             var yhist = d3.scaleLinear()
                                 .domain([0, d3.max(sample_pareto, function (d) { return d.Occurence; })])
@@ -5059,24 +4855,7 @@ else
 
                             var yAxis2 = d3.axisRight()
                                 .scale(ycum);
-
-                            d3.selectAll(".custom > *").remove();
-
-                            var tooltip = d3.select("#top_10_Occurence_pareto_chart")
-                                .append("div")
-                                .style("opacity", 0)
-                                .attr("class", "tooltip")
-                                .style("background-color", "tranparent")
-                                .style("border", "solid")
-                                .style("border-width", "2px")
-                                .style("border-radius", "5px")
-                                .style("padding", "5px")
-
-
-
-                            tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
-                                .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
-                            toolval = tooltip.append("div");
+                            d3.selectAll("#top_10_Occurence_pareto_chart > *").remove();
 
                             ////Draw svg
                             var svg_pareto = d3.select("#top_10_Occurence_pareto_chart").append("svg")
@@ -5084,7 +4863,6 @@ else
                                 .attr("height", h + m.top + m.bottom)
                                 .append("g")
                                 .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
 
 
 
@@ -5097,72 +4875,49 @@ else
                                 .attr("class", "bar")
 
 
+                            var duration_tot = 0;
 
+                            for (var i = 0; i < response.data.Table.length; i++) {
+                                duration_tot += response.data.Table[i].Occurence;
+                            }
+                            var Cum_percentage = 0;
 
                             bar_pareto.append("rect")
-                                .attr("x", function (d) { return xScale(d.loss_description); })
-                                .attr("width", xScale.bandwidth() - 2)
+                                .attr("x", function (d) { return xScale(d.loss_description) + 80; })
+                                .attr("width", "50")
                                 .attr("y", function (d) { return yhist(d.Occurence); })
                                 .attr("height", function (d) { return h - yhist(d.Occurence); })
                                 .style("fill", function (d) {
-                                    if (d.Percentage < 80) {
-                                        return color(d.d)
-                                    }
-                                    else {
-                                        return "#B8B0AF"
-                                    }
+                                    console.log(color(d.Occurence))
+                                    return color(d.duration)
                                 })
                                 .attr("fill", color)
                                 .attr("text", function (d) { return `${d.Occurence}` })
-
                                 .on("mouseout", function () {
-                                    d3.select(this).style('Stroke', 'none');
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 1);
+                                    //d3.select(this).attr('fill', function(d) { return colorScale(window.bandClassifier(d.perChange,100));});
+                                    d3.select(this).style("stroke", "none");
                                     tooltip.style("visibility", "hidden");
                                 })
-
                                 .on("mousemove", function (d) {
-                                    var bar = d3.select(this);
-                                    var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 4);
-                                    d3.select(this).style('Stroke', 'black');
-                                    d3.select(this).style('stroke-width', '2');
-                                    d3.select(this).transition()
-                                        .style("opacity", 2);
                                     tooltip.style("visibility", "visible")
                                         .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                    var text = 'Occurence: ' + d.Occurence + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
+                                    var text = 'Occurence: ' + d.Occurence;
 
-
+                                    //console.log(d3.mouse(this)[0])
                                     tooltip.select("div").html(text)
 
-
                                 })
-                            //.on("click", function (d) {
-                            //    get_Rejection_data(d.RejectionDescription);
 
-                            //})
-
-
-                            bar_pareto.selectAll(".bar-title")
-                                .data(sample_pareto)
-                                .enter()
-                                .append("text")
-                                .classed('bar-title', true)
-                                .attr('text-anchor', 'middle')
-                                .style("color", "black")
-                                .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                .attr("y", function (d) { return yhist(d.Occurence); })
-                                .text((a) => `${a.Occurence}`)
 
 
                             ////Draw CDF line
                             var guide = d3.line()
                                 .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .y(function (d) { return ycum(d.Percentage) });
+                                .y(function (d) {
+                                    Cum_percentage += (d.duration * 100) / duration_tot;
+                                    return ycum(Cum_percentage)
+                                });
 
 
                             var line = svg_pareto.append('path')
@@ -5171,19 +4926,19 @@ else
                                 .attr('class', 'line');
                             svg_pareto.selectAll(".line")
                                 .data(sample_pareto)
-                                .enter().append("circle")
+                                //  .enter().append("circle")
                                 .attr("r", 3.5)
                                 .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .attr("cy", function (d) { return ycum(d.Percentage) });
+                                .attr("cy", function (d) {
+                                    Cum_percentage += (d.duration * 100) / duration_tot;
+                                    return ycum(Cum_percentage)
+                                });
 
                             //Draw axes
                             svg_pareto.append("g")
                                 .attr("class", "x axis")
                                 .attr("transform", "translate(0," + h + ")")
-                                .call(xAxis)
-                                .selectAll("text")
-                                .style("text-anchor", "end")
-                                .attr("transform", "rotate(-65)");
+                                .call(xAxis);
 
                             svg_pareto.append("g")
                                 .attr("class", "y axis")
@@ -5196,39 +4951,16 @@ else
 
                                 .text("Occurence");
 
-                            svg_pareto.append("g")
-                                .attr("class", "y axis")
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .call(yAxis2)
-                                .append("text")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", 50)
-                                .attr("dy", "-.71em")
-                                .style("text-anchor", "end")
-                                .text("Pareto Percentage");
-
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label")
-                                //.attr("text-anchor", "end")
-                                .attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "rotate(-90)")
-                                .text("Occurence");
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label2")
-                                //.attr("text-anchor", "end")
-                                //.attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", w + 40)
-                                .text("Pareto Percentage %");
+                            //svg_pareto.append("g")
+                            //    .attr("class", "y axis")
+                            //    .attr("transform", "translate(" + [w, 0] + ")")
+                            //    .call(yAxis2)
+                            //    .append("text")
+                            //    .attr("transform", "rotate(-90)")
+                            //    .attr("y", 50)
+                            //    .attr("dy", "-.71em")
+                            //    .style("text-anchor", "end")
+                            //    .text("Cumulative %");
 
                         }
                         else {
@@ -5284,9 +5016,7 @@ else
                     "line": '@Session["LineCode"]',
                     "Date": Month,
                     "Machine": Machine,
-                    /*"Loss": Loss_Name,*/
-                    "Loss": Loss_id,
-
+                    "Loss": Loss_Name,
                 };
                 $.ajax({
                     type: "POST",
@@ -5543,7 +5273,6 @@ else
                                     cols += "<td> " + j + "</td> ";
                                     cols += "<td> " + response.data.Table[i].loss_description + "</td> ";
                                     cols += "<td> " + response.data.Table[i].duration + "</td> ";
-                                    cols += "<td> " + response.data.Table[i].tot_duration + "</td> ";
                                     cols += "<td> " + ((response.data.Table[i].duration * 100) / duration_tot).toFixed(2) + "</td> ";
                                     cols += "</tr>";
                                     newRow.append(cols);
@@ -5763,21 +5492,10 @@ else
                     "loss_category":losscat
                 };
 
-                var myData_new = {
-                    "QueryType": 'Month_duration',
-                    "CompanyCode": '@Session["CompanyCode"]',
-                    "PlantCode": '@Session["PlantCode"]',
-                    "Line_Code": '@Session["LineCode"]',
-                    "month": Month,
-                    "Machine_Code": Machine,
-                    "report_type": '1',
-                    "loss_category":losscat
-                };
-
                 $.ajax({
                     type: "POST",
                     url: URL + 'api/Losses/Get_Loss_Occurence_chart',
-                    data: myData_new,
+                    data: myData,
                     headers: {
                         Authorization: 'Bearer ' + user1
                     },
@@ -6027,7 +5745,7 @@ else
                         losscat = $("#Loss_Category").val()
                     }
                     var myData = {
-                        "QueryType": 'Month_duration',
+                        "QueryType": 'Month',
                         "CompanyCode": '@Session["CompanyCode"]',
                         "PlantCode": '@Session["PlantCode"]',
                         "Line_Code": '@Session["LineCode"]',
@@ -6061,9 +5779,9 @@ else
                             if (response.status != "Error") {
 
                                 sample_pareto = response.data.Table;
-
                                 if (sample_pareto.length < 2) {
                                     $('#top_10_pareto_chart').css("width", "30%");
+
                                 }
 
                                 else if (sample_pareto.length < 5) {
@@ -6076,10 +5794,8 @@ else
                                 else {
                                     $('#top_10_pareto_chart').css("width", "100%");
                                 }
-
                                 const a = $('#top_10_pareto_chart').height();
                                 const b = $('#top_10_pareto_chart').width();
-
 
 
                                 var m = { top: 25, right: 50, bottom: 150, left: 50 }
@@ -6089,13 +5805,14 @@ else
 
                                 var dataset = null;
                                 //typecast Amount to #, calculate total, and cumulative amounts
-
-
+                                var duration_tot = 0;
+                                for (var i = 0; i < response.data.Table.length; i++) {
+                                    duration_tot += response.data.Table[i].duration;
+                                }
+                                var Cum_percentage = 0;
                                 //Axes and scales
                                 var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                                 xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                                xScale.paddingInner(0.2)
-                                xScale.paddingOuter(0.2);
 
                                 var yhist = d3.scaleLinear()
                                     .domain([0, d3.max(sample_pareto, function (d) { return d.duration; })])
@@ -6107,15 +5824,14 @@ else
                                     .scale(xScale);
 
 
+
                                 var yAxis = d3.axisLeft()
                                     .scale(yhist)
 
 
                                 var yAxis2 = d3.axisRight()
                                     .scale(ycum);
-
-                                d3.selectAll(".custom > *").remove();
-
+                                d3.selectAll("#top_10_pareto_chart > *").remove();
                                 var tooltip = d3.select("#top_10_pareto_chart")
                                     .append("div")
                                     .style("opacity", 0)
@@ -6128,7 +5844,7 @@ else
 
 
 
-                                tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
+                                tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
                                     .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                                 toolval = tooltip.append("div");
 
@@ -6138,9 +5854,6 @@ else
                                     .attr("height", h + m.top + m.bottom)
                                     .append("g")
                                     .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
-
-
 
                                 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -6152,71 +5865,41 @@ else
 
 
 
-
                                 bar_pareto.append("rect")
-                                    .attr("x", function (d) { return xScale(d.loss_description); })
-                                    .attr("width", xScale.bandwidth() - 2)
+                                    .attr("x", function (d) { console.log(xScale(d.loss_description));return xScale(d.loss_description)+80 ; })
+                                    .attr("width", "50")
                                     .attr("y", function (d) { return yhist(d.duration); })
                                     .attr("height", function (d) { return h - yhist(d.duration); })
                                     .style("fill", function (d) {
-                                        if (d.Percentage < 80) {
-                                            return color(d.d)
-                                        }
-                                        else {
-                                            return "#B8B0AF"
-                                        }
+                                        console.log(color(d.duration))
+                                        return color(d.duration)
                                     })
                                     .attr("fill", color)
                                     .attr("text", function (d) { return `${d.duration}` })
-
                                     .on("mouseout", function () {
-                                        d3.select(this).style('Stroke', 'none');
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 1);
+                                        d3.select(this).style("stroke", "none");
                                         tooltip.style("visibility", "hidden");
                                     })
 
                                     .on("mousemove", function (d) {
-                                        var bar = d3.select(this);
-                                        var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 4);
-                                        d3.select(this).style('Stroke', 'black');
-                                        d3.select(this).style('stroke-width', '2');
-                                        d3.select(this).transition()
-                                            .style("opacity", 2);
                                         tooltip.style("visibility", "visible")
                                             .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                        var text = 'Duration: ' + d.duration + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
-
+                                        var text = 'Duration: ' + d.duration;
 
                                         tooltip.select("div").html(text)
 
-
                                     })
-                                //.on("click", function (d) {
-                                //    get_Rejection_data(d.RejectionDescription);
-
-                                //})
 
 
-                                bar_pareto.selectAll(".bar-title")
-                                    .data(sample_pareto)
-                                    .enter()
-                                    .append("text")
-                                    .classed('bar-title', true)
-                                    .attr('text-anchor', 'middle')
-                                    .style("color", "black")
-                                    .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                    .attr("y", function (d) { return yhist(d.duration); })
-                                    .text((a) => `${a.duration}`)
-
-
-                                ////Draw CDF line
+                                //Draw CDF line
                                 var guide = d3.line()
                                     .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .y(function (d) { return ycum(d.Percentage) });
+                                    .y(function (d) {
+                                        Cum_percentage += (d.duration * 100) / duration_tot;
+                                        console.log(Cum_percentage)
+                                        return ycum(Cum_percentage)
+                                    });
 
 
                                 var line = svg_pareto.append('path')
@@ -6228,16 +5911,29 @@ else
                                     .enter().append("circle")
                                     .attr("r", 3.5)
                                     .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .attr("cy", function (d) { return ycum(d.Percentage) });
+                                    .attr("cy", function (d) { Cum_percentage += (d.duration * 100) / duration_tot; return ycum(Cum_percentage) });
 
                                 //Draw axes
+                                //svg_pareto.append("g")
+                                //    .attr("class", "x axis")
+                                //    .attr("transform", "translate(0," + h + ")")
+                                //    .call(xAxis);
+                                console.log(xAxis)
                                 svg_pareto.append("g")
                                     .attr("class", "x axis")
                                     .attr("transform", "translate(0," + h + ")")
-                                    .call(xAxis)
-                                    .selectAll("text")
-                                    .style("text-anchor", "end")
-                                    .attr("transform", "rotate(-65)");
+                                    .call(xAxis);
+                                //svg_pareto.append('g')
+                                //    .attr('transform', `translate(10, ${h})`)
+
+                                //   .call(d3.axisBottom(xScale))
+                                //    .selectAll("text")
+                                //    .style("text-anchor", "end")
+                                //    .attr("dx", "-.8em")
+                                //    .attr("dy", ".15em")
+                                //    .attr("transform", function (d) {
+                                //        return "rotate(-25)"
+                                //    });
 
                                 svg_pareto.append("g")
                                     .attr("class", "y axis")
@@ -6248,7 +5944,7 @@ else
                                     .attr("dy", ".71em")
                                     .style("text-anchor", "end")
 
-                                    .text("Duration");
+                                    .text("Frequency");
 
                                 svg_pareto.append("g")
                                     .attr("class", "y axis")
@@ -6259,18 +5955,19 @@ else
                                     .attr("y", 50)
                                     .attr("dy", "-.71em")
                                     .style("text-anchor", "end")
-                                    .text("Pareto Percentage");
+                                    .text("Percentage %");
 
 
                                 svg_pareto.append("text")
                                     .attr("class", "y label")
+
                                     //.attr("text-anchor", "end")
                                     .attr("y", -50)
                                     .attr("dy", ".75em")
                                     .attr('text-anchor', 'end')
 
-                                    .attr("transform", "rotate(-90)")
-                                    .text("Duration");
+                                   // .attr("transform", "rotate(-90)")
+                                    .text("Frequency");
 
                                 svg_pareto.append("text")
                                     .attr("class", "y label2")
@@ -6281,8 +5978,8 @@ else
 
                                     .attr("transform", "translate(" + [w, 0] + ")")
                                     .attr("transform", "rotate(-90)")
-                                    .attr("y", w + 40)
-                                    .text("Pareto Percentage %");
+                                    .attr("y", w + 50)
+                                    .text("Percentage");
 
                             }
                             else {
@@ -6564,7 +6261,7 @@ else
                 });
             }
 
-            else if (Report_name == "7")
+         else if (Report_name == "7")
             {
                 var losscat = ''
                 if ($("#Loss_Category").val() == "null") {
@@ -6574,7 +6271,7 @@ else
                     losscat = $("#Loss_Category").val()
                 }
                var myData = {
-                    "QueryType": 'Month_occurence',
+                    "QueryType": 'Month',
                     "CompanyCode": '@Session["CompanyCode"]',
                     "PlantCode": '@Session["PlantCode"]',
                     "Line_Code": '@Session["LineCode"]',
@@ -6675,9 +6372,9 @@ else
 
 
                             sample_pareto = response.data.Table;
-
                             if (sample_pareto.length < 2) {
                                 $('#top_10_Occurence_pareto_chart').css("width", "30%");
+
                             }
 
                             else if (sample_pareto.length < 5) {
@@ -6690,14 +6387,10 @@ else
                             else {
                                 $('#top_10_Occurence_pareto_chart').css("width", "100%");
                             }
-
                             const a = $('#top_10_Occurence_pareto_chart').height();
                             const b = $('#top_10_Occurence_pareto_chart').width();
-
-
-
-                            var m = { top: 25, right: 50, bottom: 150, left: 50 }
-                                , h = a - m.top - m.bottom - 25
+                            var m = { top: 50, right: 25, bottom: 200, left: 50 }
+                                , h = a - m.top - m.bottom
                                 , w = b - m.left - m.right
                                 , barWidth = 5;
 
@@ -6708,8 +6401,6 @@ else
                             //Axes and scales
                             var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                             xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                            xScale.paddingInner(0.2)
-                            xScale.paddingOuter(0.2);
 
                             var yhist = d3.scaleLinear()
                                 .domain([0, d3.max(sample_pareto, function (d) { return d.Occurence; })])
@@ -6727,24 +6418,7 @@ else
 
                             var yAxis2 = d3.axisRight()
                                 .scale(ycum);
-
-                            d3.selectAll(".custom > *").remove();
-
-                            var tooltip = d3.select("#top_10_Occurence_pareto_chart")
-                                .append("div")
-                                .style("opacity", 0)
-                                .attr("class", "tooltip")
-                                .style("background-color", "tranparent")
-                                .style("border", "solid")
-                                .style("border-width", "2px")
-                                .style("border-radius", "5px")
-                                .style("padding", "5px")
-
-
-
-                            tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
-                                .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
-                            toolval = tooltip.append("div");
+                            d3.selectAll("#top_10_Occurence_pareto_chart > *").remove();
 
                             ////Draw svg
                             var svg_pareto = d3.select("#top_10_Occurence_pareto_chart").append("svg")
@@ -6755,103 +6429,68 @@ else
 
 
 
-
                             var color = d3.scaleOrdinal(d3.schemeCategory10);
 
                             //Draw histogram
+                            var tooltip = d3.select("#top_10_Occurence_pareto_chart")
+                                .append("div")
+                                .style("opacity", 0)
+                                .attr("class", "tooltip")
+                                .style("background-color", "tranparent")
+                                .style("border", "solid")
+                                .style("border-width", "2px")
+                                .style("border-radius", "5px")
+                                .style("padding", "5px")
+                            tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
+                                .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
+                            toolval = tooltip.append("div");
                             var bar_pareto = svg_pareto.selectAll(".bar")
                                 .data(sample_pareto)
                                 .enter().append("g")
                                 .attr("class", "bar")
 
 
+                            var duration_tot = 0;
 
+                            for (var i = 0; i < response.data.Table.length; i++) {
+                                duration_tot += response.data.Table[i].Occurence;
+                            }
+                            var Cum_percentage = 0;
 
                             bar_pareto.append("rect")
-                                .attr("x", function (d) { return xScale(d.loss_description); })
-                                .attr("width", xScale.bandwidth() - 2)
+                                .attr("x", function (d) { return xScale(d.loss_description) + 80; })
+                                .attr("width", "50")
                                 .attr("y", function (d) { return yhist(d.Occurence); })
                                 .attr("height", function (d) { return h - yhist(d.Occurence); })
                                 .style("fill", function (d) {
-                                    if (d.Percentage < 80) {
-                                        return color(d.d)
-                                    }
-                                    else {
-                                        return "#B8B0AF"
-                                    }
+                                    console.log(color(d.Occurence))
+                                    return color(d.duration)
                                 })
                                 .attr("fill", color)
                                 .attr("text", function (d) { return `${d.Occurence}` })
-
                                 .on("mouseout", function () {
-                                    d3.select(this).style('Stroke', 'none');
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 1);
+                                    //d3.select(this).attr('fill', function(d) { return colorScale(window.bandClassifier(d.perChange,100));});
+                                    d3.select(this).style("stroke", "none");
                                     tooltip.style("visibility", "hidden");
                                 })
-
                                 .on("mousemove", function (d) {
-                                    var bar = d3.select(this);
-                                    var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 4);
-                                    d3.select(this).style('Stroke', 'black');
-                                    d3.select(this).style('stroke-width', '2');
-                                    d3.select(this).transition()
-                                        .style("opacity", 2);
                                     tooltip.style("visibility", "visible")
                                         .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                    var text = 'Occurence: ' + d.Occurence + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
+                                    var text = 'Occurence: ' + d.Occurence ;
 
-
+                                    //console.log(d3.mouse(this)[0])
                                     tooltip.select("div").html(text)
 
-
                                 })
-                            //.on("click", function (d) {
-                            //    get_Rejection_data(d.RejectionDescription);
-
-                            //})
 
 
-                            bar_pareto.selectAll(".bar-title")
-                                .data(sample_pareto)
-                                .enter()
-                                .append("text")
-                                .classed('bar-title', true)
-                                .attr('text-anchor', 'middle')
-                                .style("color", "black")
-                                .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                .attr("y", function (d) { return yhist(d.Occurence); })
-                                .text((a) => `${a.Occurence}`)
-
-
-                            ////Draw CDF line
-                            var guide = d3.line()
-                                .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .y(function (d) { return ycum(d.Percentage) });
-
-
-                            var line = svg_pareto.append('path')
-                                .datum(sample_pareto)
-                                .attr('d', guide)
-                                .attr('class', 'line');
-                            svg_pareto.selectAll(".line")
-                                .data(sample_pareto)
-                                .enter().append("circle")
-                                .attr("r", 3.5)
-                                .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .attr("cy", function (d) { return ycum(d.Percentage) });
 
                             //Draw axes
                             svg_pareto.append("g")
                                 .attr("class", "x axis")
                                 .attr("transform", "translate(0," + h + ")")
-                                .call(xAxis)
-                                .selectAll("text")
-                                .style("text-anchor", "end")
-                                .attr("transform", "rotate(-65)");
+                                .call(xAxis);
 
                             svg_pareto.append("g")
                                 .attr("class", "y axis")
@@ -6863,40 +6502,6 @@ else
                                 .style("text-anchor", "end")
 
                                 .text("Occurence");
-
-                            svg_pareto.append("g")
-                                .attr("class", "y axis")
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .call(yAxis2)
-                                .append("text")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", 50)
-                                .attr("dy", "-.71em")
-                                .style("text-anchor", "end")
-                                .text("Pareto Percentage");
-
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label")
-                                //.attr("text-anchor", "end")
-                                .attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "rotate(-90)")
-                                .text("Occurence");
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label2")
-                                //.attr("text-anchor", "end")
-                                //.attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", w + 40)
-                                .text("Pareto Percentage %");
 
 
                         }
@@ -6952,8 +6557,7 @@ else
                     "line": '@Session["LineCode"]',
                     "Date": Year,
                     "Machine": Machine,
-                    /*"Loss": Loss_Name,*/
-                    "Loss": Loss_id,
+                    "Loss": Loss_Name,
                 };
                 $.ajax({
                     type: "POST",
@@ -7430,23 +7034,12 @@ else
                     "Machine_Code": Machine,
                    "report_type": '1',
                     "loss_category":losscat
-               };
-
-                 var myData_new = {
-                     "QueryType": 'Year_duration',
-                    "CompanyCode": '@Session["CompanyCode"]',
-                    "PlantCode": '@Session["PlantCode"]',
-                    "Line_Code": '@Session["LineCode"]',
-                    "year": Year,
-                    "Machine_Code": Machine,
-                   "report_type": '1',
-                    "loss_category":losscat
                 };
 
                 $.ajax({
                     type: "POST",
                     url: URL + 'api/Losses/Get_Loss_Occurence_chart',
-                    data: myData_new,
+                    data: myData,
                     headers: {
                         Authorization: 'Bearer ' + user1
                     },
@@ -7698,7 +7291,7 @@ else
                         losscat = $("#Loss_Category").val()
                     }
                     var myData = {
-                        "QueryType": 'Year_duration',
+                        "QueryType": 'Year',
                         "CompanyCode": '@Session["CompanyCode"]',
                         "PlantCode": '@Session["PlantCode"]',
                         "Line_Code": '@Session["LineCode"]',
@@ -7731,9 +7324,9 @@ else
 
                             if (response.status != "Error") {
                                 sample_pareto = response.data.Table;
-
                                 if (sample_pareto.length < 2) {
                                     $('#top_10_pareto_chart').css("width", "30%");
+
                                 }
 
                                 else if (sample_pareto.length < 5) {
@@ -7746,11 +7339,8 @@ else
                                 else {
                                     $('#top_10_pareto_chart').css("width", "100%");
                                 }
-
                                 const a = $('#top_10_pareto_chart').height();
                                 const b = $('#top_10_pareto_chart').width();
-
-
 
                                 var m = { top: 25, right: 50, bottom: 150, left: 50 }
                                     , h = a - m.top - m.bottom - 25
@@ -7759,13 +7349,14 @@ else
 
                                 var dataset = null;
                                 //typecast Amount to #, calculate total, and cumulative amounts
-
-
+                                var duration_tot = 0;
+                                for (var i = 0; i < response.data.Table.length; i++) {
+                                    duration_tot += response.data.Table[i].duration;
+                                }
+                                var Cum_percentage = 0;
                                 //Axes and scales
                                 var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                                 xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                                xScale.paddingInner(0.2)
-                                xScale.paddingOuter(0.2);
 
                                 var yhist = d3.scaleLinear()
                                     .domain([0, d3.max(sample_pareto, function (d) { return d.duration; })])
@@ -7777,15 +7368,14 @@ else
                                     .scale(xScale);
 
 
+
                                 var yAxis = d3.axisLeft()
                                     .scale(yhist)
 
 
                                 var yAxis2 = d3.axisRight()
                                     .scale(ycum);
-
-                                d3.selectAll(".custom > *").remove();
-
+                                d3.selectAll("#top_10_pareto_chart > *").remove();
                                 var tooltip = d3.select("#top_10_pareto_chart")
                                     .append("div")
                                     .style("opacity", 0)
@@ -7798,7 +7388,7 @@ else
 
 
 
-                                tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
+                                tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
                                     .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                                 toolval = tooltip.append("div");
 
@@ -7824,69 +7414,40 @@ else
 
 
                                 bar_pareto.append("rect")
-                                    .attr("x", function (d) { return xScale(d.loss_description); })
-                                    .attr("width", xScale.bandwidth() - 2)
+                                    .attr("x", function (d) { console.log(xScale(d.loss_description)); return xScale(d.loss_description) + 80; })
+                                    .attr("width", "50")
                                     .attr("y", function (d) { return yhist(d.duration); })
                                     .attr("height", function (d) { return h - yhist(d.duration); })
                                     .style("fill", function (d) {
-                                        if (d.Percentage < 80) {
-                                            return color(d.d)
-                                        }
-                                        else {
-                                            return "#B8B0AF"
-                                        }
+                                        console.log(color(d.duration))
+                                        return color(d.duration)
                                     })
                                     .attr("fill", color)
                                     .attr("text", function (d) { return `${d.duration}` })
 
                                     .on("mouseout", function () {
-                                        d3.select(this).style('Stroke', 'none');
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 1);
+                                        d3.select(this).style("stroke", "none");
                                         tooltip.style("visibility", "hidden");
                                     })
 
                                     .on("mousemove", function (d) {
-                                        var bar = d3.select(this);
-                                        var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 4);
-                                        d3.select(this).style('Stroke', 'black');
-                                        d3.select(this).style('stroke-width', '2');
-                                        d3.select(this).transition()
-                                            .style("opacity", 2);
                                         tooltip.style("visibility", "visible")
                                             .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                        var text = 'Duration: ' + d.duration + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
-
+                                        var text = 'Duration: ' + d.duration;
 
                                         tooltip.select("div").html(text)
 
-
                                     })
-                                //.on("click", function (d) {
-                                //    get_Rejection_data(d.RejectionDescription);
 
-                                //})
-
-
-                                bar_pareto.selectAll(".bar-title")
-                                    .data(sample_pareto)
-                                    .enter()
-                                    .append("text")
-                                    .classed('bar-title', true)
-                                    .attr('text-anchor', 'middle')
-                                    .style("color", "black")
-                                    .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                    .attr("y", function (d) { return yhist(d.duration); })
-                                    .text((a) => `${a.duration}`)
-
-
-                                ////Draw CDF line
+                                //Draw CDF line
                                 var guide = d3.line()
                                     .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .y(function (d) { return ycum(d.Percentage) });
+                                    .y(function (d) {
+                                        Cum_percentage += (d.duration * 100) / duration_tot;
+                                        console.log(Cum_percentage)
+                                        return ycum(Cum_percentage)
+                                    });
 
 
                                 var line = svg_pareto.append('path')
@@ -7898,17 +7459,26 @@ else
                                     .enter().append("circle")
                                     .attr("r", 3.5)
                                     .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .attr("cy", function (d) { return ycum(d.Percentage) });
+                                    .attr("cy", function (d) { Cum_percentage += (d.duration * 100) / duration_tot; return ycum(Cum_percentage) });
 
                                 //Draw axes
-                                svg_pareto.append("g")
-                                    .attr("class", "x axis")
-                                    .attr("transform", "translate(0," + h + ")")
-                                    .call(xAxis)
+                                //svg_pareto.append("g")
+                                //    .attr("class", "x axis")
+                                //    .attr("transform", "translate(0," + h + ")")
+                                //    .call(xAxis);
+                                console.log(xAxis)
+
+                                svg_pareto.append('g')
+                                    .attr('transform', `translate(10, ${h})`)
+
+                                    .call(d3.axisBottom(xScale))
                                     .selectAll("text")
                                     .style("text-anchor", "end")
-
-                                    .attr("transform", "rotate(-65)");
+                                    .attr("dx", "-.8em")
+                                    .attr("dy", ".15em")
+                                    .attr("transform", function (d) {
+                                        return "rotate(-25)"
+                                    });
 
                                 svg_pareto.append("g")
                                     .attr("class", "y axis")
@@ -7919,7 +7489,7 @@ else
                                     .attr("dy", ".71em")
                                     .style("text-anchor", "end")
 
-                                    .text("Duration");
+                                    .text("Frequency");
 
                                 svg_pareto.append("g")
                                     .attr("class", "y axis")
@@ -7930,18 +7500,19 @@ else
                                     .attr("y", 50)
                                     .attr("dy", "-.71em")
                                     .style("text-anchor", "end")
-                                    .text("Pareto Percentage");
+                                    .text("Percentage %");
 
 
                                 svg_pareto.append("text")
                                     .attr("class", "y label")
+
                                     //.attr("text-anchor", "end")
                                     .attr("y", -50)
                                     .attr("dy", ".75em")
                                     .attr('text-anchor', 'end')
 
-                                    .attr("transform", "rotate(-90)")
-                                    .text("Duration");
+                                    // .attr("transform", "rotate(-90)")
+                                    .text("Frequency");
 
                                 svg_pareto.append("text")
                                     .attr("class", "y label2")
@@ -7952,8 +7523,8 @@ else
 
                                     .attr("transform", "translate(" + [w, 0] + ")")
                                     .attr("transform", "rotate(-90)")
-                                    .attr("y", w + 40)
-                                    .text("Pareto Percentage %");
+                                    .attr("y", w + 50)
+                                    .text("Percentage");
 
                             }
                             else {
@@ -8248,7 +7819,7 @@ else
                     losscat = $("#Loss_Category").val()
                 }
                 var myData = {
-                    "QueryType": 'Year_occurence',
+                    "QueryType": 'Year',
                     "CompanyCode": '@Session["CompanyCode"]',
                     "PlantCode": '@Session["PlantCode"]',
                     "Line_Code": '@Session["LineCode"]',
@@ -8344,9 +7915,9 @@ else
                         if (response.status != "Error") {
 
                             sample_pareto = response.data.Table;
-
                             if (sample_pareto.length < 2) {
                                 $('#top_10_Occurence_pareto_chart').css("width", "30%");
+
                             }
 
                             else if (sample_pareto.length < 5) {
@@ -8359,6 +7930,7 @@ else
                             else {
                                 $('#top_10_Occurence_pareto_chart').css("width", "100%");
                             }
+
 
                             const a = $('#top_10_Occurence_pareto_chart').height();
                             const b = $('#top_10_Occurence_pareto_chart').width();
@@ -8377,8 +7949,6 @@ else
                             //Axes and scales
                             var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                             xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                            xScale.paddingInner(0.2)
-                            xScale.paddingOuter(0.2);
 
                             var yhist = d3.scaleLinear()
                                 .domain([0, d3.max(sample_pareto, function (d) { return d.Occurence; })])
@@ -8396,9 +7966,7 @@ else
 
                             var yAxis2 = d3.axisRight()
                                 .scale(ycum);
-
-                            d3.selectAll(".custom > *").remove();
-
+                            d3.selectAll("#top_10_Occurence_pareto_chart > *").remove();
                             var tooltip = d3.select("#top_10_Occurence_pareto_chart")
                                 .append("div")
                                 .style("opacity", 0)
@@ -8408,20 +7976,15 @@ else
                                 .style("border-width", "2px")
                                 .style("border-radius", "5px")
                                 .style("padding", "5px")
-
-
-
-                            tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
+                            tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
                                 .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                             toolval = tooltip.append("div");
-
                             ////Draw svg
                             var svg_pareto = d3.select("#top_10_Occurence_pareto_chart").append("svg")
                                 .attr("width", w + m.left + m.right)
                                 .attr("height", h + m.top + m.bottom)
                                 .append("g")
                                 .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
 
 
 
@@ -8434,72 +7997,49 @@ else
                                 .attr("class", "bar")
 
 
+                            var duration_tot = 0;
 
+                            for (var i = 0; i < response.data.Table.length; i++) {
+                                duration_tot += response.data.Table[i].Occurence;
+                            }
+                            var Cum_percentage = 0;
 
                             bar_pareto.append("rect")
-                                .attr("x", function (d) { return xScale(d.loss_description); })
-                                .attr("width", xScale.bandwidth() - 2)
+                                .attr("x", function (d) { return xScale(d.loss_description) + 80; })
+                                .attr("width", "50")
                                 .attr("y", function (d) { return yhist(d.Occurence); })
                                 .attr("height", function (d) { return h - yhist(d.Occurence); })
                                 .style("fill", function (d) {
-                                    if (d.Percentage < 80) {
-                                        return color(d.d)
-                                    }
-                                    else {
-                                        return "#B8B0AF"
-                                    }
+                                    console.log(color(d.Occurence))
+                                    return color(d.Occurence)
                                 })
                                 .attr("fill", color)
                                 .attr("text", function (d) { return `${d.Occurence}` })
 
                                 .on("mouseout", function () {
-                                    d3.select(this).style('Stroke', 'none');
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 1);
+                                    //d3.select(this).attr('fill', function(d) { return colorScale(window.bandClassifier(d.perChange,100));});
+                                    d3.select(this).style("stroke", "none");
                                     tooltip.style("visibility", "hidden");
                                 })
-
                                 .on("mousemove", function (d) {
-                                    var bar = d3.select(this);
-                                    var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 4);
-                                    d3.select(this).style('Stroke', 'black');
-                                    d3.select(this).style('stroke-width', '2');
-                                    d3.select(this).transition()
-                                        .style("opacity", 2);
                                     tooltip.style("visibility", "visible")
                                         .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                    var text = 'Occurence: ' + d.Occurence + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
+                                    var text = 'Occurence: ' + d.Occurence;
 
-
+                                    //console.log(d3.mouse(this)[0])
                                     tooltip.select("div").html(text)
 
-
                                 })
-                            //.on("click", function (d) {
-                            //    get_Rejection_data(d.RejectionDescription);
-
-                            //})
-
-
-                            bar_pareto.selectAll(".bar-title")
-                                .data(sample_pareto)
-                                .enter()
-                                .append("text")
-                                .classed('bar-title', true)
-                                .attr('text-anchor', 'middle')
-                                .style("color", "black")
-                                .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                .attr("y", function (d) { return yhist(d.Occurence); })
-                                .text((a) => `${a.Occurence}`)
 
 
                             ////Draw CDF line
                             var guide = d3.line()
                                 .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .y(function (d) { return ycum(d.Percentage) });
+                                .y(function (d) {
+                                    Cum_percentage += (d.Occurence * 100) / duration_tot;
+                                    return ycum(Cum_percentage)
+                                });
 
 
                             var line = svg_pareto.append('path')
@@ -8508,19 +8048,19 @@ else
                                 .attr('class', 'line');
                             svg_pareto.selectAll(".line")
                                 .data(sample_pareto)
-                                .enter().append("circle")
+                                //  .enter().append("circle")
                                 .attr("r", 3.5)
                                 .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .attr("cy", function (d) { return ycum(d.Percentage) });
+                                .attr("cy", function (d) {
+                                    Cum_percentage += (d.Occurence * 100) / duration_tot;
+                                    return ycum(Cum_percentage)
+                                });
 
                             //Draw axes
                             svg_pareto.append("g")
                                 .attr("class", "x axis")
                                 .attr("transform", "translate(0," + h + ")")
-                                .call(xAxis)
-                                .selectAll("text")
-                                .style("text-anchor", "end")
-                                .attr("transform", "rotate(-65)");
+                                .call(xAxis);
 
                             svg_pareto.append("g")
                                 .attr("class", "y axis")
@@ -8533,39 +8073,16 @@ else
 
                                 .text("Occurence");
 
-                            svg_pareto.append("g")
-                                .attr("class", "y axis")
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .call(yAxis2)
-                                .append("text")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", 50)
-                                .attr("dy", "-.71em")
-                                .style("text-anchor", "end")
-                                .text("Pareto Percentage");
-
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label")
-                                //.attr("text-anchor", "end")
-                                .attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "rotate(-90)")
-                                .text("Occurence");
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label2")
-                                //.attr("text-anchor", "end")
-                                //.attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", w + 40)
-                                .text("Pareto Percentage %");
+                            //svg_pareto.append("g")
+                            //    .attr("class", "y axis")
+                            //    .attr("transform", "translate(" + [w, 0] + ")")
+                            //    .call(yAxis2)
+                            //    .append("text")
+                            //    .attr("transform", "rotate(-90)")
+                            //    .attr("y", 50)
+                            //    .attr("dy", "-.71em")
+                            //    .style("text-anchor", "end")
+                            //    .text("Cumulative %");
 
                         }
                         else {
@@ -8632,8 +8149,7 @@ else
                     "FDate": FDate,
                     "TDate": TDate,
                     "Machine": Machine,
-                    /* "Loss": Loss_Name,*/
-                    "Loss": Loss_id,
+                    "Loss": Loss_Name,
                 };
                 $.ajax({
                     type: "POST",
@@ -9117,23 +8633,10 @@ else
                     "loss_category":losscat
                 };
 
-
-                var myData_new = {
-                    "QueryType": 'Custom_duration',
-                    "CompanyCode": '@Session["CompanyCode"]',
-                    "PlantCode": '@Session["PlantCode"]',
-                    "Line_Code": '@Session["LineCode"]',
-                    "fromdate": FDate,
-                    "todate": TDate,
-                    "Machine_Code": Machine,
-                    "report_type": '1',
-                    "loss_category":losscat
-                };
-
                 $.ajax({
                     type: "POST",
                     url: URL + 'api/Losses/Get_Loss_Occurence_chart',
-                    data: myData_new,
+                    data: myData,
                     headers: {
                         Authorization: 'Bearer ' + user1
                     },
@@ -9380,7 +8883,7 @@ else
                         losscat = $("#Loss_Category").val()
                     }
                     var myData = {
-                        "QueryType": 'Custom_duration',
+                        "QueryType": 'Custom',
                         "CompanyCode": '@Session["CompanyCode"]',
                         "PlantCode": '@Session["PlantCode"]',
                         "Line_Code": '@Session["LineCode"]',
@@ -9414,11 +8917,10 @@ else
 
                             if (response.status != "Error") {
                                 sample_pareto = response.data.Table;
-
                                 if (sample_pareto.length < 2) {
                                     $('#top_10_pareto_chart').css("width", "30%");
-                                }
 
+                                }
                                 else if (sample_pareto.length < 5) {
                                     $('#top_10_pareto_chart').css("width", "50%");
 
@@ -9429,7 +8931,6 @@ else
                                 else {
                                     $('#top_10_pareto_chart').css("width", "100%");
                                 }
-
                                 const a = $('#top_10_pareto_chart').height();
                                 const b = $('#top_10_pareto_chart').width();
 
@@ -9440,15 +8941,16 @@ else
                                     , w = b - m.left - m.right
                                     , barWidth = 5;
 
-                                var dataset = null;
+                                var datase= d3.scaleLinear().domain([0, 100]).range([h, 0]);
+
+                                var xAxis = d3.axisBottom()
+                                    .scalt = null;
                                 //typecast Amount to #, calculate total, and cumulative amounts
 
 
                                 //Axes and scales
                                 var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                                 xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                                xScale.paddingInner(0.2)
-                                xScale.paddingOuter(0.2);
 
                                 var yhist = d3.scaleLinear()
                                     .domain([0, d3.max(sample_pareto, function (d) { return d.duration; })])
@@ -9466,9 +8968,18 @@ else
 
                                 var yAxis2 = d3.axisRight()
                                     .scale(ycum);
+                                d3.selectAll("#top_10_pareto_chart > *").remove();
 
-                                d3.selectAll(".custom > *").remove();
+                                ////Draw svg
+                                var svg_pareto = d3.select("#top_10_pareto_chart").append("svg")
+                                    .attr("width", w + m.left + m.right)
+                                    .attr("height", h + m.top + m.bottom)
+                                    .append("g")
+                                    .attr("transform", "translate(" + m.left + "," + m.top + ")");
 
+
+
+                                var color = d3.scaleOrdinal(d3.schemeCategory10);
                                 var tooltip = d3.select("#top_10_pareto_chart")
                                     .append("div")
                                     .style("opacity", 0)
@@ -9481,22 +8992,9 @@ else
 
 
 
-                                tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
+                                tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
                                     .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                                 toolval = tooltip.append("div");
-
-                                ////Draw svg
-                                var svg_pareto = d3.select("#top_10_pareto_chart").append("svg")
-                                    .attr("width", w + m.left + m.right)
-                                    .attr("height", h + m.top + m.bottom)
-                                    .append("g")
-                                    .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
-
-
-
-                                var color = d3.scaleOrdinal(d3.schemeCategory10);
-
                                 //Draw histogram
                                 var bar_pareto = svg_pareto.selectAll(".bar")
                                     .data(sample_pareto)
@@ -9504,72 +9002,47 @@ else
                                     .attr("class", "bar")
 
 
+                                var duration_tot = 0;
 
+                                for (var i = 0; i < response.data.Table.length; i++) {
+                                    duration_tot += response.data.Table[i].duration;
+                                }
+                                var Cum_percentage = 0;
 
                                 bar_pareto.append("rect")
-                                    .attr("x", function (d) { return xScale(d.loss_description); })
-                                    .attr("width", xScale.bandwidth() - 2)
+                                    .attr("x", function (d) { return xScale(d.loss_description) + 80; })
+                                    .attr("width", "50")
                                     .attr("y", function (d) { return yhist(d.duration); })
                                     .attr("height", function (d) { return h - yhist(d.duration); })
                                     .style("fill", function (d) {
-                                        if (d.Percentage < 80) {
-                                            return color(d.d)
-                                        }
-                                        else {
-                                            return "#B8B0AF"
-                                        }
+                                        console.log(color(d.duration))
+                                        return color(d.duration)
                                     })
                                     .attr("fill", color)
                                     .attr("text", function (d) { return `${d.duration}` })
 
                                     .on("mouseout", function () {
-                                        d3.select(this).style('Stroke', 'none');
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 1);
+                                        d3.select(this).style("stroke", "none");
                                         tooltip.style("visibility", "hidden");
                                     })
 
                                     .on("mousemove", function (d) {
-                                        var bar = d3.select(this);
-                                        var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                        d3.selectAll(".bar").transition()
-                                            .style("opacity", 4);
-                                        d3.select(this).style('Stroke', 'black');
-                                        d3.select(this).style('stroke-width', '2');
-                                        d3.select(this).transition()
-                                            .style("opacity", 2);
                                         tooltip.style("visibility", "visible")
                                             .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                        var text = 'Duration: ' + d.duration + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
-
+                                        var text = 'Duration: ' + d.duration;
 
                                         tooltip.select("div").html(text)
 
-
                                     })
-                                //.on("click", function (d) {
-                                //    get_Rejection_data(d.RejectionDescription);
-
-                                //})
-
-
-                                bar_pareto.selectAll(".bar-title")
-                                    .data(sample_pareto)
-                                    .enter()
-                                    .append("text")
-                                    .classed('bar-title', true)
-                                    .attr('text-anchor', 'middle')
-                                    .style("color", "black")
-                                    .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                    .attr("y", function (d) { return yhist(d.duration); })
-                                    .text((a) => `${a.duration}`)
-
 
                                 ////Draw CDF line
                                 var guide = d3.line()
                                     .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .y(function (d) { return ycum(d.Percentage) });
+                                    .y(function (d) {
+                                        Cum_percentage += (d.duration * 100) / duration_tot;
+                                        return ycum(Cum_percentage)
+                                    });
 
 
                                 var line = svg_pareto.append('path')
@@ -9578,19 +9051,19 @@ else
                                     .attr('class', 'line');
                                 svg_pareto.selectAll(".line")
                                     .data(sample_pareto)
-                                    .enter().append("circle")
+                              //      .enter().append("circle")
                                     .attr("r", 3.5)
                                     .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                    .attr("cy", function (d) { return ycum(d.Percentage) });
+                                    .attr("cy", function (d) {
+                                        Cum_percentage += (d.duration * 100) / duration_tot;
+                                        return ycum(Cum_percentage)
+                                    });
 
                                 //Draw axes
                                 svg_pareto.append("g")
                                     .attr("class", "x axis")
                                     .attr("transform", "translate(0," + h + ")")
-                                    .call(xAxis)
-                                    .selectAll("text")
-                                    .style("text-anchor", "end")
-                                    .attr("transform", "rotate(-65)");
+                                    .call(xAxis);
 
                                 svg_pareto.append("g")
                                     .attr("class", "y axis")
@@ -9612,30 +9085,7 @@ else
                                     .attr("y", 50)
                                     .attr("dy", "-.71em")
                                     .style("text-anchor", "end")
-                                    .text("Pareto Percentage");
-
-
-                                svg_pareto.append("text")
-                                    .attr("class", "y label")
-                                    //.attr("text-anchor", "end")
-                                    .attr("y", -50)
-                                    .attr("dy", ".75em")
-                                    .attr('text-anchor', 'end')
-
-                                    .attr("transform", "rotate(-90)")
-                                    .text("Duration");
-
-                                svg_pareto.append("text")
-                                    .attr("class", "y label2")
-                                    //.attr("text-anchor", "end")
-                                    //.attr("y", -50)
-                                    .attr("dy", ".75em")
-                                    .attr('text-anchor', 'end')
-
-                                    .attr("transform", "translate(" + [w, 0] + ")")
-                                    .attr("transform", "rotate(-90)")
-                                    .attr("y", w + 40)
-                                    .text("Pareto Percentage %");
+                                    .text("Cumulative %");
 
                             }
                             else {
@@ -9929,7 +9379,7 @@ else
                     losscat = $("#Loss_Category").val()
                 }
                 var myData = {
-                    "QueryType": 'Custom_occurence',
+                    "QueryType": 'Custom',
                     "CompanyCode": '@Session["CompanyCode"]',
                     "PlantCode": '@Session["PlantCode"]',
                     "Line_Code": '@Session["LineCode"]',
@@ -10027,9 +9477,9 @@ else
 
                         if (response.status != "Error") {
                             sample_pareto = response.data.Table;
-
                             if (sample_pareto.length < 2) {
                                 $('#top_10_Occurence_pareto_chart').css("width", "30%");
+
                             }
 
                             else if (sample_pareto.length < 5) {
@@ -10042,7 +9492,6 @@ else
                             else {
                                 $('#top_10_Occurence_pareto_chart').css("width", "100%");
                             }
-
                             const a = $('#top_10_Occurence_pareto_chart').height();
                             const b = $('#top_10_Occurence_pareto_chart').width();
 
@@ -10056,12 +9505,21 @@ else
                             var dataset = null;
                             //typecast Amount to #, calculate total, and cumulative amounts
 
-
+                            var tooltip = d3.select("#top_10_Occurence_pareto_chart")
+                                .append("div")
+                                .style("opacity", 0)
+                                .attr("class", "tooltip")
+                                .style("background-color", "tranparent")
+                                .style("border", "solid")
+                                .style("border-width", "2px")
+                                .style("border-radius", "5px")
+                                .style("padding", "5px")
+                            tooltip = d3.select("body").append("div").style("width", "150px").style("height", "30px").style("background", "white")
+                                .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
+                            toolval = tooltip.append("div");
                             //Axes and scales
                             var xScale = d3.scaleBand().rangeRound([0, w], 0.1);
                             xScale.domain(sample_pareto.map(function (d) { return d.loss_description; }));
-                            xScale.paddingInner(0.2)
-                            xScale.paddingOuter(0.2);
 
                             var yhist = d3.scaleLinear()
                                 .domain([0, d3.max(sample_pareto, function (d) { return d.Occurence; })])
@@ -10079,24 +9537,7 @@ else
 
                             var yAxis2 = d3.axisRight()
                                 .scale(ycum);
-
-                            d3.selectAll(".custom > *").remove();
-
-                            var tooltip = d3.select("#top_10_Occurence_pareto_chart")
-                                .append("div")
-                                .style("opacity", 0)
-                                .attr("class", "tooltip")
-                                .style("background-color", "tranparent")
-                                .style("border", "solid")
-                                .style("border-width", "2px")
-                                .style("border-radius", "5px")
-                                .style("padding", "5px")
-
-
-
-                            tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
-                                .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
-                            toolval = tooltip.append("div");
+                            d3.selectAll("#top_10_Occurence_pareto_chart > *").remove();
 
                             ////Draw svg
                             var svg_pareto = d3.select("#top_10_Occurence_pareto_chart").append("svg")
@@ -10104,7 +9545,6 @@ else
                                 .attr("height", h + m.top + m.bottom)
                                 .append("g")
                                 .attr("transform", "translate(" + m.left + "," + m.top + ")");
-
 
 
 
@@ -10117,93 +9557,48 @@ else
                                 .attr("class", "bar")
 
 
+                            var duration_tot = 0;
 
+                            for (var i = 0; i < response.data.Table.length; i++) {
+                                duration_tot += response.data.Table[i].Occurence;
+                            }
+                            var Cum_percentage = 0;
 
                             bar_pareto.append("rect")
-                                .attr("x", function (d) { return xScale(d.loss_description); })
-                                .attr("width", xScale.bandwidth() - 2)
+                                .attr("x", function (d) { return xScale(d.loss_description) + 80; })
+                                .attr("width", "50")
                                 .attr("y", function (d) { return yhist(d.Occurence); })
                                 .attr("height", function (d) { return h - yhist(d.Occurence); })
                                 .style("fill", function (d) {
-                                    if (d.Percentage < 80) {
-                                        return color(d.d)
-                                    }
-                                    else {
-                                        return "#B8B0AF"
-                                    }
+                                    console.log(color(d.Occurence))
+                                    return color(d.duration)
                                 })
                                 .attr("fill", color)
                                 .attr("text", function (d) { return `${d.Occurence}` })
-
                                 .on("mouseout", function () {
-                                    d3.select(this).style('Stroke', 'none');
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 1);
+                                    //d3.select(this).attr('fill', function(d) { return colorScale(window.bandClassifier(d.perChange,100));});
+                                    d3.select(this).style("stroke", "none");
                                     tooltip.style("visibility", "hidden");
                                 })
-
                                 .on("mousemove", function (d) {
-                                    var bar = d3.select(this);
-                                    var label = d3.select(this.parentNode).selectAll('.label').data([d]);
-                                    d3.selectAll(".bar").transition()
-                                        .style("opacity", 4);
-                                    d3.select(this).style('Stroke', 'black');
-                                    d3.select(this).style('stroke-width', '2');
-                                    d3.select(this).transition()
-                                        .style("opacity", 2);
                                     tooltip.style("visibility", "visible")
                                         .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                    var text = 'Occurence: ' + d.Occurence + '<br/> Percentage: ' + d.Percentage + ' <br/> Loss Description: ' + d.loss_description + '';
+                                    var text = 'Occurence: ' + d.Occurence;
 
-
+                                    //console.log(d3.mouse(this)[0])
                                     tooltip.select("div").html(text)
 
-
                                 })
-                            //.on("click", function (d) {
-                            //    get_Rejection_data(d.RejectionDescription);
-
-                            //})
 
 
-                            bar_pareto.selectAll(".bar-title")
-                                .data(sample_pareto)
-                                .enter()
-                                .append("text")
-                                .classed('bar-title', true)
-                                .attr('text-anchor', 'middle')
-                                .style("color", "black")
-                                .attr("x", d => xScale(d.loss_description) + xScale.bandwidth() / 2)
-                                .attr("y", function (d) { return yhist(d.Occurence); })
-                                .text((a) => `${a.Occurence}`)
 
-
-                            ////Draw CDF line
-                            var guide = d3.line()
-                                .x(function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .y(function (d) { return ycum(d.Percentage) });
-
-
-                            var line = svg_pareto.append('path')
-                                .datum(sample_pareto)
-                                .attr('d', guide)
-                                .attr('class', 'line');
-                            svg_pareto.selectAll(".line")
-                                .data(sample_pareto)
-                                .enter().append("circle")
-                                .attr("r", 3.5)
-                                .attr("cx", function (d) { return xScale(d.loss_description) + (xScale.bandwidth() / 2); })
-                                .attr("cy", function (d) { return ycum(d.Percentage) });
 
                             //Draw axes
                             svg_pareto.append("g")
                                 .attr("class", "x axis")
                                 .attr("transform", "translate(0," + h + ")")
-                                .call(xAxis)
-                                .selectAll("text")
-                                .style("text-anchor", "end")
-                                .attr("transform", "rotate(-65)");
+                                .call(xAxis);
 
                             svg_pareto.append("g")
                                 .attr("class", "y axis")
@@ -10216,39 +9611,7 @@ else
 
                                 .text("Occurence");
 
-                            svg_pareto.append("g")
-                                .attr("class", "y axis")
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .call(yAxis2)
-                                .append("text")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", 50)
-                                .attr("dy", "-.71em")
-                                .style("text-anchor", "end")
-                                .text("Pareto Percentage");
 
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label")
-                                //.attr("text-anchor", "end")
-                                .attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "rotate(-90)")
-                                .text("Occurence");
-
-                            svg_pareto.append("text")
-                                .attr("class", "y label2")
-                                //.attr("text-anchor", "end")
-                                //.attr("y", -50)
-                                .attr("dy", ".75em")
-                                .attr('text-anchor', 'end')
-
-                                .attr("transform", "translate(" + [w, 0] + ")")
-                                .attr("transform", "rotate(-90)")
-                                .attr("y", w + 40)
-                                .text("Pareto Percentage %");
 
                         }
                         else {
@@ -10276,6 +9639,4 @@ else
         }
 
     });
-
-
 </script>

@@ -398,10 +398,10 @@
                 <a class="logo">
                     @if (@Session["CustomerLogo"] == null)
                     {
-                        <img src="~/Images/teallogo.png" class="customerlogo" alt="Customer Logo" style="float:left;margin-top:0px;height:45px;margin-bottom:0px;" /> }
+                        <img src="../Images/teallogo.png" class="customerlogo" alt="Customer Logo" style="float:left;margin-top:0px;height:45px;margin-bottom:0px;" /> }
                     else
                     {
-                        <img src="~/Images/@Session["CustomerLogo"]" class="customerlogo" alt="Customer Logo" style="float:left;margin-top:0px;height:45px;margin-bottom:0px;" />}
+                        <img src="../Images/@Session["CustomerLogo"]" class="customerlogo" alt="Customer Logo" style="float:left;margin-top:0px;height:35px;margin-bottom:0px;" />}
 
                 </a>
                 <a>
@@ -803,12 +803,12 @@
                                         <span>Main Dashboard</span>
                                     </a>
                                 </li>
-                                <li>
+                                @*<li>
                                     <a href="@Url.Action("Loss_Live","Losses")">
                                         <i class="glyphicon glyphicon-compressed"></i>
                                         <span>Latest Machine Events</span>
                                     </a>
-                                </li>
+                                </li>*@
 
                                 <li class="nav-parent @(ViewContext.RouteData.Values["Action"].ToString() == "AvailabilityLiveDashboard" ? "nav-expanded " : "") @(ViewContext.RouteData.Values["Action"].ToString() == "QualityLiveDashboard" ? "nav-expanded" : "") @(ViewContext.RouteData.Values["Action"].ToString() == "HourlyTrackerLive" ? "nav-expanded " : "") @(ViewContext.RouteData.Values["Action"].ToString() == "OEELiveDashboard" ? "nav-expanded " : "") @(ViewContext.RouteData.Values["Action"].ToString() == "OperatorEfficiencyLive" ? "nav-expanded " : "") @(ViewContext.RouteData.Values["Action"].ToString() == "OEEHistoricDashboard" ? "nav-expanded " : "") @(ViewContext.RouteData.Values["Action"].ToString() == "OperatorEfficiencyHistoricDashboard" ? "nav-expanded " : "") @(ViewContext.RouteData.Values["Action"].ToString() == "AvailabilityHistoricDashboard" ? "nav-expanded " : "")">
 
@@ -940,11 +940,11 @@
 
 
                                     <ul class="nav nav-children ">
-                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Quality" ? "nav-active " : "")">
+                                        @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Quality" ? "nav-active " : "")">
                                             <a href="@Url.Action("Quality","Quality")">
                                                 <span>Quality Overview</span>
                                             </a>
-                                        </li>
+                                        </li>*@
                                         <!--<li class="nav-parent @(ViewContext.RouteData.Values["Action"].ToString() == "FirstPassYieldLiveDashboard" ? "nav-expanded " : "")">
                                         <a>
 
@@ -989,11 +989,11 @@
                                                         <span>Rejection Reason Pareto</span>
                                                     </a>
                                                 </li>
-                                                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "QualityHistoric_Heatmap" ? "nav-active " : "")">
+                                                @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "QualityHistoric_Heatmap" ? "nav-active " : "")">
                                                     <a href="@Url.Action("QualityHistoric_Heatmap","Quality")">
                                                         <span>Heat Map</span>
                                                     </a>
-                                                </li>
+                                                </li>*@
 
                                                 @*</ul>
                                                     </li>*@
@@ -1060,11 +1060,11 @@
                                                     </a>
 
                                                     <ul class="nav nav-children" style="">
-                                                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ToolLifeHistoricDashboard" ? "nav-active " : "")">
+                                                        @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ToolLifeHistoricDashboard" ? "nav-active " : "")">
                                                             <a href="@Url.Action("ToolLifeHistoricDashboard","ToolLife")">
                                                                 <span>Historic View</span>
                                                             </a>
-                                                        </li>
+                                                        </li>*@
                                                         @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PreventiveMaintanenceDashboard" ? "nav-active " : "")">
                                                                 <a href="@Url.Action("PreventiveMaintanenceDashboard","ToolLife")">
                                                                     <span>Preventive Maintenance</span>
@@ -1536,7 +1536,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    <ul class="nav-children ">
+                                    @*<ul class="nav-children ">
                                         <li class="">
                                             <a href="~/Cycletime/ActualvsTargetCycletime">
 
@@ -1544,7 +1544,7 @@
                                             </a>
                                         </li>
 
-                                    </ul>
+                                    </ul>*@
 
                                     <ul class="nav nav-children ">
                                         <li class="nav-parent @(ViewContext.RouteData.Values["Action"].ToString() == "cycletime" ? "nav-expanded " : "")">
@@ -1590,13 +1590,13 @@
                                                 </li>
 
 
-                                                <li class=" @(ViewContext.RouteData.Values["Action"].ToString() == "Losses" ? "nav-active " : "") ">
+                                                @*<li class=" @(ViewContext.RouteData.Values["Action"].ToString() == "Losses" ? "nav-active " : "") ">
                                                     <a href="~/Cycletime/MachineWiseCycleTime">
                                                         <span> MachineWise - CycleTime</span>
                                                     </a>
 
 
-                                                </li>
+                                                </li>*@
 
 
                                             </ul>
@@ -1713,7 +1713,7 @@
 
                                 <!----------- MIS Report ------>
 
-                                <li class="nav-parent @(ViewContext.RouteData.Values["Controller"].ToString() == "MisReport" ? "nav-expanded " : "")">
+                                <!--<li class="nav-parent @(ViewContext.RouteData.Values["Controller"].ToString() == "MisReport" ? "nav-expanded " : "")">
                                     <a>
                                         <i class="fa fa-bar-chart-o" aria-hidden="true"></i>
                                         <span>MIS Report</span>
@@ -1721,17 +1721,17 @@
 
                                     <ul class="nav nav-children">
                                         <li class=" @(ViewContext.RouteData.Values["Action"].ToString() == "Misreportdetails" ? "nav-active " : "") ">
-                                            <a href="~/MisReport/Misreportdetails">
+                                            <a href="~/MisReport/Misreportdetails">-->
 
                                                 @*   @Url.Action("NewDash", "Main")*@
 
-                                                <span>MIS Report</span>
+                                                <!--<span>MIS Report</span>
                                             </a>
                                         </li>
                                     </ul>
 
 
-                                </li>
+                                </li>-->
 
 
 
@@ -2051,7 +2051,7 @@
         <div class="logo-container">
             <a class="logo" style="float:right">
                 <span style="color:white">Copyright © 2021, Titan Engineering &amp; Automation Limited. All rights reserved.</span>
-                <img src="/assets1/images/teallogo.png" style="height:35px;" alt="TEAL">
+                <img src="../assets1/images/teallogo.png" style="height:35px;" alt="TEAL">
             </a>
         </div>
     </div>
@@ -2708,8 +2708,8 @@
                     dataType: "json",
                     success: function (response)
                     {
-                        console.log("hello");
-                        console.log(response);
+                        //console.log("hello");
+                        //console.log(response);
                         $(".Holiday").html(response);
                     },
                     error: function (response) {

@@ -54,7 +54,7 @@
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("NewDash","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -86,7 +86,7 @@
                     <div class="col-sm-2">
                         <select class="form-control" id="Variant"></select>
                     </div>
-                    <label style="display:none" id="Actual_cycle"></label>
+
 
                     <label class="col-sm-2 control-label"> Select Report  <span class="required">*</span></label>
                     <div class="col-sm-2">
@@ -203,7 +203,7 @@
                 </div>
                 <!--<h2 class="panel-title" style="color:white;"> Shiftwise Frequency Chart </h2>-->
                 <h2 class="panel-title" style="color:white;">
-                    Shiftwise Cycletime Frequency Chart <span style="float:right"><span id="s_cycletime"></span></span>
+                    Shiftwise Frequency Chart <span style="float:right"> Cycletime: <span id="s_cycletime"></span> </span>
                 </h2>
             </header>
 
@@ -229,14 +229,14 @@
                 </div>
                 <!--<h2 class="panel-title" style="color:white;"> Daywise Frequency Chart </h2>-->
                 <h2 class="panel-title" style="color:white;">
-                    Daywise Cycletime Frequency Chart <span style="float:right"> <span id="d_cycletime"></span> <span>
+                    Daywise Frequency Chart <span style="float:right"> Cycletime : <span id="d_cycletime"></span> </span>
                 </h2>
             </header>
             <div class="panel-body">
                 <div class="form-group">
                     <div class='Range_chart_daywise' style="height:500px;width:100%">
                         <div id="err_Range_chart_daywise" style="color:red;font-weight:bold;"></div>
-                        @*<svg style="height:100%;width:100%"></svg>*@
+                        <svg style="height:100%;width:100%"></svg>
                     </div>
                 </div>
             </div>
@@ -254,7 +254,7 @@
                 </div>
                 @*<h2 class="panel-title" style="color:white;"> Monthwise Frequency Chart </h2>*@
                 <h2 class="panel-title" style="color:white;">
-                    Monthwise Cycletime Frequency Chart <span style="float:right"><span id="m_cycletime"></span> </span>
+                    Monthwise Frequency Chart <span style="float:right"> Cycletime : <span id="m_cycletime"></span> </span>
                 </h2>
             </header>
             <div class="panel-body">
@@ -278,7 +278,7 @@
                 </div>
                 @*<h2 class="panel-title" style="color:white;"> Yearwise Frequency Chart </h2>*@
                 <h2 class="panel-title" style="color:white;">
-                    Yearwise Cycletime Frequency Chart <span style="float:right"> <span id="y_cycletime"></span> </span>
+                    Yearwise Frequency Chart <span style="float:right"> Cycletime : <span id="y_cycletime"></span> </span>
                 </h2>
             </header>
             <div class="panel-body">
@@ -303,7 +303,7 @@
                 </div>
                 <!--<h2 class="panel-title" style="color:white;"> Customwise Frequency Chart </h2>-->
                 <h2 class="panel-title" style="color:white;">
-                    Customwise Cycletime Frequency Chart <span style="float:right"> <span id="c_cycletime"></span> </span>
+                    Customwise Frequency Chart <span style="float:right"> Cycletime : <span id="c_cycletime"></span> </span>
                 </h2>
             </header>
             <div class="panel-body">
@@ -356,6 +356,7 @@
         </section>
     </div>
 </div>
+
 
 
 
@@ -667,17 +668,6 @@
                 "LineCode": '@Session["LineCode"]'
             };
 
-            var data3 = {
-                        "QueryType": "Actual_cycle_time",
-                        "Parameter": '@Session["PlantCode"]',
-                        "Parameter1": '@Session["CompanyCode"]',
-                        "Parameter2": Machine,
-                        "Parameter3": Variant,
-                        "Parameter6": '@Session["LineCode"]',
-                        "CompanyCode": '@Session["CompanyCode"]',
-                        "PlantCode": '@Session["PlantCode"]',
-                        "LineCode": '@Session["LineCode"]'
-                };
 
 
 
@@ -693,23 +683,7 @@
 
                 success: function (response) {
 
-                    $.ajax({
-                        type: "POST",
-                        data: data3,
-                        headers:
-                        {
-                            Authorization: 'Bearer ' + user1
-                        },
-                        url: URL + "api/Values/User_settings_details",
-                        dataType: "json",
 
-                        success: function (response1) {
-
-                            var ac = response1.data.Table[0].Autocycletime;
-                            $("#Actual_cycle").html(ac);
-
-                        }
-                    })
 
 
                     var s = '<option value="">Select Movement</option>';
@@ -2076,11 +2050,9 @@
 
 
                         $("#average_table").show();
-                        //var VariantCode = $('#end').val();
-                        var VariantCode = $('#Variant').val();
-                        var Actual_cycle = $("#Actual_cycle").html();
 
-                        $("#lbl_title").html("Daywise Average - Table [ " + VariantCode + "(" + Actual_cycle+' sec) ]');
+
+                        $("#lbl_title").html("Daywise Average - Table  " );
 
                         if (response.status != "Error") {
                             var Cycle_Data = {

@@ -7,13 +7,12 @@
 <script src="~/Scripts/d3.min.js"></script>
 <link rel="stylesheet" type="text/css" href="~/assets1/datepicker_normal/jquery-ui-1.8.19.custom.css">
 <link href="~/Content/bootstrapmodel.css" rel="stylesheet" />
-
-<header class="page-header" ">
-    <h2>Maintenance-MTTR</h2>
+<header class="page-header">
+    <h2>Mean Time to Repair</h2>
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("NewDash","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -24,46 +23,6 @@
         </ol>
     </div>
 </header>
-
-
-
-
-@{
-    ViewBag.Title = "ProductionHistoricDashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<style>
-    .highlight {
-        left: 50px;
-        transform: scale(1.5) translate(25px);
-        outline: 2px blue dashed;
-    }
-</style>
-
-@*<script src="~/Scripts/d3.min.js"></script>*@
-<script src="~/Scripts/d3_v4.min.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-@*<script src="https://d3js.org/d3-interpolate.v2.min.js"></script>
-    <script src="https://d3js.org/d3-scale-chromatic.v2.min.js"></script>*@
-<link rel="stylesheet" type="text/css" href="~/assets1/datepicker_normal/jquery-ui-1.8.19.custom.css">
-<header class="page-header">
-    <h2>MTTR Analysis - Rejection Reason Pareto </h2>
-    <div class="right-wrapper pull-right">
-        <ol class="breadcrumbs">
-            <li>
-                <a href="@Url.Action("Dashboard","Main")">
-                    <i class="fa fa-home"></i>
-                </a>
-            </li>
-            @*<li><span>Quality</span></li>
-                <li><span>Historic Data & Analytics</span></li>
-                <li><span>Quality Analysis</span></li>
-                <li><span>Pareto</span></li>*@
-        </ol>
-    </div>
-</header>
-
 @if (ViewContext.Controller.HasPermission("ParetoAnalysisHistoric-View"))
 {
     <div class="row">
@@ -75,22 +34,22 @@
                     <select id="linecode" class="form-control" name="linecode" title="*"></select>
                 </div>&nbsp;&nbsp;*@
             <div class="btn-group">
-                <label class="control-label" style="float:right; font-weight:bold;"> Select Machine <span class="required">*</span></label>
+                <label class="control-label" style="float:right; font-weight:bold;"> Select Machine <span class="required">*</span> </label>
             </div>
-            <div class="btn-group">
+            <div class="btn-group" style="padding-right:5px;">
                 <select id="machinecode" class="form-control" name="machinecode" title="Select Machine">
                     <option value="">Select Line First</option>
                 </select>
             </div>
             <div class="btn-group">
-                <label class="control-label" style="float: right; font-weight: bold; margin-left: 30px;"> No of Records <span class="required">*</span></label>
+                <label class="control-label" style="float:right; font-weight:bold;"> No of Records <span class="required">*</span></label>
             </div>
-            <div class="btn-group">
-                <input type="text" class="form-control record" name="records" title="Enter no. of records" required style="margin-left: 15px;" />
+            <div class="btn-group" style="padding-right:5px;">
+                <input type="text" class="form-control record" name="records" title="Enter no. of records" required />
 
             </div>
             <div class="btn-group">
-                <span style="color:red; margin-left: 30px;">Note : Type 'All' or number (eg: all or 10 or 20)</span>
+                <span style="color:red;">Note : Type 'All' or number (eg: all or 10 or 20)</span>
             </div>
         </div>
     </div>
@@ -124,22 +83,22 @@
 
                                 </div>
 
-                                <div class="col-md-4" style="right: 83px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchtoday" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
 
                                 </div>
                             </div>
-                            <!--<header class="panel-heading">
-                                <div class="btn-group" style="width:100%;padding:10px;padding-right:50px;">-->
-                                    @*<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="today_line"></span></button>*@
+                            <header class="panel-heading">
+                                <div class="btn-group" style="width:100%;padding:10px;padding-right:50px;">
+                                    <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="today_line"></span></button>
 
-                                <!--</div>
-                            </header>-->
+                                </div>
+                            </header>
                             <div class="panel-body">
 
-                                <div id='container' class="today_report" style="height:600px;width:100%;">
+                                <div id='container' class="today_report" style="height:800px;width:100%;">
                                 </div>
                             </div>
                         </section>
@@ -154,7 +113,7 @@
 
                                 </div>
 
-                                <div class="col-md-4" style="right: 89px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchyesterday" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -163,7 +122,7 @@
                             </div>
                             <header class="panel-heading">
                                 <div class="btn-group" style="width:100%;padding:10px;padding-right:50px;">
-                                    @*<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="yesterday_line"></span></button>*@
+                                    <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="yesterday_line"></span></button>
 
                                 </div>
                             </header>
@@ -174,14 +133,13 @@
                             </div>
                         </section>
                     </div>
-
                     <!--Custom-->
 
                     <div id="custom" class="tab-pane ">
                         <section class="panel">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Date range <span class="required">*</span></label>
-                                <div class="col-md-6" style="right: 87px;">
+                                <div class="col-md-6">
                                     <div class="input-daterange input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -191,7 +149,7 @@
                                         <input type="text" class="form-control datepice" style="text-align:left;z-index:0;" id="end" name="end" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="right: 83px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchcustomwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -202,7 +160,7 @@
                             </div>
                             <header class="panel-heading">
                                 <div class="btn-group" style="width:100%;padding:10px;padding-right:50px;">
-                                    @*<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="custom_line"></span></button>*@
+                                    <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="custom_line"></span></button>
                                     @* <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default" style="float:right;">Subsystem : <span id="custom_subsystem"></span></button>*@
                                 </div>
                             </header>
@@ -220,16 +178,16 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-labe" style="right: 189px;">Select Year <span class="required">*</span></label>
+                                <label class="col-md-2 control-labe">Select Year <span class="required">*</span></label>
                                 <div class="col-md-4">
-                                    <div class="input-group" style="right: 287px;">
+                                    <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                         <input class="date-own form-control" style="width: 150px;z-index:0;" type="text" id="year" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="right: 83px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchyearwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -240,7 +198,7 @@
                             </div>
                             <header class="panel-heading">
                                 <div class="btn-group" style="width:100%;padding:10px;padding-right:50px;">
-                                    @*<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="yearly_line"></span></button>*@
+                                    <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="yearly_line"></span></button>
                                     @*<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default" style="float:right;">Subsystem : <span id="yearly_subsystem"></span></button>*@
                                 </div>
                             </header>
@@ -250,14 +208,14 @@
                             </div>
                         </section>
                     </div>
-                    <!--Monthly-->
 
+                    <!--Monthly-->
                     <div id="monthly" class="tab-pane">
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-label" style="right: 189px;">Select Month <span class="required">*</span></label>
-                                <div class="col-md-4" style="right: 283px;">
+                                <label class="col-md-2 control-label">Select Month <span class="required">*</span></label>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -265,7 +223,7 @@
                                         <input class="month-own form-control" style="width: 150px;z-index:0;" type="text" id="month" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="right: 87px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchmonthwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -276,7 +234,7 @@
                             </div>
                             <header class="panel-heading">
                                 <div class="btn-group" style="width:100%;padding:10px;padding-right:50px;">
-                                    @*<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="monthly_line"></span></button>*@
+                                    <button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Line : <span id="monthly_line"></span></button>
                                     @*<button type="button" class="mb-xs mt-xs mr-xs btn btn-sm btn-default" style="float:right;">Subsystem : <span id="monthly_subsystem"></span></button>*@
                                 </div>
                             </header>
@@ -304,6 +262,12 @@ else
 <script src="~/assets1/datepicker_normal/jquery-ui-1.8.19.custom.min.js"></script>
 <script src="~/Scripts/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
+    //$(".datepic").datepicker({
+    //    format: "yyyy-mm-dd",
+    //    orientation: "bottom",
+    //    endDate: '+0d'
+    //});
+
     $(function () {
         var todaydt = new Date();
 
@@ -326,7 +290,7 @@ else
             format: 'yyyy-mm-dd'
         }).on('changeDate', function (selected) {
             var minDate = new Date(selected.date);
-            minDate.setDate(minDate.getDate()-1);
+            minDate.setDate(minDate.getDate());
             $('.datepics').datepicker('setEndDate', minDate);
         });
     });
@@ -392,6 +356,64 @@ else
                 }
                 else {
                     var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
+                    @*var myData = {
+                        "Flag": "LineCode",
+                        "CompanyCode": '@Session["CompanyCode"]',
+                        "PlantCode": '@Session["PlantCode"]',
+                    };
+                     var R_url = '@Url.Action("Login", "Main")';
+                   var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
+                    //$.ajax({
+                    //    type: 'Get',
+                    //    url: URL + 'api/UserSettings/GetEmployee',
+                    //    headers: {
+                    //        Authorization: 'Bearer ' + user1
+                    //    },
+                    //    dataType: 'json'
+                    //}).success(function (response) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Main/GetSettingdatas1',
+                        data: myData,
+                        dataType: "json",
+                        success: function (response) {
+                            var s = '<option value="">Select Line</option>';
+                            for (var i = 0; i < response.data.length; i++) {
+                                s += '<option value="' + response.data[i].Code + '">' + response.data[i].Name + '</option>';
+                            }
+                            $("#linecode").html(s);
+                        },
+                        error: function (response) {
+                            if (response.status == "401") {
+                                swal({
+                                    icon: "warning",
+                                    title: "Session Timeout",
+                                    button: true,
+                                    closeModal: false
+                                })
+                                window.location = R_url;
+                            }
+                            else {
+                                swal({
+                                    icon: "warning",
+                                    title: response.responseText,
+                                    button: true,
+                                    closeModal: false
+                                })
+
+                            }
+                        }
+                    });
+                    //}).error(function (response) {
+                    //    swal({
+                    //        icon: "warning",
+                    //        title: "Session Timeout",
+                    //        button: true,
+                    //        closeModal: false
+                    //    })
+                    //    window.location = R_url;
+                    //});*@
+
 
                     var myData1 = {
                         "Flag": "Subsystem",
@@ -416,18 +438,15 @@ else
                         dataType: "json",
                         success: function (response) {
                             var s = '<option value="">Select Machine</option>';
-
                             for (var i = 0; i < response.data.length; i++) {
-                                console.log(response.data.length);
                                 if (response.data.length == 1) {
                                     s += '<option value="' + response.data[i].Code + '" selected=selected>' + response.data[i].Name + '</option>';
                                 }
                                 else {
-                                    s += '<option value="' + response.data[i].Code + '">' + response.data[i].Code + "-" + response.data[i].Name + '</option>';
+                                    s += '<option value="' + response.data[i].Code + '">' + response.data[i].Name + '</option>';
                                 }
                             }
                             $("#machinecode").html(s);
-                            //$(".record").text("10");
                             $(".record").val(10);
                         },
                         error: function (response) {
@@ -481,6 +500,76 @@ else
 
 </script>
 
+
+<script type="text/javascript">
+    @*$('#linecode').on('change', function() {
+        //alert(this.value);
+
+
+                   var myData1 = {
+                        "Flag": "Subsystem",
+                        "CompanyCode": '@Session["CompanyCode"]',
+                       "PlantCode": '@Session["PlantCode"]',
+                        "LineCode":this.value,
+                    };
+                     var R_url = '@Url.Action("Login", "Main")';
+                   var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
+                    //$.ajax({
+                    //    type: 'Get',
+                    //    url: URL + 'api/UserSettings/GetEmployee',
+                    //    headers: {
+                    //        Authorization: 'Bearer ' + user1
+                    //    },
+                    //    dataType: 'json'
+                    //}).success(function (response) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Main/GetSettingdatas1',
+                        data: myData1,
+                        dataType: "json",
+                        success: function (response) {
+                            var s = '<option value="">Select Machine</option>';
+                            for (var i = 0; i < response.data.length; i++) {
+                                s += '<option value="' + response.data[i].Code + '">' + response.data[i].Name + '</option>';
+                            }
+                            $("#machinecode").html(s);
+                        },
+                        error: function (response) {
+                            if (response.status == "401") {
+                                swal({
+                                    icon: "warning",
+                                    title: "Session Timeout",
+                                    button: true,
+                                    closeModal: false
+                                })
+                                window.location = R_url;
+                            }
+                            else {
+                                swal({
+                                    icon: "warning",
+                                    title: response.responseText,
+                                    button: true,
+                                    closeModal: false
+                                })
+
+                            }
+                        }
+                    });
+                    //}).error(function (response) {
+                    //    swal({
+                    //        icon: "warning",
+                    //        title: "Session Timeout",
+                    //        button: true,
+                    //        closeModal: false
+                    //    })
+                    //    window.location = R_url;
+                    //});
+
+    });*@
+
+</script>
+
+
 <script type="text/javascript">
     var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
     document.getElementById("searchcustomwise").addEventListener("click", function () {
@@ -528,7 +617,7 @@ else
         else if (records == '') {
             swal({
                 icon: "error",
-                title: "Please Provide No. of records",
+                title: "Please Provide No. of Records",
                 button: false,
                 timer: 4500
             })
@@ -596,12 +685,11 @@ else
                     d3.select("svg").remove();
                     if (response.status != "Error") {
 
-
                         sample = response.data.Table;
                         var lineName = sample[0].lineName;
 
-                        //$('#custom_line').text(lineName);
-                        //$('#custom_subsystem').text(machinecode);
+                        $('#custom_line').text(lineName);
+                        $('#custom_subsystem').text(machinecode);
                         d3.select(".custom_report").append("svg");
                         const svg = d3.select('svg');
                         const svgContainer = d3.select('.custom_report');
@@ -610,14 +698,12 @@ else
                         const b = $('.custom_report').width();
 
                         const margin = 150;
-                        const width = b - 2 * margin-10;
-                        const height = a - 2 * margin-100;
+                        const width = b - 2 * margin - 10;
+                        const height = a - 2 * margin - 300;
 
                         //const margin = 80;
                         //const width = 1000 - 2 * margin;
                         //const height = 700 - 2 * margin;
-
-                       /* console.log(a+" : "+b);*/
 
                         const chart = svg.append('g')
                             .attr('transform', `translate(${margin}, ${margin})`);
@@ -644,9 +730,12 @@ else
                             .style("border-radius", "5px")
                             .style("padding", "5px")
 
-                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("background-color", "#898584").style("color", "white")
+
+
+                        tooltip = d3.select("body").append("div").style("width", "300px").style("height", "60px").style("background", "white")
                             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
+
 
                         chart.append('g')
                             .attr('transform', `translate(10, ${height})`)
@@ -708,7 +797,7 @@ else
                                 barGroups.append('text')
                                     .attr('class', 'value')
                                     .attr('x', (a) => xScale(a.Alarm_Description) + xScale.bandwidth() / 2)
-                                    .attr('y', (a) => yScale(a.MTTR) - 10)
+                                    .attr('y', (a) => yScale(a.MTTR) -10)
                                     .attr('text-anchor', 'middle')
                                     .text((a) => `${a.MTTR}`)
 
@@ -721,13 +810,14 @@ else
 
                             .on("mousemove", function (d) {
                                 tooltip.style("visibility", "visible")
-                                    .style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 5) + "px");
+                                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                var text = 'Downtime: ' + d.tot_downtime + ' Min <br/> No of Occurence: ' + d.no_of_occurence + ' <br/> Downtime Reason: ' + d.Alarm_Description + '';
+                                var text = 'Downtime: ' + d.tot_downtime + '<br/> No of Occurence: ' + d.no_of_occurence + '';
 
                                 tooltip.select("div").html(text)
 
                             })
+
 
                             .on('mouseleave', function () {
                                 d3.selectAll('.value')
@@ -759,8 +849,7 @@ else
                             .attr('y', margin / 2.4)
                             .attr('transform', 'rotate(-90)')
                             .attr('text-anchor', 'middle')
-                            //.text('Time(in minutes)')
-                            .text('MTTR (in Minutes)')
+                            .text('MTTR(in minutes)')
 
                         svg.append('text')
                             .attr('class', 'label')
@@ -849,7 +938,7 @@ else
         else if (records == '') {
             swal({
                 icon: "error",
-                title: "Please Provide No. of records",
+                title: "Please Provide No. of Records",
                 button: false,
                 timer: 4500
             })
@@ -901,8 +990,9 @@ else
                     if (response.status != "Error") {
                         sample = response.data.Table;
                         var lineName = sample[0].lineName;
-                        //$('#yearly_line').text(lineName);
-                        //$('#yearly_subsystem').text(machinecode);
+
+                        $('#yearly_line').text(lineName);
+                        $('#yearly_subsystem').text(machinecode);
                         d3.select(".year_report").append("svg");
                         const svg = d3.select('svg');
                         const svgContainer = d3.select('.year_report');
@@ -911,8 +1001,8 @@ else
                         const b = $('.year_report').width();
 
                         const margin = 150;
-                        const width = b - 2 * margin-10;
-                        const height = a - 2 * margin-200;
+                        const width = b - 2 * margin - 10;
+                        const height = a - 2 * margin - 300;
 
                         //const margin = 80;
                         //const width = 1000 - 2 * margin;
@@ -945,7 +1035,7 @@ else
 
 
 
-                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("background-color", "#898584").style("color", "white")
+                        tooltip = d3.select("body").append("div").style("width", "300px").style("height", "60px").style("background", "white")
                             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
 
@@ -1023,9 +1113,9 @@ else
 
                             .on("mousemove", function (d) {
                                 tooltip.style("visibility", "visible")
-                                    .style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 5) + "px");
+                                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                  var text = 'Downtime: ' + d.tot_downtime + ' Min <br/> No of Occurence: ' + d.no_of_occurence + ' <br/> Downtime Reason: ' + d.Alarm_Description + '';
+                                var text = 'Downtime: ' + d.tot_downtime + '<br/> No of Occurence: ' + d.no_of_occurence + '';
 
                                 tooltip.select("div").html(text)
 
@@ -1061,8 +1151,7 @@ else
                             .attr('y', margin / 2.4)
                             .attr('transform', 'rotate(-90)')
                             .attr('text-anchor', 'middle')
-                            //.text('Time(in minutes)')
-                            .text('MTTR (in Minutes)')
+                            .text('MTTR(in minutes)')
 
                         svg.append('text')
                             .attr('class', 'label')
@@ -1150,7 +1239,7 @@ else
         else if (records == '') {
             swal({
                 icon: "error",
-                title: "Please Provide No. of records",
+                title: "Please Provide No. of Records",
                 button: false,
                 timer: 4500
             })
@@ -1203,8 +1292,9 @@ else
                     if (response.status != "Error") {
                         sample = response.data.Table;
                         var lineName = sample[0].lineName;
-                        //$('#monthly_line').text(lineName);
-                       // $('#monthly_subsystem').text(machinecode);
+
+                        $('#monthly_line').text(lineName);
+                        $('#monthly_subsystem').text(machinecode);
                         d3.select(".monthly_report").append("svg");
                         const svg = d3.select('svg');
                         const svgContainer = d3.select('.monthly_report');
@@ -1213,8 +1303,8 @@ else
                         const b = $('.monthly_report').width();
 
                         const margin = 150;
-                        const width = b - 2 * margin -10;
-                        const height = a - 2 * margin-200;
+                        const width = b - 2 * margin - 10;
+                        const height = a - 2 * margin - 300;
 
 
                         //const margin = 80;
@@ -1236,6 +1326,7 @@ else
                         const makeYLines = () => d3.axisLeft()
                             .scale(yScale)
 
+
                         var tooltip = d3.select(".monthly_report")
                             .append("div")
                             .style("opacity", 0)
@@ -1248,7 +1339,7 @@ else
 
 
 
-                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("background-color", "#898584").style("color", "white")
+                        tooltip = d3.select("body").append("div").style("width", "300px").style("height", "60px").style("background", "white")
                             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
 
@@ -1326,13 +1417,14 @@ else
 
                             .on("mousemove", function (d) {
                                 tooltip.style("visibility", "visible")
-                                    .style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 5) + "px");
+                                    .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                  var text = 'Downtime: ' + d.tot_downtime + ' Min <br/> No of Occurence: ' + d.no_of_occurence + ' <br/> Downtime Reason: ' + d.Alarm_Description + '';
+                                var text = 'Downtime: ' + d.tot_downtime + '<br/> No of Occurence: ' + d.no_of_occurence + '';
 
                                 tooltip.select("div").html(text)
 
                             })
+
 
                             .on('mouseleave', function () {
                                 d3.selectAll('.value')
@@ -1364,8 +1456,7 @@ else
                             .attr('y', margin / 2.4)
                             .attr('transform', 'rotate(-90)')
                             .attr('text-anchor', 'middle')
-                           // .text('Time(in minutes)')
-                            .text('MTTR(in Minutes)')
+                            .text('MTTR(in minutes)')
 
                         svg.append('text')
                             .attr('class', 'label')
@@ -1426,9 +1517,6 @@ else
         }
 
     })
-
-
-
     //-----------------Today--------------------------//
 
     document.getElementById("searchtoday").addEventListener("click", function () {
@@ -1498,7 +1586,7 @@ else
                     if (response.status != "Error") {
                         sample = response.data.Table;
                         var lineName = sample[0].lineName;
-                       /* $('#today_line').text(lineName);*/
+                        $('#today_line').text(lineName);
 
                         d3.select(".today_report").append("svg");
                         const svg = d3.select('svg');
@@ -1507,9 +1595,9 @@ else
                         const a = $('.today_report').height();
                         const b = $('.today_report').width();
 
-                        const margin = 80;
+                        const margin = 150;
                         const width = b - 2 * margin -10;
-                        const height = a - 2 * margin-80;
+                        const height = a - 2 * margin-300;
 
 
                         //const margin = 80;
@@ -1543,7 +1631,7 @@ else
 
 
 
-                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("height", "100px").style("background-color", "#898584").style("color", "white")
+                        tooltip = d3.select("body").append("div").style("width", "150px").style("height", "60px").style("background", "white")
                             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
 
@@ -1623,7 +1711,7 @@ else
                                 tooltip.style("visibility", "visible")
                                     .style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 5) + "px");
 
-                                  var text = 'Downtime: ' + d.tot_downtime + ' Min <br/> No of Occurence: ' + d.no_of_occurence + ' <br/> Downtime Reason: ' + d.Alarm_Description + '';
+                                var text = 'Downtime: ' + d.tot_downtime + '<br/> No of Occurence: ' + d.no_of_occurence + '';
 
                                 tooltip.select("div").html(text)
 
@@ -1778,7 +1866,7 @@ else
                     if (response.status != "Error") {
                         sample = response.data.Table;
                         var lineName = sample[0].lineName;
-                       // $('#yesterday_line').text(lineName);
+                        $('#yesterday_line').text(lineName);
 
                         d3.select(".yesterday_report").append("svg");
                         const svg = d3.select('svg');
@@ -1789,7 +1877,7 @@ else
 
                         const margin = 150;
                         const width = b - 2 * margin -10;
-                        const height = a - 2 * margin-200;
+                        const height = a - 2 * margin-300;
 
 
                         //const margin = 80;
@@ -1823,7 +1911,7 @@ else
 
 
 
-                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("height", "100px").style("background-color", "#898584").style("color", "white")
+                        tooltip = d3.select("body").append("div").style("width", "150px").style("height", "60px").style("background", "white")
                             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
 
@@ -1903,7 +1991,7 @@ else
                                 tooltip.style("visibility", "visible")
                                     .style("top", (d3.event.pageY - 10) + "px").style("left", (d3.event.pageX + 5) + "px");
 
-                                  var text = 'Downtime: ' + d.tot_downtime + 'Min <br/> No of Occurence: ' + d.no_of_occurence + ' <br/> Downtime Reason: ' + d.Alarm_Description + '';
+                                var text = 'Downtime: ' + d.tot_downtime + '<br/> No of Occurence: ' + d.no_of_occurence + '';
 
                                 tooltip.select("div").html(text)
 
@@ -1988,7 +2076,5 @@ else
 
     })
 
-
 </script>
-
 

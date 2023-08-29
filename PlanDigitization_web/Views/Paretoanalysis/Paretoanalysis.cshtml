@@ -26,11 +26,11 @@
 </style>
 <link rel="stylesheet" type="text/css" href="~/assets1/datepicker_normal/jquery-ui-1.8.19.custom.css">
 <header class="page-header">
-    <h2>Downtime Reason  Pareto</h2>
+    <h2>Pareto Analysis</h2>
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("NewDash","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -53,23 +53,23 @@
 
 
 
-        <div class="btn-group" style="left: 10px;">
+        <div class="btn-group">
             <label class="control-label" style="float:right; font-weight:bold;">Select Machine<span class="required">*</span></label>
         </div>
-        <div class="btn-group" style="left: 28px;">
+        <div class="btn-group">
             <select id="machinecode" class="form-control" name="machinecode" @*title="*"*@>
                 <option value="">Select Line First</option>
             </select>
         </div>
 
 
-        <div class="btn-group" style="left: 37px;">
-            <label class="control-label" style="float: right; font-weight: bold; margin-right: 10px; margin-left: 23px;" margin-left: 35px;> No of Records <span class="required">*</span></label>
+        <div class="btn-group">
+            <label class="control-label" style="float:right; font-weight:bold;"> No of Records <span class="required">*</span></label>
         </div>
-        <div class="btn-group" style="left: 45px;">
+        <div class="btn-group">
             <input type="text" class="form-control record" name="records" title="Enter no of records" required />
         </div>
-        <span style="color: red; margin-left: 46px;">*Type all or number (eg: all or 10 or 20)</span>
+        <span style="color:red;">*Type all or number (eg: all or 10 or 20)</span>
     </div> @*<div class="btn-group">
             <label class="control-label" style="float:right; font-weight:bold;"> Select Machine </label>
         </div>
@@ -95,12 +95,12 @@
                     <li class="active" id="custom_report">
                         <a href="#custom" data-toggle="tab">Custom</a>
                     </li>
-                    <li id="yearly_report">
+                    @*<li id="yearly_report">
                         <a href="#yearly" data-toggle="tab"> Yearly</a>
                     </li>
                     <li id="monthly_report">
                         <a href="#monthly" data-toggle="tab">Monthly</a>
-                    </li>
+                    </li>*@
                 </ul>
                 <div class="tab-content">
 
@@ -108,7 +108,7 @@
                         <section class="panel">
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Date range</label>
-                                <div class="col-md-6" style="right: 89px;">
+                                <div class="col-md-6">
                                     <div class="input-daterange input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -118,7 +118,7 @@
                                         <input type="text" class="form-control datepic" style="text-align:left;z-index:0;" id="end" name="end" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="padding-left: 0px;padding-right: 0px;right: 68px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchcustomwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -137,12 +137,12 @@
                             <div class="panel-body">
                                 <div class="row">
                                     @*<div class="chart chart-md" id="custom1"></div>*@
-                                    <div class='col-md-6 custome_report' style="height: 650px; border: solid; border-width: 5px; ">
+                                    <div class='col-md-6 custome_report' style="height: 650px;  background-color: rgb(91 165 241 / 10%); ">
 
                                         <h3 style="font-family: verdana; color: #47640a; text-align: center ">Occurrence Of The Alarm</h3>
 
                                     </div>
-                                    <div class='col-md-6 custome_Duration' style="height: 650px; border: solid; border-width: 5px;">
+                                    <div class='col-md-6 custome_Duration' style="height: 650px; background-color: #e0e0e0; ">
                                         <h3 style="font-family: verdana; color: #47640a; text-align: center ">Duration Of The Alarm</h3>
 
                                     </div>
@@ -155,8 +155,8 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-labe" style="right: 198px;">Select Year</label>
-                                <div class="col-md-4" style="right: 282px;">
+                                <label class="col-md-2 control-labe">Select Year</label>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -164,7 +164,7 @@
                                         <input class="date-own form-control" style="width: 150px;z-index:0;" type="text" id="year" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="right: 83px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchyearwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -183,10 +183,10 @@
                             <div class="panel-body">
                                 <div class="row">
                                     @*<div class="chart chart-md" id="custom1"></div>*@
-                                    <div class='col-md-6 year_report' style="height: 650px;border:solid;border-width:5px;">
+                                    <div class='col-md-6 year_report' style="height: 650px;  background-color: rgb(91 165 241 / 10%); ">
                                         <h3 style="font-family: verdana; color: #47640a; text-align: center ">Occurrence Of The Alarm</h3>
                                     </div>
-                                    <div class='col-md-6 year_Duration' style="height: 650px; border: solid; border-width: 5px; ">
+                                    <div class='col-md-6 year_Duration' style="height: 650px; background-color: #e0e0e0; ">
                                         <h3 style="font-family: verdana; color: #47640a; text-align: center ">Duration Of The Alarm</h3>
                                     </div>
                                 </div>
@@ -199,8 +199,8 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-label" style="right: 189px;">Select Month</label>
-                                <div class="col-md-4" style="right: 282px;">
+                                <label class="col-md-2 control-label">Select Month</label>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -208,7 +208,7 @@
                                         <input class="month-own form-control" style="width: 150px;z-index:0;" type="text" id="month" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="right: 87px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchmonthwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -227,12 +227,9 @@
                             <div class="panel-body">
                                 <div class="row">
                                     @*<div class="chart chart-md" id="custom1"></div>*@
-                                    <div class='col-md-6 monthly_report' style="height: 650px; border: solid; border-width: 5px; ">
-                                        <h3 style="font-family: verdana; color: #47640a; text-align: center ">Occurrence Of The Alarm</h3>
-
+                                    <div class='col-md-6 monthly_report' style="height: 650px;  background-color: rgb(91 165 241 / 10%); ">
                                     </div>
-                                    <div class='col-md-6 monthly_Duration' style="height: 650px; border: solid; border-width: 5px;">
-                                        <h3 style="font-family: verdana; color: #47640a; text-align: center ">Duration Of The Alarm</h3>
+                                    <div class='col-md-6 monthly_Duration' style="height: 650px; background-color: #e0e0e0; ">
                                     </div>
                                 </div>
                             </div>
@@ -453,7 +450,7 @@ else
                             //$("#machinecode").html(s);
 
                             for (var i = 0; i < response.data.length; i++) {
-                                console.log(response.data.length);
+                               // console.log(response.data.length);
                                 if (response.data.length == 1) {
                                     s += '<option value="' + response.data[i].Code + '" selected=selected>' + response.data[i].Name + '</option>';
                                 }
@@ -501,22 +498,22 @@ else
 
     });
 
-    document.getElementById("resetcustom").addEventListener("click", function () {
-        $('#start').val('');
-        $('#end').val('');
-        d3.select(".custome_report svg").remove();
-        d3.select(".custome_Duration svg").remove();
-    })
-    document.getElementById("resetyear").addEventListener("click", function () {
-        $('#year').val('');
-        d3.select(".year_report svg").remove();
-        d3.select(".year_Duration svg").remove();
-    })
-    document.getElementById("resetmonth").addEventListener("click", function () {
-        $('#month').val('');
-        d3.select(".monthly_report svg").remove();
-        d3.select(".monthly_Duration svg").remove();
-    })
+    //document.getElementById("resetcustom").addEventListener("click", function () {
+    //    $('#start').val('');
+    //    $('#end').val('');
+    //    d3.select(".custome_report svg").remove();
+    //    d3.select(".custome_Duration svg").remove();
+    //})
+    //document.getElementById("resetyear").addEventListener("click", function () {
+    //    $('#year').val('');
+    //    d3.select(".year_report svg").remove();
+    //    d3.select(".year_Duration svg").remove();
+    //})
+    //document.getElementById("resetmonth").addEventListener("click", function () {
+    //    $('#month').val('');
+    //    d3.select(".monthly_report svg").remove();
+    //    d3.select(".monthly_Duration svg").remove();
+    //})
 
 
 </script>
@@ -640,7 +637,7 @@ else
             .style("border-radius", "5px")
             .style("padding", "5px")
 
-        tooltip = d3.select("body").append("div").style("width", "150px").style("height", "100px").style("background-color", "#898584").style("color", "white")
+        tooltip = d3.select("body").append("div").style("width", "150px").style("height", "100px").style("background", "white")
             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
         toolval = tooltip.append("div");
 
@@ -828,7 +825,7 @@ else
             .style("border-radius", "5px")
             .style("padding", "5px")
 
-        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "90px").style("background-color", "#898584").style("color", "white")
+        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "90px").style("background", "white")
             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
         toolval = tooltip.append("div");
 
@@ -1074,7 +1071,52 @@ else
 
 
                         graphReport(".custome_report", response)
-                          $.ajax({
+
+                    }
+                    else {
+                        sample = "";
+                        $(".custome_report").empty();
+
+                        var div_width = 400;
+                        var div_height = 400;
+                        var svg = d3.select(".custome_report").append("svg")
+                            .attr("width", div_width)
+                            .attr("height", div_height)
+                            .attr("preserveAspectRatio", "xMidYMid")
+                            .append("g")
+                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
+
+                        svg.append("text")
+                            .text("No Data Available")
+                            .style("font-size", "40px");
+                    }
+
+                },
+                error: function (response) {
+                    if (response.status == "401") {
+                        swal({
+                            icon: "warning",
+                            title: "Session Timeout",
+                            button: true,
+                            closeModal: false
+                        })
+                        window.location = R_url;
+                    }
+                    else {
+                        swal({
+                            icon: "warning",
+                            title: response.responseText,
+                            button: true,
+                            closeModal: false
+                        })
+
+                    }
+                }
+             });
+
+
+
+            $.ajax({
                 type: "POST",
                 url: URL + 'api/Paretoanalysis/GetPareto_CustomDuration',
                 headers: {
@@ -1143,52 +1185,6 @@ else
                 }
             });
 
-                    }
-                    else {
-                        sample = "";
-                        $(".custome_report").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".custome_report").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-             });
-
-
-
-
-
         }
 
     })
@@ -1196,411 +1192,6 @@ else
 
 
 
-    document.getElementById("searchyearwise").addEventListener("click", function () {
-
-        var linecode = '@Session["LineCode"]';
-        var machinecode = $('#machinecode').val();
-        var machinecode1 = $('#machinecode option:selected').text();
-        var records = $('.record').val();
-        var year = $('#year').val();
-        $('.updated_time').text(new Date().toLocaleString());
-        $('.shift').text("N/A");
-
-
-        if (linecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Line details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (machinecode == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Machine details",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else if (records == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide No. of records",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (year == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Year",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else
-        {
-            var myData = {
-                "line": linecode,
-                "Machine": machinecode,
-                "records": records,
-                "Year": year,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
-             @*var R_url = '@Url.Action("Login", "Main")';
-                   var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-                    $.ajax({
-                        type: 'Get',
-                        url: URL + 'api/UserSettings/GetEmployee',
-                        headers: {
-                            Authorization: 'Bearer ' + user1
-                        },
-                        dataType: 'json'
-                    }).success(function (response) {*@
-             var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: URL + 'api/Paretoanalysis/GetPareto_YearwiseReport',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                   /* $('#yearly_line').text(linecode);*/
-                    $('#yearly_line').text('@Session["LineName"]')
-                      $('#yearly_machine').text(machinecode1);
-
-                    d3.select("svg").remove();
-                    if (response.status != "Error") {
-
-
-                        graphReport(".year_report", response)
-
-                         $.ajax({
-                type: "POST",
-                  url: URL + 'api/Paretoanalysis/GetPareto_YearwiseDuration',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                dataType: "json",
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                    d3.select(".year_Duration svg").remove();
-                    if (response.status != "Error") {
-                        /* $('#custom_line').text(linecode);*/
-                        $('#year_line').text('@Session["LineName"]');
-                        $('#year_machine').text(machinecode1);
-
-                        graphDuration(".year_Duration", response)
-                    }
-                    else
-                    {
-                        sample = "";
-                         $(".year_Duration").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".year_Duration").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-            });
-                    }
-                    else
-                    {
-                        $(".year_report").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".year_report").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-                },
-                error: function (result) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-            });
-                    //}).error(function (response) {
-                    //    swal({
-                    //        icon: "warning",
-                    //        title: "Session Timeout",
-                    //        button: true,
-                    //        closeModal: false
-                    //    })
-                    //    window.location = R_url;
-                    //});
-
-
-        }
-
-    })
-
-    document.getElementById("searchmonthwise").addEventListener("click", function () {
-
-        var linecode = '@Session["LineCode"]';
-        var machinecode = $('#machinecode').val();
-        var machinecode1 = $('#machinecode option:selected').text();
-        var records = $('.record').val();
-        var month = $('#month').val();
-        $('.updated_time').text(new Date().toLocaleString());
-        $('.shift').text("N/A");
-
-
-        if (linecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Line details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (machinecode == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Machine details",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else if (records == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide No. of records",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (month == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Month",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else
-        {
-            var chartData = [];
-            var myData = {
-                "line": linecode,
-                "Machine": machinecode,
-                "records": records,
-                "Year": month,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
-             var R_url = '@Url.Action("Login", "Main")';
-                   var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: URL + 'api/Paretoanalysis/GetPareto_MonthwiseReport',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                    d3.select("svg").remove();
-                    /*  $('#monthly_line').text(linecode);*/
-                    $('#monthly_line').text('@Session["LineName"]');
-                    $('#monthly_machine').text(machinecode1);
-
-                    if (response.status != "Error")
-                    {
-
-
-                        graphReport(".monthly_report", response);
-                        $.ajax({
-                type: "POST",
-                  url: URL + 'api/Paretoanalysis/GetPareto_MonthwiseDuration',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                dataType: "json",
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                    d3.select(".monthly_Duration svg").remove();
-                    if (response.status != "Error") {
-                        /* $('#custom_line').text(linecode);*/
-                        $('#monthly_line').text('@Session["LineName"]');
-                        $('#monthly_machine').text(machinecode1);
-
-                        graphDuration(".monthly_Duration", response)
-
-
-                    }
-                    else
-                    {
-                        sample = "";
-                         $(".monthly_Duration").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".monthly_Duration").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-            });
-
-                    }
-                    else
-                    {
-                        $(".monthly_report").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".monthly_report").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-              });
-
-
-
-
-
-        }
-
-    })
 
 </script>
 

@@ -1,7 +1,323 @@
-﻿body {
+﻿﻿body {
     background-color: white;
     height: 100%;
 }
+/*.loading{
+    z-index: 9999;
+}*/
+.Selection_Condition {
+    font-weight: bolder;
+    text-align: center;
+}
+
+.modal-content {
+    width: auto;
+}
+
+#largeShoes .modal-dialog .modal-content .modal-header {
+    border-radius: 8px;
+}
+
+#myModalLatestAlarm .modal-dialog .modal-content .modal-header {
+    border-radius: 8px;
+}
+
+#myModalLatestLoss .modal-dialog .modal-content .modal-header {
+    border-radius: 8px;
+}
+
+#myModalHourlyTracker .modal-dialog .modal-content .modal-header {
+    border-radius: 8px;
+}
+
+#largeShoes .tooltiptext1,
+#myModalHourlyTracker .tooltiptext1 {
+    font-size: 12px;
+}
+
+#myModalLatestAlarm thead,
+#myModalLatestLoss thead {
+    background-color: teal;
+    color: white;
+}
+
+#myModalLatestAlarm .Live_Alarm_ID {
+    display: none;
+}
+
+#myModalLatestAlarm .alarm_error,
+#myModalLatestLoss .Loss_error {
+    color: red;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#myModalHourlyTracker .Hourly_Utilisation,
+#myModalHourlyTracker .Hourly_Downtime,
+#myModalHourlyTracker .Hourly_Production_Alignment,
+#myModalHourlyTracker .Hourly_Production {
+    height: 230px;
+    width: 100%;
+    margin: auto;
+}
+
+#myModalHourlyTracker .Hourly_OEE {
+    height: 360px;
+    width: 100%;
+    margin: auto;
+}
+
+.carousel_panel {
+    margin-bottom: 0px;
+}
+
+.carousel_panel_body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.panel0 {
+    margin-bottom: 0px;
+}
+
+    .panel0 .panel-body {
+        padding-top: 5px;
+    }
+
+    .panel0 .row_slide {
+        color: white;
+    }
+
+.panel {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.panel1 {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.panel .panel-heading {
+    padding: 6px !important;
+    color: black;
+}
+
+.panel .pb_kpi_live {
+    height: 230px;
+    width: 100%;
+    margin: auto;
+}
+
+.panel-body .data_kpi_live .avail,
+.panel-body .data_kpi_live .perf,
+.panel-body .data_kpi_live .qual,
+.panel-body .data_kpi_live .oee {
+    margin: auto;
+}
+
+
+.panel1 fontSanserif {
+    color: black;
+    font-weight: bold;
+}
+
+.panel1 .panel-heading .fontSanserif {
+    color: black;
+    font-weight: bold;
+}
+
+.panel1 .panel-heading .titleTooltip {
+    margin-left: 3px;
+}
+
+.panel1 .panel-heading .machineBatchcode {
+    font-size: 9px;
+}
+
+.panel1 .panel-body {
+    color: black;
+}
+
+    .panel1 .panel-body .kpiCard .kpiCard_outer {
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        margin-left: 0px;
+    }
+
+.kpicard_Shift {
+    font-size: 9px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: grey;
+}
+
+    .kpicard_Shift span {
+        font-size: 18px;
+        color: black;
+    }
+
+.carousel_inner_padding {
+    padding: 6px;
+}
+
+.panel1 .row_apq {
+    font-size: 9px;
+}
+
+    .panel1 .row_apq progress {
+        width: 7%;
+    }
+
+.panel1 .kpicard_apq_value {
+    font-size: 12px;
+}
+
+.panel1 .productionCard .row_ProdCard {
+    font-size: 9px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-right: 0px;
+}
+
+.carousel_Label {
+    color: grey;
+}
+
+.carousel_Value {
+    font-size: 15px;
+    color: black;
+}
+
+.machine_status_bars {
+    margin: 5px;
+    height: 50px;
+    width: 88px !important;
+    text-align: center;
+    border-radius: 5px;
+    color: black;
+}
+
+#statusbar_hov {
+    font-weight: bold;
+}
+
+#slide_nav_button {
+    background-color: darkgrey;
+    color: darkgrey;
+}
+
+.machine_status_bars #okpart_id {
+    font-size: 19px;
+}
+
+.panel1 .row_alarm .row_alarm_Min {
+    font-size: 9px;
+}
+
+.panel1 .row_alarm {
+    font-size: 9px;
+    margin-top: 1%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-right: 0px;
+}
+
+.panel1 .row_util {
+    font-size: 9px;
+    margin-top: 1%;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-right: 0px;
+}
+
+    .panel1 .row_util .util_overview {
+        height: 101px;
+    }
+
+.panel2 .fontSanserif {
+    color: black;
+}
+
+    .panel2 .fontSanserif .titleTooltip, .panel_title {
+        color: black;
+        font-size: 20px;
+    }
+
+        .panel_title .titleTooltip {
+            color: grey !important;
+            font-size: 15px !important;
+            margin-top: 3px;
+        }
+
+.glyphicon .tooltiptext1 {
+    line-height: 1.5;
+}
+
+.glyphicon .tooltiptext2 {
+    line-height: 1.5;
+}
+
+.panel2 .util_panel_body {
+    height: 230px;
+    width: 100%;
+    margin: auto;
+}
+
+    .panel2 .util_panel_body #utli_overview {
+        height: 230px;
+        width: 100%;
+        margin: auto;
+    }
+
+.panel2 #status_bar {
+    width: 100%;
+    height: 115px;
+}
+
+.panel2 .mttr_graph {
+    height: 230px;
+    width: 330px;
+    margin: auto;
+}
+
+.panel2 .mtbf_graph,
+.panel2 .custome_report,
+.panel2 #container1 {
+    height: 230px;
+    width: 330px;
+    margin: auto;
+}
+
+.panel2 #heatmap_customs {
+    height: 230px;
+    width: 710px;
+}
+
+.panel2 .Range_chart_daywise {
+    height: 230px;
+    width: 530px;
+    margin: auto;
+}
+
+    .panel2 .Range_chart_daywise .err_Range_chart_daywise {
+        color: red;
+        font-weight: bold;
+    }
+
+    .panel2 .Range_chart_daywise svg {
+        height: 100%;
+        width: 100%;
+    }
+
+.panel2 #top_10_pareto_chart {
+    height: 230px;
+    width: 530px;
+    margin: auto;
+}
+
+.main_div .panel {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 
 .dark-mode {
     background-color: #1b1c1c;
@@ -24,6 +340,8 @@
     /*font-weight: bold;*/
     margin-right: -30px;
 }
+
+
 
 .pie text {
     font-family: "Verdana";
@@ -126,6 +444,10 @@ section .panel-heading .row div .machineBatchcode {
     display: inline-block;
 }
 
+h2 .titleTooltip {
+    font-size: 12px;
+}
+
 .titleTooltip_status {
     position: relative;
     display: inline-block;
@@ -148,10 +470,14 @@ section .panel-heading .row div .machineBatchcode {
     top: 20px;
     right: 105%;
     font-weight: normal;
-    z-index: 100000;
+    z-index: 1000;
+    font-size: 12px;
 }
 
-.titleTooltip:hover .tooltiptext, .titleTooltip:hover .tooltiptext1, .titleTooltip_status:hover .tooltiptext_status {
+.titleTooltip:hover .tooltiptext,
+.titleTooltip:hover .tooltiptext1,
+.titleTooltip_status:hover .tooltiptext_status,
+.titleTooltip:hover .tooltiptext2 {
     visibility: visible;
     display: block;
 }
@@ -166,10 +492,28 @@ section .panel-heading .row div .machineBatchcode {
     padding: 5px 0;
     position: absolute;
     top: 20px;
-    left: 105%;
+    right: 105%;
     font-weight: normal;
     z-index: 1;
 }
+
+.titleTooltip .tooltiptext2 {
+    visibility: hidden;
+    width: 200px;
+    background-color: Grey;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    top: 20px;
+    left: 105%;
+    font-weight: normal;
+    z-index: 1;
+    font-size: 12px;
+}
+
+
 
 .titleTooltip_status .tooltiptext_status {
     visibility: hidden;
@@ -179,25 +523,29 @@ section .panel-heading .row div .machineBatchcode {
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
-    top: 20px;
+    top: 0px;
     left: 105%;
     font-weight: normal;
-    height: 79px;
+    height: 50px;
     width: 224px;
-    z-index: 9999;
+    z-index: 1000;
+    line-height: 14px;
+    font-size: 12px;
 }
 
+
 /* cicular progress bar chart*/
-#darkg center .widget_1, #darkg center .widget_2, #darkg center .widget_3 {
+#darkg center .carouselWidget {
     width: auto;
     height: auto;
 }
 
-    #darkg center .widget_1 svg, #darkg center .widget_2 svg, #darkg center .widget_3 svg {
+    #darkg center .carouselWidget svg {
         width: 119px !important;
         height: 127px !important;
         display: block;
     }
+
 
 .popupWidget {
     height: 100%;
@@ -325,18 +673,19 @@ line {
     display: flex;
 }
 
-#myCarousel {
-    /*padding-top: 20px;*/
-    width: 1220px;
+/*#myCarousel {*/
+/*padding-top: 20px;*/
+/*width: 1220px;
     height: 350px;
-}
+}*/
 
 .statusbar_flex {
     display: flex;
     padding-left: 12px;
     padding-top: 12px;
-    overflow-x:auto;
-    overflow-y:hidden;
+    padding-right: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .Flex-item-status {
@@ -393,7 +742,7 @@ line {
     margin-top: -310px;
     margin-left: -30px;
     font-size: 12px;
-    z-index: 100000; /*Increase the z-index value */
+    z-index: 1000; /*Increase the z-index value */
 }
 
 .Hourly_OEE .tooltipHourlyOEE {
@@ -404,7 +753,7 @@ line {
     padding: 8px;
     border-radius: 4px;
     font-size: 12px;
-    z-index: 100000; /*Increase the z-index value */
+    z-index: 1000; /*Increase the z-index value */
 }
 
 .Hourly_Production .bar {
@@ -415,6 +764,7 @@ line {
 .Hourly_Production .bar-group {
     fill: lightblue;
 }
+
 .Hourly_Production .line {
     fill: none;
     stroke-width: 1.5px;
@@ -441,7 +791,7 @@ line {
     padding: 8px;
     border-radius: 4px;
     font-size: 12px;
-    z-index: 100000; /*Increase the z-index value */
+    z-index: 1000; /*Increase the z-index value */
 }
 
 
@@ -454,7 +804,7 @@ line {
     padding: 8px;
     border-radius: 4px;
     font-size: 12px;
-    z-index: 100000; /*Increase the z-index value */
+    z-index: 1000; /*Increase the z-index value */
 }
 
 .Hourly_Utilisation .bar-group-0 { /*uptime*/
@@ -556,7 +906,7 @@ line {
     padding: 8px;
     border-radius: 4px;
     font-size: 12px;
-    z-index: 100000; /*Increase the z-index value */
+    z-index: 1000; /*Increase the z-index value */
 }
 
 .tooltip-arrow {
@@ -570,4 +920,19 @@ line {
 
 .tooltip-rotate {
     transform: translate(-150%, -250%) rotate(270deg);
+}
+
+.no_hand_cursor {
+    cursor: default;
+}
+
+
+
+
+
+
+@media screen and (min-width: 768px) {
+    .carousel-indicators {
+        bottom: 10px;
+    }
 }

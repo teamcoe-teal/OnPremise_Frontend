@@ -24,7 +24,7 @@
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("Dashboard","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -37,38 +37,27 @@
 </header>
 @if (ViewContext.Controller.HasPermission("MachineAvailabilityHistoric-View"))
 {
-    <input type="button" class="btn btn-primary" onclick="location.href='/Quality/QualityLiveDashboard';" value="Click to View Live Production Dashbaord" style="float:right;text-decoration:none;margin-right:2%;border-style:none;" />
+    @*<input type="button" class="btn btn-primary" onclick="location.href='/Quality/QualityLiveDashboard';" value="Click to View Live Quality Dashbaord" style="float:right;text-decoration:none;margin-right:2%;border-style:none;" />*@
     <div class="row">
         <div class="col-md-12">
-            <div class="btn-group"></div>
             @*<div class="btn-group">
-            <label class="control-label" style="float:right; font-weight:bold;"> Select Line </label>
-        </div>
-        <div class="btn-group">
-            <select id="linecode" class="form-control" name="linecode" title="*"></select>
-        </div>&nbsp;&nbsp;*@
-            @*<div class="btn-group" style="padding-right: 10px;">
-            <label class="control-label" style="float: right; font-weight: bold; padding-right: 7px;"> Select Machine </label>
-        </div>*@
-
+                    <label class="control-label" style="float:right; font-weight:bold;"> Select Line </label>
+                </div>
+                <div class="btn-group">
+                    <select id="linecode" class="form-control" name="linecode" title="*"></select>
+                </div>&nbsp;&nbsp;*@
             <div class="btn-group">
-                <label class="control-label" style="float:right; font-weight:bold;"> Select Machine <span class="required">*</span> </label>
+                <label class="control-label" style="float:right; font-weight:bold;"> Select Machine </label>
             </div>
-
             <div class="btn-group">
-                <select id="machinecode" class="form-control" name="machinecode" @*title="*"*@>
+                <select id="machinecode" class="form-control" name="machinecode" title="*">
                     <option value="">Select Line First</option>
                 </select>
             </div>
 
-            @*<div class="btn-group">
-                <label class="control-label" style="float: right; font-weight: bold; padding-right: 7px;margin-left: 30px;"> Select Variant </label>
-            </div>*@
-
             <div class="btn-group">
-                <label class="control-label" style="float:right; font-weight:bold;"> Select Variant <span class="required">*</span></label>
+                <label class="control-label" style="float:right; font-weight:bold;"> Select Variant </label>
             </div>
-
 
             <div class="btn-group">
                 <select class="form-control" id="Variant">
@@ -141,8 +130,8 @@
                     <div id="custom" class="tab-pane active">
                         <section class="panel">
                             <div class="form-group">
-                                <label class="col-md-1 control-label" style="padding-top: 9px;">Date range</label>
-                                <div class="col-md-6" style="padding-top: 5px;">
+                                <label class="col-md-1 control-label">Date range</label>
+                                <div class="col-md-6">
                                     <div class="input-daterange input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -170,8 +159,8 @@
                             <div class="panel-body">
                                 @*<div class="chart chart-md" id="custom1"></div>*@
                                 @*<div id='custom1'>
-                <svg class="custom1"></svg>
-            </div>*@
+                                        <svg class="custom1"></svg>
+                                    </div>*@
                                 <div id="heat_head" style="display:none"><h2>Heat Map for rejections</h2></div>
                                 <div id="container" class="heatmap_custom" style="height:600px;">
 
@@ -185,8 +174,8 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-1 control-labe" style="right: 218px; top: 7px; margin-left: 30px; ">Select Year</label>
-                                <div class="col-md-4" style="right: 201px;">
+                                <label class="col-md-1 control-labe">Select Year</label>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -219,9 +208,9 @@
                     <div id="monthly" class="tab-pane">
                         <section class="panel">
                             <div class="form-group">
-                                <div class="col-md-2" style="right: 205px;"></div>
-                                <label class="col-md-2 control-label" style="right: 198px;top: 5px;">Select Month</label>
-                                <div class="col-md-4" style="right: 301px;">
+                                <div class="col-md-2"></div>
+                                <label class="col-md-2 control-label">Select Month</label>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -229,7 +218,7 @@
                                         <input class="month-own form-control" style="width: 150px;z-index:0;" type="text" id="month" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4"style="right: 78px;">
+                                <div class="col-md-4">
                                     <div class="btn-group">
                                         <button type="button" id="searchmonthwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
                                     </div>
@@ -512,7 +501,7 @@ else
 
     document.getElementById("searchcustomwise").addEventListener("click", function ()
     {
-       
+
         var linecode = '@Session["LineCode"]';
         var machinecode = $('#machinecode').val();
         var Variant = $('#Variant').val();
@@ -656,7 +645,7 @@ else
 
 
 
-                         tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background-color", "#898584").style("color", "white")
+                         tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
                              .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                          toolval = tooltip.append("div");
 
@@ -711,11 +700,11 @@ else
                                  tooltip.style("visibility", "visible")
                                      .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                 var text = 'Occurence: ' + d.Frequency + ' (times)<br/> Percentage: ' + d.Percentage + '<br/> Weightage: ' + d.Weightage + '' + "%" + ' <br/> RejectionDescription: ' + d.RejectionDescription + '';
+                                 var text = 'Occurence: ' + d.Frequency + '<br/> Percentage: ' + d.Percentage + '<br/> Weightage: ' + d.Weightage + '' + "%" + ' <br/> RejectionDescription: ' + d.RejectionDescription + '';
 
 
                                  tooltip.select("div").html(text)
-                                
+
 
                              })
                              .on("click", function (d) {
@@ -771,7 +760,7 @@ else
                              .attr("dy", ".71em")
                              .style("text-anchor", "end")
 
-                             .text("Occurrence (times)");
+                             .text("Occurrence");
 
                          svg_pareto.append("g")
                              .attr("class", "y axis")
@@ -793,7 +782,7 @@ else
                              .attr('text-anchor', 'end')
 
                              .attr("transform", "rotate(-90)")
-                             .text("Occurrence (times)");
+                             .text("Occurrence");
 
                          svg_pareto.append("text")
                              .attr("class", "y label2")
@@ -972,7 +961,7 @@ else
                             .style("border-width", "2px")
                             .style("border-radius", "5px")
                             .style("padding", "5px")
-                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background-color", "#898584").style("color", "white")
+                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
                             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
 
@@ -1050,7 +1039,7 @@ else
                                 tooltip.style("visibility", "visible")
                                     .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                var text = 'Occurence: ' + d.Frequency + ' (times)<br/> Percentage: ' + d.Percentage + '<br/> Weightage: ' + d.Weightage + '' + "%" + ' <br/> RejectionDescription: ' + d.RejectionDescription + '';
+                                var text = 'Occurence: ' + d.Frequency + '<br/> Percentage: ' + d.Percentage + '<br/> Weightage: ' + d.Weightage + '' + "%" + ' <br/> RejectionDescription: ' + d.RejectionDescription + '';
 
 
                                 tooltip.select("div").html(text)
@@ -1075,7 +1064,7 @@ else
                              .attr("x", d => xScale(d.RejectionDescription) + xScale.bandwidth() / 2)
                              .attr("y", function (d) { return yhist(d.Frequency); })
                               .text((a) => `${a.Frequency}`)
-                             
+
                         ////Draw CDF line
                         var guide = d3.line()
                             .x(function (d) { return xScale(d.RejectionDescription) + (xScale.bandwidth() / 2); })
@@ -1115,7 +1104,7 @@ else
                             .attr("y", -50)
                             .attr("dy", ".71em")
                             .style("text-anchor", "end")
-                            .text("Occurrence (times)");
+                            .text("Occurrence");
 
 
                         svg_pareto.append("g")
@@ -1132,12 +1121,12 @@ else
                         svg_pareto.append("text")
                             .attr("class", "y label")
                             //.attr("text-anchor", "end")
-                            .attr("y", -40)
+                            .attr("y", -50)
                             .attr("dy", ".75em")
                             .attr('text-anchor', 'end')
 
                             .attr("transform", "rotate(-90)")
-                            .text("Occurrence (times)");
+                            .text("Occurrence");
 
                         svg_pareto.append("text")
                             .attr("class", "y label2")
@@ -1258,8 +1247,7 @@ else
                     $('.loading').hide();
                 },
                 success: function (response) {
-                    /*    d3.select(".monthly_chart svg").remove();*/
-                    d3.select("svg").remove();
+                    d3.select(".monthly_chart svg").remove();
                     if (response.status != "Error") {
 
                         sample_pareto = response.data.Table;
@@ -1333,7 +1321,7 @@ else
 
 
 
-                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background-color", "#898584").style("color", "white")
+                        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "150px").style("background", "white")
                             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
                         toolval = tooltip.append("div");
 
@@ -1389,7 +1377,7 @@ else
                                 tooltip.style("visibility", "visible")
                                     .style("top", (d3.event.pageY - 30) + "px").style("left", (d3.event.pageX + 20) + "px");
 
-                                var text = 'Occurence: ' + d.Frequency + ' (times)<br/> Percentage: ' + d.Percentage + '<br/> Weightage: ' + d.Weightage + '' + "%" + ' <br/> RejectionDescription: ' + d.RejectionDescription + '';
+                                var text = 'Occurence: ' + d.Frequency + '<br/> Percentage: ' + d.Percentage + '<br/> Weightage: ' + d.Weightage + '' + "%" + ' <br/> RejectionDescription: ' + d.RejectionDescription + '';
 
 
                                 tooltip.select("div").html(text)
@@ -1405,7 +1393,7 @@ else
                             //})
 
 
-                           
+
                         bar_pareto.selectAll(".bar-title")
                             .data(sample_pareto)
                             .enter()
@@ -1453,7 +1441,7 @@ else
                              .attr("dy", ".71em")
                              .style("text-anchor", "end")
 
-                             .text("Occurrence (times)");
+                             .text("Occurrence");
 
                          svg_pareto.append("g")
                              .attr("class", "y axis")
@@ -1475,7 +1463,7 @@ else
                             .attr('text-anchor', 'end')
 
                             .attr("transform", "rotate(-90)")
-                            .text("Occurrence (times)");
+                            .text("Occurrence");
 
                         svg_pareto.append("text")
                             .attr("class", "y label2")
@@ -1597,7 +1585,7 @@ else
         //    $(this).removeData();
         //});
 
-       
+
         $("#myModal1").modal('show');
 
 
@@ -1820,7 +1808,6 @@ else
                 success: function (response) {
 
 
-
                     if (response.status != "Error") {
                         var j = 1, ii = 0;
 
@@ -1865,7 +1852,6 @@ else
                             "autoWidth": false,
                         });
                     }
-
                     else {
 
                         $(".rejection_error").text(response.msg);
@@ -1929,7 +1915,7 @@ else
         var y = x.split("-").shift();
 
 
-       
+
 
         if (year != "") {
 

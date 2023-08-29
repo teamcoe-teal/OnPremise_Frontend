@@ -7,20 +7,15 @@
 }
 
 <header class="page-header">
-    <h2> Latest Machine Events </h2>
+    <h2> 16 Big Loss Live </h2>
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("NewDash","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
-            <li>
-                <a href="@Url.Action("Loss_Historic","Losses")">
-                    <span>Loss Historic</span>
-                </a>
-            </li>
-            @*<li><span>Live</span></li>*@
+            <li><span>Live</span></li>
         </ol>
     </div>
 </header>
@@ -36,7 +31,7 @@
                 <header class="panel-heading" style="background-color:teal;color:white;">
                     <div class="panel-actions">
                     </div>
-                    <h2 class="panel-title" style="color:white;"> Latest Machine Events </h2>
+                    <h2 class="panel-title" style="color:white;"> 16 Big Loss Live </h2>
                 </header>
                 <div class="panel-body">
                     <div class="form-group">
@@ -195,10 +190,9 @@ else
 
                 if (response.data.length > 0) {
                     window.machinecode = response.data[0].Code
-                    console.log("window", window);
                 }
                 for (var i = 0; i < response.data.length; i++) {
-                    s += '<option value="' + response.data[i].Code + '">' + response.data[i].Code + "-" + response.data[i].Name + '</option>';
+                    s += '<option value="' + response.data[i].Code + '">' + response.data[i].Name + '</option>';
                 }
                 $("#Machine").html(s);
 
@@ -216,12 +210,6 @@ else
         var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
         window.machinecode = $("#Machine").val();
         var Machine = $("#Machine").val();
-
-        $('.updated_time').text(new Date().toLocaleString());
-        $('.shift').text("N/A");
-
-        $('.shift_n').show();
-        $('.updated_time_n').show();
 
         var myData = {
             "CompanyCode": '@Session["CompanyCode"]',
@@ -337,8 +325,6 @@ else
                     $("#break_last_occ").html(response.data.Table[0].break_lastocc);
 
 
-
-
                 }
             },
             error: function (response) {
@@ -347,6 +333,10 @@ else
         });
         setTimeout(getlivedata, 120000);
     }
+    $('.updated_time').text(new Date().toLocaleString());
+    $('.shift').text(response.data[0].shift_id);
 
+    $('.shift_n').show();
+    $('.updated_time_n').show();
 
 </script>

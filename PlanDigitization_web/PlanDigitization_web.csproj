@@ -4100,6 +4100,11 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\pareto-chart.js" />
     <Content Include="Scripts\Shared\Layout.js" />
+    <Content Include="Scripts\Shiftwise_production\common.js" />
+    <Content Include="Scripts\Shiftwise_production\custom.js" />
+    <Content Include="Scripts\Shiftwise_production\graph.js" />
+    <Content Include="Scripts\Shiftwise_production\monthly.js" />
+    <Content Include="Scripts\Shiftwise_production\yearly.js" />
     <Content Include="Scripts\ToolLife\PreventiveMaintanenceDashboard.js" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />

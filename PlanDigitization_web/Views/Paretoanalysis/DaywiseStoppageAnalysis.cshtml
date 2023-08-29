@@ -49,7 +49,7 @@
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("NewDash","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -69,10 +69,10 @@
 
 
 
-        <div class="btn-group" style="left: 15px;">
+        <div class="btn-group">
             <label class="control-label" style="float:right; font-weight:bold;">Select Machine<span class="required">*</span></label>
         </div>
-        <div class="btn-group" style="left: 38px;">
+        <div class="btn-group">
             <select id="machinecode" class="form-control" name="machinecode" @*title="*"*@>
                 <option value="">Select Line First</option>
             </select>
@@ -96,9 +96,9 @@
                         <a href="#custom" data-toggle="tab">Custom</a>
                     </li>
 
-                    <li id="monthly_report">
+                    @*<li id="monthly_report">
                         <a href="#monthly" data-toggle="tab">Monthly</a>
-                    </li>
+                    </li>*@
                 </ul>
                 <div class="tab-content">
 
@@ -141,8 +141,8 @@
                         <section class="panel">
                             <div class="form-group">
                                 <div class="col-md-2"></div>
-                                <label class="col-md-2 control-label" style="right: 187px;">Select Month</label>
-                                <div class="col-md-4" style="right: 283px;">
+                                <label class="col-md-2 control-label">Select Month</label>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
@@ -150,19 +150,19 @@
                                         <input class="month-own form-control" style="width: 150px;z-index:0;" type="text" id="month" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="right: 87px;">
-                                    <div class="btn-group">
-                                        <button type="button" id="searchmonthwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button type="button" id="resetmonth" class="mb-xs mt-xs mr-xs btn btn-danger">Reset</button>
-                                    </div>
-                                </div>
+                                @*<div class="col-md-4">
+                                        <div class="btn-group">
+                                            <button type="button" id="searchmonthwise" class="mb-xs mt-xs mr-xs btn btn-primary">View</button>
+                                        </div>
+                                        <div class="btn-group">
+                                            <button type="button" id="resetmonth" class="mb-xs mt-xs mr-xs btn btn-danger">Reset</button>
+                                        </div>
+                                    </div>*@
                             </div>
 
                             <div class="panel-body">
-                                <div class='monthly_report' style="height: 450px; width: 100%; background-color: rgb(91 165 241 / 10%);">
-
+                                <div class='year_report' style="height: 650px; width: 100%; background-color: rgb(91 165 241 / 10%);">
+                                    <h3 style="font-family: verdana; color: #47640a; text-align: center ">Daywise Stoppage Analysis</h3>
                                 </div>
                             </div>
                         </section>
@@ -362,18 +362,22 @@ else
 
     });
 
-    document.getElementById("resetcustom").addEventListener("click", function () {
-        $('#start').val('');
-        $('#end').val('');
-        d3.select(".custome_report svg").remove();
-
-    })
-
-    document.getElementById("resetmonth").addEventListener("click", function () {
-        $('#month').val('');
-        d3.select(".monthly_report svg").remove();
-
-    })
+    //document.getElementById("resetcustom").addEventListener("click", function () {
+    //    $('#start').val('');
+    //    $('#end').val('');
+    //    d3.select(".custome_report svg").remove();
+    //    d3.select(".custome_Duration svg").remove();
+    //})
+    //document.getElementById("resetyear").addEventListener("click", function () {
+    //    $('#year').val('');
+    //    d3.select(".year_report svg").remove();
+    //    d3.select(".year_Duration svg").remove();
+    //})
+    //document.getElementById("resetmonth").addEventListener("click", function () {
+    //    $('#month').val('');
+    //    d3.select(".monthly_report svg").remove();
+    //    d3.select(".monthly_Duration svg").remove();
+    //})
 
 
 </script>
@@ -398,7 +402,7 @@ else
         var dataset = null;
         //typecast Amount to #, calculate total, and cumulative amounts
         dataset = response.data.Table;
-        console.log(response.data.Table[0].MTTR);
+
         //Axes and scales
         var xScale = d3.scale.ordinal().rangeRoundBands([0, w], 0.1);
         var x1Scale = d3.scale.ordinal();
@@ -450,7 +454,7 @@ else
             .style("border-radius", "5px")
             .style("padding", "5px")
 
-        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("background-color", "#898584").style("color", "white")
+        tooltip = d3.select("body").append("div").style("width", "200px").style("height", "100px").style("background", "white")
             .style("opacity", "1").style("position", "absolute").style("visibility", "hidden").style("padding", "5px");
         toolval = tooltip.append("div");
 
@@ -869,136 +873,6 @@ else
 
 
 
-
-    document.getElementById("searchmonthwise").addEventListener("click", function () {
-
-        var linecode = '@Session["LineCode"]';
-        var machinecode = $('#machinecode').val();
-        var machinecode1 = $('#machinecode option:selected').text();
-        var records = $('.record').val();
-        var month = $('#month').val();
-        $('.updated_time').text(new Date().toLocaleString());
-        $('.shift').text("N/A");
-
-
-        if (linecode == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide Line details",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (machinecode == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Machine details",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else if (records == '') {
-            swal({
-                icon: "error",
-                title: "Please Provide No. of records",
-                button: false,
-                timer: 4500
-            })
-        }
-        else if (month == '') {
-                swal({
-                    icon: "error",
-                    title: "Please Provide Month",
-                    button: false,
-                    timer: 4500
-                })
-        }
-        else
-        {
-            var chartData = [];
-            var myData = {
-                "line": linecode,
-                "Machine": machinecode,
-                "records": records,
-                "Year": month,
-                "CompanyCode": '@Session["CompanyCode"]',
-                "PlantCode": '@Session["PlantCode"]'
-            };
-             var R_url = '@Url.Action("Login", "Main")';
-                   var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: URL + 'api/Paretoanalysis/MonthlyMTTRandMTBF',
-                headers: {
-                    Authorization: 'Bearer ' + user1
-                },
-                data: myData,
-                beforeSend: function () {
-                    $('.loading').show();
-                },
-                complete: function () {
-                    $('.loading').hide();
-                },
-                success: function (response) {
-                    d3.select(".monthly_report svg").remove();
-                    /*  $('#monthly_line').text(linecode);*/
-
-                    if (response.status != "Error")
-                    {
-
-
-                        graph(".monthly_report", response);
-
-                    }
-                    else
-                    {
-                        $(".monthly_report").empty();
-
-                        var div_width = 400;
-                        var div_height = 400;
-                        var svg = d3.select(".monthly_report").append("svg")
-                            .attr("width", div_width)
-                            .attr("height", div_height)
-                            .attr("preserveAspectRatio", "xMidYMid")
-                            .append("g")
-                            .attr("transform", "translate(" + (div_width / 2 - 50) + "," + (div_height / 2 - 50) + ")");
-
-                        svg.append("text")
-                            .text("No Data Available")
-                            .style("font-size", "40px");
-                    }
-                },
-                error: function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                }
-              });
-
-
-
-
-
-        }
-
-    })
 
 </script>
 

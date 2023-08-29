@@ -1,13 +1,15 @@
 ﻿
-@{ ViewBag.Title = "Cycletime_live";
-    Layout = "~/Views/Shared/_Layout.cshtml"; }
+@{
+    ViewBag.Title = "Cycletime_live";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <header class="page-header">
     <h2> Cycle Time - Live </h2>
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("NewDash","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -28,19 +30,19 @@
             </header>
             <div class="panel-body">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" style="right: 10px;top: 5px;"> Select Machine  <span class="required">*</span></label>
-                    <div class="col-sm-2" style="right: 87px;">
+                    <label class="col-sm-2 control-label"> Select Machine  <span class="required">*</span></label>
+                    <div class="col-sm-2">
                         <select class="form-control" id="Machine" onchange="select_machine()">
                             <option value="">Select</option>
                         </select>
                     </div>
 
-                    <label class="col-sm-2 control-label" style="right: 80px;top: 5px;"> No of Records  <span class="required">*</span></label>
-                    <div class="col-sm-2" style="right: 160px;">
+                    <label class="col-sm-2 control-label"> No of Records  <span class="required">*</span></label>
+                    <div class="col-sm-2">
                         <input type="text" value="100" id="records" class="form-control" />
                     </div>
 
-                    <div class="col-sm-4" style="text-align: right; width: 170px;right: 100px;">
+                    <div class="col-sm-4" style="text-align:right;">
                         <button type="button" id="Search_live" class="btn btn-primary">Search</button>
                         <button type="reset" id="btn_cancel" class="btn btn-danger cancel">Reset</button>
                     </div>
@@ -66,13 +68,12 @@
                 <div class="form-group" id="tbl_live">
                     <h3 id="error_msg" style="color:red;"></h3>
                 </div>
+
+
             </div>
         </section>
     </div>
 </div>
-
-
-
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
@@ -80,7 +81,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('.updated_time').text(new Date().toLocaleString());
+         $('.updated_time').text(new Date().toLocaleString());
         $('.shift').text('@Session["ShiftID"]');
 
         var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
@@ -104,9 +105,10 @@
 
             success: function (response)
             {
+
                 var s = '<option value="">Select Machine</option>';
                 for (var i = 0; i < response.data.length; i++) {
-                    s += '<option value="' + response.data[i].Code + '">' + response.data[i].Code + "-" + response.data[i].Name + '</option>';
+                    s += '<option value="' + response.data[i].Code + '">' + response.data[i].Name + '</option>';
                 }
                 $("#Machine").html(s);
             }
@@ -114,7 +116,7 @@
 
     });
 
-    function select_machine()
+    @*function select_machine()
     {
         var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
         var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
@@ -122,7 +124,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Set_Mc_Code", "CycleTime")',
+            url: '../CycleTime/Set_Mc_Code',
             data: '{id: ' + JSON.stringify(Machine) + '}',
             headers: {
                 Authorization: 'Bearer ' + user1
@@ -136,7 +138,7 @@
             error: function (response) {
             }
         });
-    }
+    }*@
 
 
 </script>
@@ -151,15 +153,11 @@
     document.getElementById("Search_live").addEventListener("click", function () {
 
         getcycletime();
-
     });
 
     function getcycletime() {
-        debugger;
-        $('.updated_time').text(new Date().toLocaleString());
+           $('.updated_time').text(new Date().toLocaleString());
         $('.shift').text('@Session["ShiftID"]');
-
-
         $("#tbl_live").html('');
         var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
         var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
@@ -201,6 +199,7 @@
             success: function (response)
             {
                 $("#error_msg").html('');
+
                 if (response.status != "Error") {
                     $("#error_msg").html('');
                     var deviation = '';
@@ -245,16 +244,16 @@
                                 var th = document.createElement("th");
 
                                 if (col[i] == 'Auto_cycle') {
-                                    th.innerText = 'Others Auto Cycletime';
+                                    th.innerHTML = 'Others Auto Cycletime';
                                 }
                                 else if (col[i] == 'Manual_cycle') {
-                                    th.innerText = 'Others Manual Cycletime';
+                                    th.innerHTML = 'Others Manual Cycletime';
                                 }
                                 else if (col[i] == 'Total_cycle') {
-                                    th.innerText = 'Total Cycletime';
+                                    th.innerHTML = 'Total Cycletime';
                                 }
                                 else {
-                                    th.innerText = col[i];
+                                    th.innerHTML = col[i];
                                 }
 
                                 tr.appendChild(th);
@@ -280,11 +279,12 @@
                                             if (result.data.Table[ii].Operations == col[j])
                                             {
                                                 if (result.data.Table[ii].cycle != null && result.data.Table[ii].cycle != '' && result.data.Table[ii].cycle != '0') {
-                                                    tabCell.innerText = Live_data[i][col[j]] + " / " + (Live_data[i][col[j]] - result.data.Table[ii].cycle);
+                                                    tabCell.innerHTML = Live_data[i][col[j]] + " / " + (Math.round(((Live_data[i][col[j]] - result.data.Table[ii].cycle) + Number.EPSILON) * 100) / 100);//Math.round(((Live_data[i][col[j]] - result.data.Table[ii].cycle) + Number.EPSILON) * 100) / 100
 
                                                 }
                                                 else {
-                                                    tabCell.innerText = Live_data[i][col[j]] + " / " + (result.data.Table[ii].cycle);
+                                                    tabCell.innerHTML = Live_data[i][col[j]] + " / " + (Math.round(((result.data.Table[ii].cycle) + Number.EPSILON) * 100) / 100);//Math.round(((result.data.Table[ii].cycle) + Number.EPSILON) * 100) / 100
+                                                    //Math.round((num + Number.EPSILON) * 100) / 100
                                                     //tot_cycle += (Live_data[i][col[j]]);
                                                 }
                                                 count += 1;
@@ -293,7 +293,7 @@
 
                                             }
                                             else {
-                                                tabCell.innerText = Live_data[i][col[j]];
+                                                tabCell.innerHTML = Live_data[i][col[j]];
                                               //tot_cycle += (Live_data[i][col[j]]);
                                             }
                                             //tot_cycle = tot_cycle+ parseFloat(Live_data[i][col[j]]);
@@ -316,8 +316,9 @@
                             }
 
                             var divContainer = document.getElementById("tbl_live");
-                            divContainer.innerText = "";
+                            divContainer.innerHTML = "";
                             divContainer.appendChild(table);
+
 
                         }, error: function (result) {
 
@@ -337,7 +338,6 @@
         });
         //setTimeout(getcycletime, 10000);
     }
-
     function set_machine() {
         var URL = '@System.Configuration.ConfigurationManager.AppSettings["url"]';
 
@@ -424,10 +424,10 @@
             },
             success: function (response)
             {
-                if (response.status != "Error")
-                {
-                    $("#error_msg").text("");
+               /* console.log(response);*/
 
+                if (response.status != "Error") {
+                    $("#error_msg").text("");
                     var deviation = '';
                     var cycle_time_details = new Array();
                     var myData = {
@@ -470,16 +470,16 @@
                                 var th = document.createElement("th");
 
                                 if (col[i] == 'Auto_cycle') {
-                                    th.innerText = 'Others Auto Cycletime';
+                                    th.innerHTML = 'Others Auto Cycletime';
                                 }
                                 else if (col[i] == 'Manual_cycle') {
-                                    th.innerText = 'Others Manual Cycletime';
+                                    th.innerHTML = 'Others Manual Cycletime';
                                 }
                                 else if (col[i] == 'Total_cycle') {
-                                    th.innerText = 'Total Cycletime';
+                                    th.innerHTML = 'Total Cycletime';
                                 }
                                 else {
-                                    th.innerText = col[i];
+                                    th.innerHTML = col[i];
                                 }
 
                                 tr.appendChild(th);
@@ -502,17 +502,17 @@
                                             if (result.data.Table[ii].Operations == col[j])
                                             {
                                                 if (result.data.Table[ii].cycle != null && result.data.Table[ii].cycle != '') {
-                                                    tabCell.innerText = Live_data[i][col[j]] + " / " + (Live_data[i][col[j]] - result.data.Table[ii].cycle);
+                                                    tabCell.innerHTML = Live_data[i][col[j]] + " / " + (Live_data[i][col[j]] - result.data.Table[ii].cycle);
                                                     //tot_cycle += parseFloat(Live_data[i][col[j]]);
                                                 }
                                                 else {
-                                                    tabCell.innerText = Live_data[i][col[j]] + " / " + (result.data.Table[ii].cycle);
+                                                    tabCell.innerHTML = Live_data[i][col[j]] + " / " + (result.data.Table[ii].cycle);
                                                    // tot_cycle += (Live_data[i][col[j]]);
                                                 }
                                                 count += 1;
                                             }
                                             else {
-                                                tabCell.innerText = Live_data[i][col[j]];
+                                                tabCell.innerHTML = Live_data[i][col[j]];
                                                // tot_cycle += (Live_data[i][col[j]]);
                                             }
 
@@ -531,7 +531,7 @@
                             }
 
                             var divContainer = document.getElementById("tbl_live");
-                            divContainer.innerText = "";
+                            divContainer.innerHTML = "";
                             divContainer.appendChild(table);
 
 
@@ -558,14 +558,14 @@
     document.getElementById("Search_live").addEventListener("click", function ()
     {
        // set_machine();
+
         $('.updated_time').text(new Date().toLocaleString());
         $('.shift').text("N/A");
-
         $('.shift_n').show();
         $('.updated_time_n').show();
         fetch_live_details();
-
     });
+
 
 
 </script>

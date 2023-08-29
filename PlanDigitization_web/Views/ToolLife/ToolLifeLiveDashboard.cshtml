@@ -1,26 +1,20 @@
-﻿@{ ViewBag.Title = "ToolLifeLiveDashboard";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+﻿@{
+    ViewBag.Title = "ToolLifeLiveDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <style>
     #datatable-live-toollife thead th {
         background-color: teal;
         color: white;
     }
-
-    .dataTables_filter {
-        float: right;
-    }
-    .table {
-        white-space: nowrap;
-       
-    }
 </style>
 <header class="page-header">
-    <h2> Critical Element Life - Live </h2>
+    <h2> Tool Life Monitoring - Live </h2>
     <div class="right-wrapper pull-right">
         <ol class="breadcrumbs">
             <li>
-                <a href="@Url.Action("MainDashboard","MainDashboard")">
+                <a href="@Url.Action("NewDash","Main")">
                     <i class="fa fa-home"></i>
                 </a>
             </li>
@@ -34,58 +28,52 @@
 
 @if (ViewContext.Controller.HasPermission("ToolLifeLive-View"))
 {
-<div class="row">
-    @*<button type="button" style="float:right;margin-left:2%" class="btn btn-default">OEE Historic<span class="shift"></span></button>*@
-    <input type="button" class="btn btn-primary" onclick="location.href='/ToolLife/ToolLifeHistoricDashboard';" value="Historic-ToolLife Monitoring" style="float:right;text-decoration:none;margin-right:2%;border-style:none;" />
-    <input type="button" class="btn btn-primary" onclick="location.href='/ToolLife/NewMaintanenceDash';" value="Historic-Preventive Maintenance" style="float:right;text-decoration:none;margin-right:2%;border-style:none;" />
+    <div class="row">
+        @*<button type="button" style="float:right;margin-left:2%" class="btn btn-default">OEE Historic<span class="shift"></span></button>*@
+       @* <input type="button" class="btn btn-primary" onclick="location.href='../ToolLife/ToolLifeHistoricDashboard';" value="Historic-ToolLife Monitoring" style="float:right;text-decoration:none;margin-right:2%;border-style:none;" />*@
+        <input type="button" class="btn btn-primary" onclick="location.href='../ToolLife/NewMaintanenceDash';" value="Historic-Preventive Maintenance" style="float:right;text-decoration:none;margin-right:2%;border-style:none;" />
 
-</div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <section class="panel">
-                            <header class="panel-heading" style="background-color:teal;color:white;">
-
-                                @*<h4 class="panel-title" style="color:white;">
-                                    Asset : <span id="maccode"></span>*@
-                                 Go to preventive maintenance for acknowledgement of repair, rework and replacement issue
-                                @*</h4>*@
-
-                            </header>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped mb-none " id="datatable-live-toollife">
-                                        <thead style="background-color: teal; color: white; ">
-                                            <tr>
-                                                <th class="text-center" >S.NO</th>
-                                                <th class="text-center">Subsystem</th>
-                                                <th class="text-center">Element</th>
-                                                <th class="text-center">Make</th>
-                                                <th class="text-center">Part Number</th>
-                                                <th class="text-center">Classification</th>
-                                                <th class="text-center">Conversion Parameter</th>
-                                                <th class="text-center">Current Life Cycles</th>
-                                                <th class="text-center">PM - Rated Life Cycles</th>
-                                                <th class="text-center">PM - Recommendation Text</th>
-                                                <th class="text-center">UOM</th>
-                                                <th class="hidden-phone">%Usage</th>
-                                                <th class="hidden-phone">Last PM</th>
-                                                @*<th>Status</th>
-                                                    <th>Next PM</th>*@
-                                            </tr>
-                                        </thead>
-                                        <tbody class="details" style="width:100%;">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div> }
-                            else
-                            {
-                <div class="row">
-                    <h2 class="panel-title">View Permission is denied</h2>
-                </div>}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <section class="panel">
+                <header class="panel-heading" style="background-color:teal;color:white;">
+                    Note : Go to preventive maintenance for acknowledgement of repair, rework and replacement issues
+                </header>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped mb-none" id="datatable-live-toollife">
+                        <thead style="background-color:teal;color:white;">
+                            <tr>
+                                <th>S.NO</th>
+                                @*<th>LineName</th>*@
+                                <th>Subsystem</th>
+                                <th>Element</th>
+                                <th>Make</th>
+                                <th>Part Number</th>
+                                <th>Classification</th>
+                                <th>Conversion Parameter</th>
+                                <th>Current Life Cycles</th>
+                                <th>PM - Rated Life Cycles</th>
+                                <th>PM - Recommendation Text</th>
+                                <th>UOM</th>
+                                <th class="hidden-phone">%Usage</th>
+                                <th class="hidden-phone">Last PM</th>
+                            </tr>
+                        </thead>
+                        <tbody class="details" style="width:100%;">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <h2 class="panel-title">View Permission is denied</h2>
+    </div>
+}
 <!-- end: page -->
 <script src="~/assets1/javascripts/swal.js"></script>
 <script type="text/javascript">
@@ -108,149 +96,44 @@
     //        });
     //    });
 
-    function gettoollivedata() {
-        //var vars = [], hash;
-        //var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        //for (var i = 0; i < hashes.length; i++) {
-        //    hash = hashes[i].split('?');
-        //    vars.push(hash[0]);
-        //    vars[hash[0]] = hash[1];
-        //}
-        $('.updated_time').text('');
-        var myData = {
-            "CompanyCode": '@Session["CompanyCode"]',
-            "PlantCode": '@Session["PlantCode"]',
-            "Line_code": '@Session["LineCode"]',
-        };
-        var R_url = '@Url.Action("Login", "Main")';
-        var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
-        $.ajax({
-            type: 'Post',
-            url: URL + 'api/OEE/check_holiday',
-            data: myData,
-            headers: {
-                Authorization: 'Bearer ' + user1
-            },
+        function gettoollivedata() {
+            //var vars = [], hash;
+            //var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            //for (var i = 0; i < hashes.length; i++) {
+            //    hash = hashes[i].split('?');
+            //    vars.push(hash[0]);
+            //    vars[hash[0]] = hash[1];
+            //}
+            $('.updated_time').text('');
+            var myData = {
+                "CompanyCode": '@Session["CompanyCode"]',
+                "PlantCode": '@Session["PlantCode"]',
+                "Line_code": '@Session["LineCode"]',
+            };
+             var R_url = '@Url.Action("Login", "Main")';
+            var user1 = '@Session["Token"]' + ':' + '@Session["UserName"]';
+            $.ajax({
+                type: 'Post',
+                url: URL + 'api/OEE/check_holiday',
+                data: myData,
+                headers: {
+                    Authorization: 'Bearer ' + user1
+                },
 
-            dataType: 'json'
-        }).success(function (response) {
+                dataType: 'json'
+            }).success(function (response) {
 
-            if (response.data.length == 0) {
-                $.ajax({
-                    type: 'POST',
-                    url: URL + 'api/Toollife/GetToollivelivedatas',
-                    headers: {
-                        Authorization: 'Bearer ' + user1
-                    },
-                    data: myData,
-                    dataType: 'json'
-                }).success(function (response) {
-                    var rowsCnt = document.getElementById("datatable-live-toollife").getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
-                    if (rowsCnt > 0) {
-                        for (var i = 0; i < rowsCnt; i++) {
-                            document.getElementById("datatable-live-toollife").deleteRow(1);
-                        }
-                    }
-
-                    if ($.fn.DataTable.isDataTable('#datatable-live-toollife')) {
-                        $('#datatable-live-toollife').DataTable().clear();
-                    }
-
-                    if ($.fn.DataTable.isDataTable('#datatable-live-toollife')) {
-                        $('#datatable-live-toollife').DataTable().destroy();
-                    }
-
-                    if (response.data.length != 0) {
-
-                        var j = 1;
-                        for (var i = 0; i < response.data.length; i++) {
-                            var newRow = $("<tr>");
-                            var cols = '';
-                            cols += "<td class='text - center'> " + j + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].line_name + "</br>" + response.data[i].Machine_code + "</td> ";
-                            cols += "<td class='text - center' > " + response.data[i].ToolName + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].Make + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].Part_number + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].Classification + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].Conversion_parameter + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].currentlifecle + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].ratedlifecle + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].RecText + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].UOM + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].usage + "</td> ";
-                            cols += "<td class='text - center'> " + response.data[i].lastmain + "</td> ";
-                            //cols += "<td> " + response.data[i].Status + "</td> ";
-                            //cols += "<td> " + response.data[i].Next_PM + "</td> ";
-                            cols += "</tr>";
-                            newRow.append(cols);
-                            $(".details").append(newRow);
-
-
-                            //alert_table.row.add([j, response.data[i].line_name + "</br>" + response.data[i].Line_code, response.data[i].Machine_code, response.data[i].ToolName, response.data[i].Make, response.data[i].Part_number, response.data[i].Classification, response.data[i].Conversion_parameter, response.data[i].currentlifecle, response.data[i].ratedlifecle, response.data[i].RecText,response.data[i].UOM, response.data[i].usage, response.data[i].lastmain]).draw();
-                           // alert_table.row.add([j, response.data[i].Line_code + "</br>" + response.data[i].Machine_code, response.data[i].ToolName, response.data[i].Make, response.data[i].Part_number, response.data[i].Classification, response.data[i].Conversion_parameter, response.data[i].currentlifecle, response.data[i].ratedlifecle, response.data[i].RecText, response.data[i].UOM, response.data[i].usage, response.data[i].lastmain, response.data[i].Status, response.data[i].Next_PM]).draw();
-
-                            j++;
-
-
-                        }
-
-                        $('#datatable-live-toollife').DataTable({
-                            "responsive": true,
-                            "autoWidth": true,
-                            "scrollCollapse": true,
-                        });
-
-                        $('.updated_time').text(new Date().toLocaleString());
-                        $('.shift').text("N/A");
-                        $('.shift_n').show();
-                        $('.updated_time_n').show();
-                    }
-                    else {
-
-                        var rowsCnt = document.getElementById("datatable-live-toollife").getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
-                        if (rowsCnt > 0) {
-                            for (var i = 0; i < rowsCnt; i++) {
-                                document.getElementById("datatable-live-toollife").deleteRow(1);
-                            }
-                        }
-
-                        var newRow = $("<tr>");
-                        var cols = '';
-                        cols += "<td colspan='15' style='text-align:center;font-weight:bold;background-color:burlywood;color:black;'> No Data Available </td> ";
-                        cols += "</tr>";
-                        newRow.append(cols);
-                        $(".details").append(newRow);
-                        $('#maccode').text("N/A");
-
-                        $('.updated_time').text(new Date().toLocaleString());
-                        $('.shift').text("N/A");
-                        $('.shift_n').show();
-                        $('.updated_time_n').show();
-                        //$(".custom_pre_error").text(response.msg);
-                    }
-                }).error(function (response) {
-                    if (response.status == "401") {
-                        swal({
-                            icon: "warning",
-                            title: "Session Timeout",
-                            button: true,
-                            closeModal: false
-                        })
-                        window.location = R_url;
-                    }
-                    else {
-                        swal({
-                            icon: "warning",
-                            title: response.responseText,
-                            button: true,
-                            closeModal: false
-                        })
-
-                    }
-                });
-            }
-            else {
-
+                if (response.data.length == 0)
+                {
+                     $.ajax({
+                type: 'POST',
+                url: URL + 'api/Toollife/GetToollivelivedatas',
+                headers: {
+                    Authorization: 'Bearer ' + user1
+                },
+                data: myData,
+                dataType: 'json'
+            }).success(function (response) {
                 var rowsCnt = document.getElementById("datatable-live-toollife").getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
                 if (rowsCnt > 0) {
                     for (var i = 0; i < rowsCnt; i++) {
@@ -258,25 +141,172 @@
                     }
                 }
 
-                var newRow = $("<tr>");
-                var cols = '';
-                cols += "<td colspan='13' style='text-align:center;font-weight:bold;background-color:burlywood;color:black;'> " + response.data[0].holiday_name + " </td> ";
-                cols += "</tr>";
-                newRow.append(cols);
-                $(".details").append(newRow);
-                $('#maccode').text("N/A");
+                if ($.fn.DataTable.isDataTable('#datatable-live-toollife')) {
+                    $('#datatable-live-toollife').DataTable().destroy();
+                }
 
-                $('.updated_time').text(new Date().toLocaleString());
-                $('.shift').text("N/A");
-                $('.shift_n').show();
-                $('.updated_time_n').show();
-            }
-        });
 
-        setTimeout(gettoollivedata, 60000);
-    }
+                $(".details").html("");
+                $('#maccode').html("");
 
+                //dis_table.clear();
+
+                var alert_table = $('#datatable-live-toollife').DataTable({
+
+                            "responsive": true,
+                            "autoWidth": false,
+                            "searching": false,
+                            dom: 'Bfrtip',
+                            buttons: [
+
+                            ],
+                             "lengthMenu": [[20, 30, 50, -1], [20, 30, 50, "All"]]
+
+
+                });
+
+
+                alert_table.clear();
+
+
+                if (response.data.length != 0) {
+                   // alert("inside")
+
+                    var j = 1;
+
+                    for (var i = 0; i < response.data.length; i++) {
+
+                         $('#maccode').text(response.data[i].line_name + "_" + response.data[i].Line_code);
+
+
+                        //var newRow = $("<tr>");
+                        //var cols = '';
+                        //cols += "<td> " + j + "</td> ";
+                        //cols += "<td> " + response.data[i].line_name + "</br>" + response.data[i].Line_code + "</td> ";
+                        //cols += "<td> " + response.data[i].Machine_code + "</td> ";
+                        //cols += "<td> " + response.data[i].ToolName + "</td> ";
+                        //cols += "<td> " + response.data[i].Make + "</td> ";
+                        //cols += "<td> " + response.data[i].Part_number + "</td> ";
+                        //cols += "<td> " + response.data[i].Classification + "</td> ";
+                        //cols += "<td> " + response.data[i].Conversion_parameter + "</td> ";
+                        //cols += "<td> " + response.data[i].currentlifecle + "</td> ";
+                        //cols += "<td> " + response.data[i].ratedlifecle + "</td> ";
+                        //cols += "<td> " + response.data[i].UOM + "</td> ";
+                        //cols += "<td> " + response.data[i].usage + "</td> ";
+                        //cols += "<td> " + response.data[i].lastmain + "</td> ";
+                        //cols += "</tr>";
+                        //newRow.append(cols);
+                        //$(".details").append(newRow);
+
+
+                        //alert_table.row.add([j, response.data[i].line_name + "</br>" + response.data[i].Line_code, response.data[i].Machine_code, response.data[i].ToolName, response.data[i].Make, response.data[i].Part_number, response.data[i].Classification, response.data[i].Conversion_parameter, response.data[i].currentlifecle, response.data[i].ratedlifecle, response.data[i].RecText,response.data[i].UOM, response.data[i].usage, response.data[i].lastmain]).draw();
+                        alert_table.row.add([j, response.data[i].Line_code + "</br>" + response.data[i].Machine_code, response.data[i].ToolName, response.data[i].Make, response.data[i].Part_number, response.data[i].Classification, response.data[i].Conversion_parameter, response.data[i].currentlifecle, response.data[i].ratedlifecle, response.data[i].RecText, response.data[i].UOM, response.data[i].usage, response.data[i].lastmain]).draw();
+
+                        j++;
+
+
+                    }
+
+                //   $('#datatable-live-toollife').DataTable({
+
+                //   scrollY: true,
+                //            scrollX: true,
+                //            scroller: true,
+                //    "lengthMenu": [[20, 30, 50, -1], [20, 30, 50, "All"]]
+
+                //});
+
+
+                    $('.updated_time').text(new Date().toLocaleString());
+                    $('.shift').text("N/A");
+
+
+                    $('.shift_n').show();
+                    $('.updated_time_n').show();
+                }
+                else {
+
+                    var rowsCnt = document.getElementById("datatable-live-toollife").getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
+                    if (rowsCnt > 0) {
+                        for (var i = 0; i < rowsCnt; i++) {
+                            document.getElementById("datatable-live-toollife").deleteRow(1);
+                        }
+                    }
+
+                     var newRow = $("<tr>");
+                    var cols = '';
+                    cols += "<td colspan='13' style='text-align:center;font-weight:bold;background-color:burlywood;color:black;'> No Data Available </td> ";
+                    cols += "</tr>";
+                    newRow.append(cols);
+                    $(".details").append(newRow);
+                    $('#maccode').text("N/A");
+
+                    $('.updated_time').text(new Date().toLocaleString());
+                    $('.shift').text("N/A");
+
+
+                    $('.shift_n').show();
+                    $('.updated_time_n').show();
+                    //$(".custom_pre_error").text(response.msg);
+                }
+            }).error(function (response) {
+                if (response.status == "401") {
+                    swal({
+                        icon: "warning",
+                        title: "Session Timeout",
+                        button: true,
+                        closeModal: false
+                    })
+                    window.location = R_url;
+                }
+                else {
+                    swal({
+                        icon: "warning",
+                        title: response.responseText,
+                        button: true,
+                        closeModal: false
+                    })
+
+                }
+            });
+                }
+                else
+                {
+
+                    var rowsCnt = document.getElementById("datatable-live-toollife").getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
+                    if (rowsCnt > 0) {
+                        for (var i = 0; i < rowsCnt; i++) {
+                            document.getElementById("datatable-live-toollife").deleteRow(1);
+                        }
+                    }
+
+                     var newRow = $("<tr>");
+                    var cols = '';
+                    cols += "<td colspan='13' style='text-align:center;font-weight:bold;background-color:burlywood;color:black;'> "+response.data[0].holiday_name+" </td> ";
+                    cols += "</tr>";
+                    newRow.append(cols);
+                    $(".details").append(newRow);
+                    $('#maccode').text("N/A");
+
+                    $('.updated_time').text(new Date().toLocaleString());
+                    $('.shift').text("N/A");
+                }
+             });
+            //}).error(function (response) {
+
+            //    swal({
+            //        icon: "warning",
+            //        title: "Session Timeout",
+            //        button: true,
+            //        closeModal: false
+            //    })
+            //    window.location = R_url;
+
+            //});
+            setTimeout(gettoollivedata, 120000);
+        }
+    //});
     $(document).ready(function () {
         gettoollivedata();
-    });
+});
 </script>

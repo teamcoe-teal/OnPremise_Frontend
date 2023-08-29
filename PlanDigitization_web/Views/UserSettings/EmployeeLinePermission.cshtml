@@ -467,7 +467,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/UserSettings/Add_Line_Permission",
+                    url:'@Url.Action("Add_Line_Permission", "UserSettings")',
                     data: '{permissions: ' + JSON.stringify(finalpermission) + ',role: ' + JSON.stringify(role) + '}',
                     //headers: {
                     //    Authorization: 'Bearer ' + user1

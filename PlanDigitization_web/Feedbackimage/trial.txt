@@ -1,0 +1,3 @@
+nDGAz4fSFbpu6M7q
+
+@Url.Action("GetSettingdatas1", "Main")
